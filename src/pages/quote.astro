@@ -6,7 +6,7 @@ import { BUSINESS, url } from '../config';
 
 <Base
   title={`Free Quote | ${BUSINESS.name}`}
-  description={`Request a free commercial cleaning quote from ${BUSINESS.name}. We respond within one business day with a walkthrough or estimate.`}
+  description={`Request a free commercial cleaning quote from ${BUSINESS.name}. ${BUSINESS.responsePromise}`}
 >
   <section class="section">
     <div class="container split">
@@ -14,9 +14,9 @@ import { BUSINESS, url } from '../config';
         <nav class="crumbs"><a href={url('/')}>Home</a> / Free Quote</nav>
         <h1>Request a Free Quote</h1>
         <p>
-          Tell us a little about your facility and what you need cleaned. We'll respond within one
-          business day — usually with a quick walkthrough scheduled, or a ballpark estimate if you
-          just want numbers first.
+          Tell us a little about your facility and what you need cleaned. {BUSINESS.responsePromise}
+          Usually that means a quick walkthrough scheduled, or a ballpark estimate if you just want
+          numbers first.
         </p>
         <ul class="checklist">
           <li>No obligation, no pressure</li>

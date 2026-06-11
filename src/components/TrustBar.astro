@@ -1,16 +1,18 @@
 ---
+// True-claims-only trust bar. The star-rating widget belongs here too, but
+// ONLY once real Google reviews exist — set showStats + stats in config.ts.
 import { BUSINESS } from '../config';
-
-const years = new Date().getFullYear() - BUSINESS.foundingYear;
 ---
 
 <div class="trust-bar">
-  <span class="stars" aria-label={`Rated ${BUSINESS.stats.rating} out of 5`}>
-    ★★★★★ <strong>{BUSINESS.stats.rating}</strong> from {BUSINESS.stats.reviewCount} reviews
-  </span>
+  {BUSINESS.showStats && BUSINESS.stats.rating && (
+    <span class="stars" aria-label={`Rated ${BUSINESS.stats.rating} out of 5`}>
+      ★★★★★ <strong>{BUSINESS.stats.rating}</strong> from {BUSINESS.stats.reviewCount} Google reviews
+    </span>
+  )}
   <span>✓ Bonded &amp; Insured</span>
   <span>✓ Background-Checked Staff</span>
-  <span>✓ Serving the metro for {years}+ years</span>
+  <span>✓ Free Re-Clean Guarantee</span>
 </div>
 
 <style>

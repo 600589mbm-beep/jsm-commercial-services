@@ -40,7 +40,7 @@ const { location } = Astro.props;
       </div>
       <aside class="card">
         <h2>Get a Free Quote in {location.name}</h2>
-        <p>Tell us about your facility and we'll respond within one business day.</p>
+        <p>Tell us about your facility. {BUSINESS.responsePromise}</p>
         <QuoteForm />
       </aside>
     </div>

@@ -23,11 +23,17 @@ const schema = {
   areaServed: BUSINESS.serviceArea,
   foundingDate: String(BUSINESS.foundingYear),
   url: canonical.href,
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: BUSINESS.stats.rating,
-    reviewCount: BUSINESS.stats.reviewCount,
-  },
+  // aggregateRating intentionally omitted until real review data exists —
+  // fabricated structured-data ratings risk both trust and search penalties.
+  ...(BUSINESS.showStats && BUSINESS.stats.rating
+    ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: BUSINESS.stats.rating,
+          reviewCount: BUSINESS.stats.reviewCount,
+        },
+      }
+    : {}),
 };
 ---
 

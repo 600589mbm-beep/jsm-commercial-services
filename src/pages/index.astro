@@ -25,11 +25,13 @@ import { TESTIMONIALS } from '../data/testimonials';
         <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call Now — {BUSINESS.phone}</a>
       </div>
       <TrustBar />
-      <div class="stats">
-        <div><strong>{BUSINESS.stats.facilitiesServed}</strong><span>Facilities served</span></div>
-        <div><strong>{BUSINESS.stats.yearsInBusiness}</strong><span>Years in business</span></div>
-        <div><strong>24/7</strong><span>Emergency response</span></div>
-      </div>
+      {BUSINESS.showStats && (
+        <div class="stats">
+          <div><strong>{BUSINESS.stats.facilitiesServed}</strong><span>Facilities served</span></div>
+          <div><strong>{BUSINESS.stats.yearsInBusiness}</strong><span>Years in business</span></div>
+          <div><strong>24/7</strong><span>Emergency response</span></div>
+        </div>
+      )}
     </div>
   </section>
 
@@ -72,21 +74,23 @@ import { TESTIMONIALS } from '../data/testimonials';
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <h2>What Clients Say</h2>
+  {TESTIMONIALS.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>What Clients Say</h2>
+        </div>
+        <div class="grid grid-3">
+          {TESTIMONIALS.map((t) => (
+            <blockquote class="card testimonial">
+              <p>“{t.quote}”</p>
+              <footer>— {t.name}, {t.company}</footer>
+            </blockquote>
+          ))}
+        </div>
       </div>
-      <div class="grid grid-3">
-        {TESTIMONIALS.map((t) => (
-          <blockquote class="card testimonial">
-            <p>“{t.quote}”</p>
-            <footer>— {t.name}, {t.company}</footer>
-          </blockquote>
-        ))}
-      </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <section class="section alt">
     <div class="container">

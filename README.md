@@ -21,7 +21,14 @@ Static marketing site for JSM Commercial Services (commercial cleaning & janitor
 | Cities served | `src/data/locations.ts` |
 | Colors / styling | `src/styles/global.css` |
 
-> **TODO before launch:** replace the placeholder phone number, email, and Formspree form ID in `src/config.ts`, and swap the placeholder testimonials in `src/data/testimonials.ts` for real client quotes.
+## 🚫 Launch blockers — do these before pointing any traffic at the site
+
+1. **Real phone number** in `src/config.ts` (`phone` + `phoneHref`). The current `(612) 555-0123` is a dead line, and click-to-call is the highest-value conversion path. Tap-test it on a phone after deploying.
+2. **Real Formspree endpoint** in `src/config.ts`, then fire a **test submission end-to-end**: form → Formspree → instant email/SMS alert on your phone. The 5-minute callback habit is worth more than anything on the page.
+3. **Trust content stays hidden until real.** Stats (facilities served, years, star rating) render only when `showStats: true` in `src/config.ts`, and testimonials render only when `src/data/testimonials.ts` is non-empty. Fill them with **real numbers from your Google Business Profile** and real client quotes (verbatim, with permission) — fabricated reviews are checkable in two clicks and an FTC violation. Until then the site leads with what's true: bonded & insured, background-checked, re-clean guarantee.
+4. **Verify `foundingYear`** in `src/config.ts` — it drives the "founded in…" line on the About page.
+5. **Custom domain (~$10/yr)** — `600589mbm-beep.github.io` in the address bar undercuts every trust signal, and you'll want a clean domain for the Google Business Profile link. Buy a domain, add a `CNAME` DNS record pointing to `600589mbm-beep.github.io`, set the domain in repo Settings → Pages, then set `site` to the domain and `base` to `'/'` in `astro.config.mjs` and update `public/robots.txt`.
+6. **Response promise** — `responsePromise` in `src/config.ts` is used on every quote form. It ships as "within one business day"; once the lead-alert pipeline is tested, tighten it to "we'll call you back within the hour during business hours" (or whatever you can actually keep — the promise converts, but only set it where you can deliver).
 
 ## Conversion playbook (operational — not code)
 
