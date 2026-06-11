@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import { BUSINESS, url } from '../config';
+---
+
+<Base
+  title={`Thank You — Request Received | ${BUSINESS.name}`}
+  description="Thanks — we received your quote request and will be in touch shortly."
+>
+  <section class="section">
+    <div class="container narrow">
+      <nav class="crumbs"><a href={url('/')}>Home</a> / Thank You</nav>
+      <div class="thanks">
+        <span class="check" aria-hidden="true">✓</span>
+        <h1>Request received — thank you.</h1>
+        <p class="lead">
+          We've got your details and a team member will reach out personally.
+          {BUSINESS.responsePromise}
+        </p>
+        <p>
+          Need us sooner? Call <a href={BUSINESS.phoneHref}><strong>{BUSINESS.phone}</strong></a> and
+          we'll get right on it. For anything to send over, email
+          <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/')}>Back to Home</a>
+          <a class="btn btn-ghost" href={url('/services')}>Browse Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <CTA heading="In the meantime, see what we cover" />
+</Base>
+
+<style>
+  .narrow { max-width: 640px; }
+  .thanks { text-align: center; padding: 1rem 0 0; }
+  .check {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--teal); color: #fff; font-size: 2rem; font-weight: 800;
+    margin-bottom: 1.25rem;
+  }
+  .thanks h1 { margin-bottom: 0.75rem; }
+  .lead { font-size: 1.1rem; color: var(--text); }
+  .actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+  .btn-ghost { background: none; border: 1.5px solid var(--border); color: var(--text-soft); }
+</style>

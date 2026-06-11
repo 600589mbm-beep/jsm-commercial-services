@@ -11,8 +11,10 @@ export const BUSINESS = {
   phoneHref: 'tel:+16514478036',
   email: 'sales@jsmcommercialservices.com',
   infoEmail: 'info@jsmcommercialservices.com',
-  // Create a free form at https://formspree.io, paste your endpoint here:
-  formspreeEndpoint: 'https://formspree.io/f/YOUR_FORM_ID',
+  // Quote-form POST target. Self-hosted receiver on the VPS (stores to SQLite,
+  // shows on the admin launchpad). Submissions are NOT lost like the old
+  // Formspree placeholder was. Swap to a Formspree endpoint here if ever needed.
+  formspreeEndpoint: 'https://191-101-2-203.sslip.io/forms/jsm',
   hours: 'Mon–Fri 9am–5pm',
   address: {
     street: '7287 153rd St W #240868',

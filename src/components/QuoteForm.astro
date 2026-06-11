@@ -38,6 +38,7 @@ const serviceOptions = snow
 
 <form action={BUSINESS.formspreeEndpoint} method="POST" class="quote-wizard" novalidate>
   <input type="hidden" name="_subject" value={subject} />
+  <input type="hidden" name="_next" value="https://jsmcommercialservice.com/thank-you/" />
   <input type="hidden" name="form_type" value={snow ? 'snow-removal' : 'cleaning'} />
   <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
   <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
