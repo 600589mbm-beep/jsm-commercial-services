@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import { BUSINESS, url } from '../../config';
+import { SERVICES } from '../../data/services';
+---
+
+<Base
+  title={`Commercial Cleaning Services | ${BUSINESS.name}`}
+  description={`Full list of commercial cleaning and janitorial services from ${BUSINESS.name}: office cleaning, floor care, carpet cleaning, disinfection, and more.`}
+>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs"><a href={url('/')}>Home</a> / Services</nav>
+      <div class="section-head">
+        <h1>Commercial Cleaning Services</h1>
+        <p>
+          Everything your facility needs from one accountable vendor. Every service below is
+          available one-time or on a recurring schedule across the {BUSINESS.serviceArea}.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {SERVICES.map((s) => (
+          <div class="card">
+            <h3><a href={url(`/services/${s.slug}`)}>{s.name}</a></h3>
+            <p>{s.short}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CTA />
+</Base>

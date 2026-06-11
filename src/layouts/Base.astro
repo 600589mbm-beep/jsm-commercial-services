@@ -1,0 +1,54 @@
+---
+import { BUSINESS, url } from '../config';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: BUSINESS.name,
+  legalName: BUSINESS.legalName,
+  telephone: BUSINESS.phone,
+  email: BUSINESS.email,
+  areaServed: BUSINESS.serviceArea,
+  foundingDate: String(BUSINESS.foundingYear),
+  url: canonical.href,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: BUSINESS.stats.rating,
+    reviewCount: BUSINESS.stats.reviewCount,
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="sitemap" href={url('/sitemap-index.xml').replace(/\/$/, '')} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

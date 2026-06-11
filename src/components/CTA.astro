@@ -1,0 +1,28 @@
+---
+import { BUSINESS, url } from '../config';
+
+interface Props {
+  heading?: string;
+}
+
+const { heading = 'Ready for a cleaner facility?' } = Astro.props;
+---
+
+<section class="cta">
+  <div class="container inner">
+    <h2>{heading}</h2>
+    <p>Get a free, no-obligation walkthrough and quote — usually within 24 hours.</p>
+    <div class="buttons">
+      <a class="btn btn-primary" href={url('/quote')}>Request a Free Quote</a>
+      <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { background: var(--navy); padding: 3.5rem 0; }
+  .inner { text-align: center; }
+  h2 { color: #fff; }
+  p { color: #c4d3df; }
+  .buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+</style>

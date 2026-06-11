@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { BUSINESS, url } from '../../config';
+import { LOCATIONS } from '../../data/locations';
+import { SERVICES } from '../../data/services';
+
+export function getStaticPaths() {
+  return LOCATIONS.map((location) => ({ params: { slug: location.slug }, props: { location } }));
+}
+
+const { location } = Astro.props;
+---
+
+<Base
+  title={`Commercial Cleaning in ${location.name}, MN | ${BUSINESS.name}`}
+  description={`Commercial cleaning and janitorial services in ${location.name}, Minnesota (${location.county}). ${location.blurb} Free quotes from ${BUSINESS.name}.`}
+>
+  <section class="section">
+    <div class="container split">
+      <div>
+        <nav class="crumbs">
+          <a href={url('/')}>Home</a> / <a href={url('/locations')}>Locations</a> / {location.name}
+        </nav>
+        <h1>Commercial Cleaning in {location.name}, MN</h1>
+        <p>{location.blurb}</p>
+        <p>
+          {BUSINESS.name} provides recurring janitorial and one-time cleaning services to
+          businesses throughout {location.name} and the rest of {location.county}. Our crews are
+          trained, insured, and background-checked, and every account gets a documented scope of
+          work with supervisor inspections.
+        </p>
+        <h2>Services Available in {location.name}</h2>
+        <ul class="checklist">
+          {SERVICES.map((s) => (
+            <li><a href={url(`/services/${s.slug}`)}>{s.name}</a></li>
+          ))}
+        </ul>
+      </div>
+      <aside class="card">
+        <h2>Get a Free Quote in {location.name}</h2>
+        <p>Tell us about your facility and we'll respond within one business day.</p>
+        <QuoteForm />
+      </aside>
+    </div>
+  </section>
+  <CTA heading={`Need a cleaning crew in ${location.name}?`} />
+</Base>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .split { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://600589mbm-beep.github.io/jsm-commercial-services/sitemap-index.xml

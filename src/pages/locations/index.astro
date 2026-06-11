@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import { BUSINESS, url } from '../../config';
+import { LOCATIONS } from '../../data/locations';
+---
+
+<Base
+  title={`Service Area | ${BUSINESS.name}`}
+  description={`${BUSINESS.name} provides commercial cleaning across the ${BUSINESS.serviceArea}, including ${LOCATIONS.slice(0, 5).map((l) => l.name).join(', ')}, and more.`}
+>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs"><a href={url('/')}>Home</a> / Locations</nav>
+      <div class="section-head">
+        <h1>Our Service Area</h1>
+        <p>
+          Local crews positioned across the {BUSINESS.serviceArea} for fast response and
+          consistent recurring service. Don't see your city? Call us — we likely cover it.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {LOCATIONS.map((l) => (
+          <div class="card">
+            <h3><a href={url(`/locations/${l.slug}`)}>{l.name}, MN</a></h3>
+            <p>{l.blurb}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CTA />
+</Base>

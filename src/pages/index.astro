@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import { BUSINESS, url } from '../config';
+import { SERVICES } from '../data/services';
+import { LOCATIONS } from '../data/locations';
+---
+
+<Base
+  title={`${BUSINESS.name} | Commercial Cleaning & Janitorial — ${BUSINESS.serviceArea}`}
+  description={`${BUSINESS.name} provides office cleaning, janitorial, floor care, and disinfection services across the ${BUSINESS.serviceArea}. Free quotes within 24 hours.`}
+>
+  <section class="hero">
+    <div class="container">
+      <h1>Commercial Cleaning Your Business Can Count On</h1>
+      <p class="sub">
+        Offices, medical facilities, warehouses, and everything in between — cleaned on schedule,
+        every time, across the {BUSINESS.serviceArea}.
+      </p>
+      <div class="buttons">
+        <a class="btn btn-primary" href={url('/quote')}>Get a Free Quote</a>
+        <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+      </div>
+      <div class="stats">
+        <div><strong>{BUSINESS.stats.facilitiesServed}</strong><span>Facilities served</span></div>
+        <div><strong>{BUSINESS.stats.yearsInBusiness}</strong><span>Years in business</span></div>
+        <div><strong>{BUSINESS.stats.rating}★</strong><span>{BUSINESS.stats.reviewCount} reviews</span></div>
+        <div><strong>24/7</strong><span>Emergency response</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Our Services</h2>
+        <p>One vendor for every cleaning need in your building — on a schedule built around your business.</p>
+      </div>
+      <div class="grid grid-3">
+        {SERVICES.map((s) => (
+          <div class="card">
+            <h3><a href={url(`/services/${s.slug}`)}>{s.name}</a></h3>
+            <p>{s.short}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>Why Businesses Choose JSM</h2>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Reliable, Every Visit</h3>
+          <p>Documented checklists, supervisor inspections, and a single point of contact mean the clean you were promised is the clean you get.</p>
+        </div>
+        <div class="card">
+          <h3>Insured & Background-Checked</h3>
+          <p>Every team member is trained, uniformed, and background-checked, with full liability and workers' comp coverage behind them.</p>
+        </div>
+        <div class="card">
+          <h3>No Long-Term Contracts</h3>
+          <p>Month-to-month agreements. We keep your business by doing great work, not by locking you in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Serving the {BUSINESS.serviceArea}</h2>
+        <p>Local crews across the metro mean fast response and consistent service.</p>
+      </div>
+      <div class="grid grid-4">
+        {LOCATIONS.map((l) => (
+          <div class="card">
+            <h3><a href={url(`/locations/${l.slug}`)}>{l.name}, MN</a></h3>
+            <p>{l.county}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</Base>
+
+<style>
+  .hero {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-dark) 70%);
+    color: #fff;
+    padding: 4.5rem 0 3.5rem;
+  }
+  .hero h1 { color: #fff; max-width: 760px; }
+  .sub { color: #c4d3df; font-size: 1.15rem; max-width: 640px; }
+  .buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.75rem 0 2.5rem; }
+  .stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+  .stats div { display: flex; flex-direction: column; }
+  .stats strong { font-size: 1.6rem; color: var(--teal); }
+  .stats span { color: #c4d3df; font-size: 0.9rem; }
+</style>

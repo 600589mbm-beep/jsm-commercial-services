@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { BUSINESS, url } from '../config';
+---
+
+<Base
+  title={`Free Quote | ${BUSINESS.name}`}
+  description={`Request a free commercial cleaning quote from ${BUSINESS.name}. We respond within one business day with a walkthrough or estimate.`}
+>
+  <section class="section">
+    <div class="container split">
+      <div>
+        <nav class="crumbs"><a href={url('/')}>Home</a> / Free Quote</nav>
+        <h1>Request a Free Quote</h1>
+        <p>
+          Tell us a little about your facility and what you need cleaned. We'll respond within one
+          business day — usually with a quick walkthrough scheduled, or a ballpark estimate if you
+          just want numbers first.
+        </p>
+        <ul class="checklist">
+          <li>No obligation, no pressure</li>
+          <li>Walkthrough and written quote at no cost</li>
+          <li>Month-to-month agreements — no long-term lock-in</li>
+        </ul>
+        <p>Prefer the phone? Call <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>.</p>
+      </div>
+      <aside class="card">
+        <QuoteForm />
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .split { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { BUSINESS, url } from '../../config';
+import { SERVICES } from '../../data/services';
+
+export function getStaticPaths() {
+  return SERVICES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+---
+
+<Base
+  title={`${service.name} | ${BUSINESS.name}`}
+  description={`${service.short} ${BUSINESS.name} serves the ${BUSINESS.serviceArea}. Free quotes within 24 hours.`}
+>
+  <section class="section">
+    <div class="container split">
+      <div>
+        <nav class="crumbs">
+          <a href={url('/')}>Home</a> / <a href={url('/services')}>Services</a> / {service.name}
+        </nav>
+        <h1>{service.name}</h1>
+        <p>{service.description}</p>
+        <h2>What's Included</h2>
+        <ul class="checklist">
+          {service.bullets.map((b) => <li>{b}</li>)}
+        </ul>
+        {service.faq.length > 0 && (
+          <>
+            <h2>Frequently Asked Questions</h2>
+            {service.faq.map((f) => (
+              <div class="faq-item">
+                <h3>{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+      <aside class="card">
+        <h2>Get a Free Quote</h2>
+        <p>Tell us about your facility and we'll respond within one business day.</p>
+        <QuoteForm />
+      </aside>
+    </div>
+  </section>
+  <CTA heading={`Need ${service.name.toLowerCase()}?`} />
+</Base>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .split { grid-template-columns: 1fr; }
+  }
+</style>

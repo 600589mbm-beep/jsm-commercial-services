@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { BUSINESS, url } from '../config';
+---
+
+<Base
+  title={`Contact Us | ${BUSINESS.name}`}
+  description={`Contact ${BUSINESS.name} for commercial cleaning in the ${BUSINESS.serviceArea}. Call ${BUSINESS.phone} or send us a message.`}
+>
+  <section class="section">
+    <div class="container split">
+      <div>
+        <nav class="crumbs"><a href={url('/')}>Home</a> / Contact</nav>
+        <h1>Contact Us</h1>
+        <p>Questions, quotes, or service requests — reach us any way that's convenient.</p>
+        <h2>Phone</h2>
+        <p><a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a></p>
+        <h2>Email</h2>
+        <p><a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></p>
+        <h2>Hours</h2>
+        <p>{BUSINESS.hours}</p>
+        <h2>Service Area</h2>
+        <p>{BUSINESS.serviceArea} — <a href={url('/locations')}>see all cities</a></p>
+      </div>
+      <aside class="card">
+        <h2>Send a Message</h2>
+        <QuoteForm />
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .split h2 { font-size: 1.05rem; margin-top: 1.5rem; }
+  @media (max-width: 860px) {
+    .split { grid-template-columns: 1fr; }
+  }
+</style>
