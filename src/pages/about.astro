@@ -2,11 +2,16 @@
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
 import { BUSINESS, url } from '../config';
+import { LOCATIONS } from '../data/locations';
+import { SERVICES } from '../data/services';
+
+// TODO (Jim): replace the bio placeholder below with your real bio + photo.
+// Real-photo shot list for this page and GBP lives in ops/photo-shot-list.md.
 ---
 
 <Base
-  title={`About Us | ${BUSINESS.name}`}
-  description={`${BUSINESS.name} has provided commercial cleaning and janitorial services across the ${BUSINESS.serviceArea} since ${BUSINESS.foundingYear}.`}
+  title={`About ${BUSINESS.name} — Apple Valley, MN | Commercial Cleaning`}
+  description={`${BUSINESS.name} is a commercial cleaning company based in Apple Valley, MN serving ${LOCATIONS.length} Twin Cities metro cities. Insured, background-checked, month-to-month.`}
 >
   <section class="section">
     <div class="container">
@@ -16,24 +21,58 @@ import { BUSINESS, url } from '../config';
       </div>
       <div class="prose">
         <p>
-          {BUSINESS.name} was founded in {BUSINESS.foundingYear} on a simple observation: most
-          commercial cleaning companies are easy to hire and hard to keep happy with. Crews rotate,
-          quality drifts, and problems take a week of phone calls to fix.
+          <strong>{BUSINESS.name} is a commercial cleaning and janitorial company based in
+          Apple Valley, Minnesota</strong>, serving {LOCATIONS.length} cities across the
+          {BUSINESS.serviceArea} with {SERVICES.length} services — from nightly office janitorial
+          to floor care, medical-protocol cleaning, and snow removal.
         </p>
+        <h2>Why we exist</h2>
         <p>
-          We built our company around fixing that. Every account gets a documented scope of work,
-          a consistent assigned crew, scheduled supervisor inspections, and one phone number that
-          gets a same-day answer — all on month-to-month agreements, so we have to earn your
-          business every single month.
+          Most commercial cleaning companies are easy to hire and hard to keep happy with. Crews
+          rotate, quality drifts, and problems take a week of phone calls to fix. We built JSM
+          around fixing that: every account gets a documented scope of work, a consistent assigned
+          crew, scheduled supervisor inspections, and one phone number that gets a same-day
+          answer — all on month-to-month agreements, so we have to earn your business every
+          single month.
         </p>
-        <h2>Our Promise</h2>
+
+        <h2>Insurance & accountability</h2>
         <ul class="checklist">
-          <li>Trained, uniformed, background-checked cleaners on every account</li>
-          <li>Full general liability and workers' compensation coverage</li>
-          <li>Documented checklists and supervisor quality inspections</li>
-          <li>Same-day response to any service issue</li>
-          <li>No long-term contracts — we earn your business monthly</li>
+          <li>General liability and workers' compensation coverage; certificate of insurance available on request</li>
+          <li>We'll name your company as additionally insured on request</li>
+          <li>Every crew member background-checked, trained, and uniformed</li>
+          <li>Documented checklists and supervisor quality inspections on every account</li>
+          <li>Free re-clean guarantee: if a visit misses the written scope, we fix it at no charge</li>
         </ul>
+
+        <h2>Who you're working with</h2>
+        <div class="card bio">
+          <p>
+            <!-- TODO (Jim): real bio + headshot photo here -->
+            <strong>Jim — Owner, {BUSINESS.name}.</strong> Owner bio and photo coming soon. In the
+            meantime: every quote, scope, and service issue in this company ultimately lands on
+            the owner's desk, and the phone number on this site rings a person, not a queue.
+          </p>
+        </div>
+
+        <h2>Where we work</h2>
+        <p>
+          Headquartered at {BUSINESS.address.street}, {BUSINESS.address.city},
+          {BUSINESS.address.state} {BUSINESS.address.zip}, serving the metro from
+          {LOCATIONS[0].name} to Stillwater — <a href={url('/locations')}>see all {LOCATIONS.length} cities</a>.
+        </p>
+        <iframe
+          class="map"
+          src={`https://www.google.com/maps?q=${encodeURIComponent(
+            `${BUSINESS.address.city}, ${BUSINESS.address.state}`
+          )}&z=10&output=embed`}
+          width="100%"
+          height="320"
+          style="border:0; border-radius: 12px;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title={`Service area map centered on ${BUSINESS.address.city}, MN`}
+        ></iframe>
       </div>
     </div>
   </section>
@@ -42,4 +81,8 @@ import { BUSINESS, url } from '../config';
 
 <style>
   .prose { max-width: 760px; }
+  .prose h2 { margin-top: 2rem; }
+  .bio { margin: 0.5rem 0 1rem; }
+  .bio p { margin: 0; }
+  .map { margin-top: 1rem; }
 </style>

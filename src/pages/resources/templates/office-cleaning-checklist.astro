@@ -1,0 +1,82 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CTA from '../../../components/CTA.astro';
+import TemplatePage from '../../../components/TemplatePage.astro';
+import { BUSINESS, url } from '../../../config';
+
+const TIERS: [string, string[]][] = [
+  ['Daily', [
+    'Empty trash and recycling; replace liners',
+    'Clean and disinfect restrooms: toilets, sinks, counters, mirrors, dispensers',
+    'Restock paper products, soap, and sanitizer',
+    'Disinfect high-touch points: door handles, switches, elevator buttons, shared phones',
+    'Clean kitchen/breakroom counters, tables, and sink',
+    'Vacuum high-traffic carpet lanes; dust-mop and damp-mop hard floors',
+    'Spot-clean entrance glass and lobby surfaces',
+  ]],
+  ['Weekly', [
+    'Full vacuum of all carpeted areas, including edges and under desks',
+    'Dust desks, sills, ledges, and horizontal surfaces',
+    'Clean interior glass and partition windows',
+    'Disinfect trash bins and replace all liners',
+    'Clean microwave and refrigerator exteriors; wipe cabinet fronts',
+  ]],
+  ['Monthly', [
+    'High dusting: vents, ceiling corners, light fixtures, cabinet tops',
+    'Dust blinds and window treatments',
+    'Machine-buff or burnish hard floors',
+    'Vacuum upholstered furniture; clean under movable furniture',
+    'Deep-clean breakroom appliances inside and out (with notice)',
+  ]],
+  ['Quarterly / Semi-annual', [
+    'Carpet extraction or encapsulation cleaning',
+    'Strip and re-wax VCT floors (or scrub-and-recoat)',
+    'Exterior window cleaning',
+    'Wall washing and baseboard detailing',
+  ]],
+];
+---
+
+<Base
+  title={`Printable Office Cleaning Checklist (Daily–Quarterly) | ${BUSINESS.name}`}
+  description={`Free printable office cleaning checklist: daily, weekly, monthly, and quarterly tasks professional janitorial crews work from. PDF download, no gate.`}
+>
+  <section class="section">
+    <div class="container article">
+      <nav class="crumbs noprint">
+        <a href={url('/')}>Home</a> / <a href={url('/resources')}>Resources</a> /
+        <a href={url('/resources/templates')}>Templates</a> / Cleaning Checklist
+      </nav>
+      <h1>Office Cleaning Checklist</h1>
+      <p class="noprint">
+        Print it, clip it to a clipboard, and audit any cleaning vendor against it — including us.
+        The full reasoning behind each tier is in the
+        <a href={url('/resources/office-cleaning-checklist')}>companion guide</a>.
+      </p>
+      <TemplatePage pdf="office-cleaning-checklist.pdf">
+        <table>
+          <tr><th>Facility</th><td class="fill">[Name / area]</td><th>Week of</th><td class="fill">[Date]</td></tr>
+        </table>
+        {TIERS.map(([tier, items]) => (
+          <>
+            <h2>{tier}</h2>
+            <ul class="boxes">
+              {items.map((i) => <li>{i}</li>)}
+            </ul>
+          </>
+        ))}
+        <h2>Sign-off</h2>
+        <table>
+          <tr><th>Completed by</th><td class="fill"></td><th>Date</th><td class="fill"></td></tr>
+          <tr><th>Inspected by</th><td class="fill"></td><th>Date</th><td class="fill"></td></tr>
+          <tr><th>Issues noted</th><td class="fill" colspan="3"></td></tr>
+        </table>
+      </TemplatePage>
+    </div>
+  </section>
+  <CTA heading="Rather have someone else own this checklist?" />
+</Base>
+
+<style>
+  .article { max-width: 820px; }
+</style>

@@ -1,0 +1,110 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CTA from '../../../components/CTA.astro';
+import TemplatePage from '../../../components/TemplatePage.astro';
+import { BUSINESS, url } from '../../../config';
+---
+
+<Base
+  title={`Free Janitorial RFP Template (Word-Ready) | ${BUSINESS.name}`}
+  description={`A complete janitorial RFP template: facility profile, scope-of-work checklist, frequency matrix, insurance requirements, and comparable pricing format.`}
+>
+  <section class="section">
+    <div class="container article">
+      <nav class="crumbs noprint">
+        <a href={url('/')}>Home</a> / <a href={url('/resources')}>Resources</a> /
+        <a href={url('/resources/templates')}>Templates</a> / Janitorial RFP
+      </nav>
+      <h1>Janitorial Services RFP Template</h1>
+      <p class="noprint">
+        Copy this into a document, fill in the bracketed fields, and send it to 3–4 vendors. The
+        frequency matrix and pricing format force every bid into the same shape, so you can
+        compare scope to scope instead of number to number.
+      </p>
+      <TemplatePage pdf="janitorial-rfp-template.pdf">
+        <h2>1. Company &amp; Contact</h2>
+        <table>
+          <tr><th>Organization</th><td class="fill">[Company name]</td></tr>
+          <tr><th>Contact / title</th><td class="fill">[Name, role]</td></tr>
+          <tr><th>Email / phone</th><td class="fill">[Contact details]</td></tr>
+          <tr><th>Proposal deadline</th><td class="fill">[Date]</td></tr>
+          <tr><th>Desired start date</th><td class="fill">[Date]</td></tr>
+        </table>
+
+        <h2>2. Facility Profile</h2>
+        <table>
+          <tr><th>Address</th><td class="fill">[Street, city, ZIP]</td></tr>
+          <tr><th>Total cleanable sq ft</th><td class="fill">[Approx. sq ft]</td></tr>
+          <tr><th>Facility type</th><td class="fill">[Office / medical / industrial / mixed]</td></tr>
+          <tr><th>Restrooms (count)</th><td class="fill">[#]</td></tr>
+          <tr><th>Kitchens / breakrooms</th><td class="fill">[#]</td></tr>
+          <tr><th>Floor types</th><td class="fill">[Carpet %, VCT %, concrete %, other]</td></tr>
+          <tr><th>Building hours / access</th><td class="fill">[Hours; alarm/keys/badging]</td></tr>
+          <tr><th>Occupancy</th><td class="fill">[Approx. headcount / daily visitors]</td></tr>
+        </table>
+
+        <h2>3. Scope of Work Requested</h2>
+        <ul class="boxes">
+          <li>Trash &amp; recycling removal, liner replacement</li>
+          <li>Restroom cleaning, disinfection, and restocking</li>
+          <li>High-touch surface disinfection (doors, switches, shared equipment)</li>
+          <li>Vacuuming and hard-floor dust/damp mop</li>
+          <li>Kitchen/breakroom cleaning</li>
+          <li>Interior glass and entrance cleaning</li>
+          <li>Dusting (work surfaces, sills, ledges)</li>
+          <li>Day porter coverage: <span class="fill">[hours/day, if any]</span></li>
+          <li>Periodic floor care (strip/wax or burnish): <span class="fill">[frequency]</span></li>
+          <li>Periodic carpet extraction: <span class="fill">[frequency]</span></li>
+          <li>Window cleaning: <span class="fill">[frequency]</span></li>
+          <li>Consumables supplied by vendor (paper, soap, liners)</li>
+          <li>Other: <span class="fill">[describe]</span></li>
+        </ul>
+
+        <h2>4. Service Frequency Matrix</h2>
+        <table>
+          <tr><th>Area</th><th>Requested frequency</th><th>Notes</th></tr>
+          <tr><td>Offices / open work areas</td><td class="fill">[e.g., 3×/week]</td><td class="fill"></td></tr>
+          <tr><td>Restrooms</td><td class="fill">[e.g., every visit]</td><td class="fill"></td></tr>
+          <tr><td>Kitchen / breakroom</td><td class="fill">[e.g., every visit]</td><td class="fill"></td></tr>
+          <tr><td>Conference rooms</td><td class="fill">[frequency]</td><td class="fill"></td></tr>
+          <tr><td>Lobby / entrances</td><td class="fill">[frequency]</td><td class="fill"></td></tr>
+          <tr><td>Other</td><td class="fill">[frequency]</td><td class="fill"></td></tr>
+        </table>
+
+        <h2>5. Vendor Requirements</h2>
+        <ul class="boxes">
+          <li>Certificate of insurance: general liability + workers' compensation (attach)</li>
+          <li>Willing to name our organization as additionally insured</li>
+          <li>All staff background-checked; employees (not subcontractors) — state if otherwise</li>
+          <li>Named account manager and escalation contact</li>
+          <li>Documented inspection/QA process (describe in proposal)</li>
+          <li>Two references from comparable facilities</li>
+          <li>Contract terms: state required commitment length and cancellation terms</li>
+        </ul>
+
+        <h2>6. Pricing Format (required)</h2>
+        <table>
+          <tr><th>Line item</th><th>Monthly price</th></tr>
+          <tr><td>Base janitorial service (scope &amp; frequency above)</td><td class="fill">$</td></tr>
+          <tr><td>Consumables (if separate)</td><td class="fill">$</td></tr>
+          <tr><td>Day porter (if requested)</td><td class="fill">$</td></tr>
+          <tr><td>Periodic floor care (annualized ÷ 12)</td><td class="fill">$</td></tr>
+          <tr><td>Periodic carpet care (annualized ÷ 12)</td><td class="fill">$</td></tr>
+          <tr><td><strong>Total monthly</strong></td><td class="fill"><strong>$</strong></td></tr>
+        </table>
+
+        <h2>7. Evaluation Criteria</h2>
+        <p>
+          Proposals will be evaluated on: completeness of scope response, inspection/QA process,
+          staffing model and background-check policy, references, contract flexibility, and price
+          — in that order.
+        </p>
+      </TemplatePage>
+    </div>
+  </section>
+  <CTA heading="Want a bid for this RFP?" />
+</Base>
+
+<style>
+  .article { max-width: 820px; }
+</style>

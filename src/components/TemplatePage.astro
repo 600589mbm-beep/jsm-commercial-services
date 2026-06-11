@@ -1,0 +1,34 @@
+---
+// Shared frame for printable template pages: download button + print styles.
+import { url } from '../config';
+
+interface Props {
+  pdf: string; // filename in /templates/
+}
+
+const { pdf } = Astro.props;
+---
+
+<div class="tpl-actions noprint">
+  <a class="btn btn-primary" href={url(`/templates/${pdf}`).replace(/\/$/, '')} download>Download PDF</a>
+  <button class="btn btn-navy" onclick="window.print()">Print</button>
+</div>
+<div class="tpl-body">
+  <slot />
+</div>
+
+<style is:global>
+  .tpl-actions { display: flex; gap: 0.75rem; margin: 1rem 0 2rem; }
+  .tpl-body table { width: 100%; border-collapse: collapse; margin: 0 0 1.5rem; }
+  .tpl-body th, .tpl-body td { border: 1px solid var(--border); padding: 0.5rem 0.7rem; text-align: left; vertical-align: top; }
+  .tpl-body th { background: var(--bg-alt); color: var(--navy); }
+  .tpl-body .fill { color: var(--text-soft); }
+  .tpl-body .boxes li { list-style: none; padding-left: 1.8rem; position: relative; margin-bottom: 0.45rem; }
+  .tpl-body .boxes li::before { content: '☐'; position: absolute; left: 0; font-size: 1.05rem; color: var(--navy); }
+  .tpl-body .boxes { padding-left: 0; }
+  @media print {
+    header.site-header, footer.site-footer, .sticky-call, .to-top, .scroll-progress, .noprint, .cta { display: none !important; }
+    .tpl-body { font-size: 12px; }
+    body { padding-bottom: 0 !important; }
+  }
+</style>

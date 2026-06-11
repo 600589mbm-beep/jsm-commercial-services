@@ -3,7 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import CTA from '../../../components/CTA.astro';
 import QuoteForm from '../../../components/QuoteForm.astro';
 import { BUSINESS, url } from '../../../config';
-import { LOCATIONS } from '../../../data/locations';
+import { LOCATIONS, CITY_LOCAL } from '../../../data/locations';
 import { SERVICES, SERVICE_ICONS } from '../../../data/services';
 
 export function getStaticPaths() {
@@ -33,6 +33,7 @@ const intros = [
   `Businesses in ${location.name}, MN get ${service.name.toLowerCase()} from ${BUSINESS.name} on month-to-month agreements — no long-term contracts — with a free walkthrough and written pricing within 24 hours. We serve all of ${location.county}. ${location.blurb}`,
 ];
 
+const local = CITY_LOCAL[location.slug];
 const nearby = LOCATIONS.filter((l) => l.county === location.county && l.slug !== location.slug).slice(0, 6);
 const otherServices = SERVICES.filter((s) => s.slug !== service.slug);
 
@@ -71,13 +72,25 @@ const breadcrumbSchema = {
         <h1>{service.name} in {location.name}, MN</h1>
         <p>{intros[v]}</p>
         <p>{service.description}</p>
+        {local && (
+          <>
+            <h2>Working in {location.name}</h2>
+            <p>{local.context}</p>
+          </>
+        )}
         <h2>What's Included</h2>
         <ul class="checklist">
           {service.bullets.map((b) => <li>{b}</li>)}
         </ul>
-        {service.faq.length > 0 && (
+        {(service.faq.length > 0 || local) && (
           <>
             <h2>Common Questions</h2>
+            {(local?.faqs ?? []).map((f) => (
+              <details class="faq-acc">
+                <summary>{f.q}<span class="plus">+</span></summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
             {service.faq.map((f) => (
               <details class="faq-acc">
                 <summary>{f.q}<span class="plus">+</span></summary>

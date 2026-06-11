@@ -1,0 +1,52 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CTA from '../../../components/CTA.astro';
+import { BUSINESS, url } from '../../../config';
+
+const TEMPLATES = [
+  {
+    slug: 'janitorial-rfp-template',
+    name: 'Janitorial RFP Template',
+    desc: 'A fill-in request-for-proposal: facility profile, scope checklist, frequency matrix, insurance requirements, and a pricing format that makes bids comparable.',
+  },
+  {
+    slug: 'office-cleaning-checklist',
+    name: 'Office Cleaning Checklist (Printable)',
+    desc: 'The daily / weekly / monthly / quarterly checklist professional crews work from — print it and audit your current vendor against it.',
+  },
+  {
+    slug: 'vendor-comparison-sheet',
+    name: 'Cleaning Vendor Comparison Sheet',
+    desc: 'Score up to three bidders side-by-side on the 12 criteria that actually predict service quality.',
+  },
+];
+---
+
+<Base
+  title={`Free Janitorial Templates: RFP, Checklist, Vendor Comparison | ${BUSINESS.name}`}
+  description={`Free downloadable templates for facility managers: janitorial RFP, office cleaning checklist, and vendor comparison sheet. No email gate.`}
+>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs">
+        <a href={url('/')}>Home</a> / <a href={url('/resources')}>Resources</a> / Templates
+      </nav>
+      <div class="section-head">
+        <h1>Free Templates for Facility Managers</h1>
+        <p>
+          Use them with us or with anyone else — no email gate, no watermark. Each template is a
+          web page you can print plus a downloadable PDF.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {TEMPLATES.map((t) => (
+          <div class="card">
+            <h3><a href={url(`/resources/templates/${t.slug}`)}>{t.name}</a></h3>
+            <p>{t.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CTA />
+</Base>

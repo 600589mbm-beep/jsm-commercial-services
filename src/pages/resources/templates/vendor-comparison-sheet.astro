@@ -1,0 +1,67 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CTA from '../../../components/CTA.astro';
+import TemplatePage from '../../../components/TemplatePage.astro';
+import { BUSINESS, url } from '../../../config';
+
+const CRITERIA = [
+  'Quote built from an on-site walkthrough (not sight-unseen)',
+  'Written scope of work provided, line by line',
+  'General liability + workers’ comp insurance verified in writing',
+  'Will name us as additionally insured',
+  'Employees (not subcontractors); background checks confirmed',
+  'Same assigned crew each visit',
+  'Documented inspection / QA process',
+  'Named account manager with direct contact',
+  'Re-clean or make-good guarantee in writing',
+  'References from comparable facilities (2+)',
+  'Contract terms: month-to-month or short commitment',
+  'Price vs. scope (score last, after everything above)',
+];
+---
+
+<Base
+  title={`Cleaning Vendor Comparison Sheet (Score 3 Bids) | ${BUSINESS.name}`}
+  description={`Free vendor comparison scorecard: rate up to three commercial cleaning bids on the 12 criteria that predict service quality. Printable + PDF.`}
+>
+  <section class="section">
+    <div class="container article">
+      <nav class="crumbs noprint">
+        <a href={url('/')}>Home</a> / <a href={url('/resources')}>Resources</a> /
+        <a href={url('/resources/templates')}>Templates</a> / Vendor Comparison
+      </nav>
+      <h1>Cleaning Vendor Comparison Sheet</h1>
+      <p class="noprint">
+        Score each bidder 0–2 on every row (0 = no/unclear, 1 = partial, 2 = yes, verified).
+        Anything scored 0 on rows 1–4 is a walk-away, not a discount. Pairs with our
+        <a href={url('/resources/how-to-choose-commercial-cleaning-company')}>10-questions vetting guide</a>.
+      </p>
+      <TemplatePage pdf="vendor-comparison-sheet.pdf">
+        <table>
+          <tr>
+            <th style="width:46%">Criterion (score 0–2)</th>
+            <th>Vendor A<br /><span class="fill">[name]</span></th>
+            <th>Vendor B<br /><span class="fill">[name]</span></th>
+            <th>Vendor C<br /><span class="fill">[name]</span></th>
+          </tr>
+          {CRITERIA.map((c, i) => (
+            <tr><td>{i + 1}. {c}</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+          ))}
+          <tr>
+            <td><strong>Total (max 24)</strong></td>
+            <td class="fill"></td><td class="fill"></td><td class="fill"></td>
+          </tr>
+          <tr>
+            <td><strong>Monthly price quoted</strong></td>
+            <td class="fill">$</td><td class="fill">$</td><td class="fill">$</td>
+          </tr>
+        </table>
+      </TemplatePage>
+    </div>
+  </section>
+  <CTA heading="Add us to the comparison — free quote in 24 hours" />
+</Base>
+
+<style>
+  .article { max-width: 880px; }
+</style>

@@ -1,0 +1,141 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import { BUSINESS, url } from '../../config';
+import { PILLAR_SLUG } from '../../data/costGuides';
+---
+
+<Base
+  title={`Free Commercial Cleaning Cost Calculator (Twin Cities) | ${BUSINESS.name}`}
+  description={`Estimate your monthly commercial cleaning cost in 30 seconds: facility type, square footage, frequency. Market-range math, no email required.`}
+>
+  <section class="section">
+    <div class="container calc-wrap">
+      <nav class="crumbs">
+        <a href={url('/')}>Home</a> / <a href={url('/resources')}>Resources</a> / Cost Calculator
+      </nav>
+      <h1>Commercial Cleaning Cost Calculator</h1>
+      <p>
+        A 30-second estimate of what routine commercial cleaning typically costs in the
+        Minneapolis–St. Paul market. The math uses the published market ranges from our
+        <a href={url(`/resources/${PILLAR_SLUG}`)}>2026 cost guide</a> — no email required,
+        nothing gated.
+      </p>
+
+      <div class="card calc" id="calc">
+        <label for="c-type">Facility type</label>
+        <select id="c-type">
+          <option value="office">Office</option>
+          <option value="medical">Medical / dental</option>
+          <option value="retail">Retail / other</option>
+          <option value="school">School / daycare</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="warehouse">Warehouse / industrial</option>
+        </select>
+
+        <label for="c-sqft">Square footage</label>
+        <input id="c-sqft" type="number" min="500" max="500000" step="500" value="10000" />
+
+        <label for="c-freq">Cleaning frequency</label>
+        <select id="c-freq">
+          <option value="1">1× per week</option>
+          <option value="2">2× per week</option>
+          <option value="3" selected>3× per week</option>
+          <option value="5">5× per week (nightly)</option>
+          <option value="7">7× per week</option>
+        </select>
+
+        <label>Specialty services to flag (quoted separately)</label>
+        <div class="adds">
+          <label><input type="checkbox" id="c-floor" /> Floor strip &amp; wax</label>
+          <label><input type="checkbox" id="c-carpet" /> Carpet extraction</label>
+          <label><input type="checkbox" id="c-window" /> Window cleaning</label>
+        </div>
+
+        <div class="result" id="c-result" aria-live="polite"></div>
+
+        <p class="fine">
+          Estimate only, based on typical Twin Cities market ranges ($0.08–$0.25/sq ft per visit
+          for routine cleaning; medical and restaurant typically 20–50% above office rates;
+          machine-scrubbed warehouse floor $0.03–$0.10/sq ft). Your real number depends on
+          restroom density, floor mix, and scope — which is what a free walkthrough establishes.
+        </p>
+        <a class="btn btn-primary" href={url('/quote')}>Get My Real Number — Free Quote</a>
+      </div>
+    </div>
+  </section>
+  <CTA heading="Want a real quote instead of an estimate?" />
+</Base>
+
+<style>
+  .calc-wrap { max-width: 720px; }
+  .calc { margin-top: 1.5rem; }
+  .adds { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin: 0.4rem 0 0.6rem; }
+  .adds label { display: flex; align-items: center; gap: 0.45rem; font-weight: 500; margin: 0; }
+  .adds input { width: auto; }
+  .result {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    border-radius: 10px;
+    background: var(--bg-alt);
+    border: 1.5px solid var(--border);
+  }
+  .result strong.range { font-size: 1.7rem; color: var(--navy); display: block; }
+  .result .per { color: var(--text-soft); font-size: 0.9rem; }
+  .result ul { margin: 0.6rem 0 0; padding-left: 1.2rem; color: var(--text-soft); font-size: 0.92rem; }
+  .fine { font-size: 0.8rem; color: var(--text-soft); margin-top: 1rem; }
+  .calc .btn { margin-top: 0.5rem; }
+</style>
+
+<script>
+  // Rates are $/sq ft per visit, sourced from the cost pillar guide's
+  // published market ranges. Frequency shifts within the band (per-visit
+  // rates fall as frequency rises).
+  const RATES: Record<string, [number, number]> = {
+    office: [0.08, 0.25],
+    medical: [0.12, 0.3],
+    retail: [0.08, 0.25],
+    school: [0.1, 0.25],
+    restaurant: [0.12, 0.3],
+    warehouse: [0.03, 0.1],
+  };
+  const FREQ_ADJ: Record<string, number> = { '1': 1.0, '2': 0.93, '3': 0.85, '5': 0.75, '7': 0.72 };
+
+  const ADDONS: [string, string, string][] = [
+    ['c-floor', 'Floor strip & wax', 'typically $0.35–$0.80/sq ft per cycle, 1–2×/year'],
+    ['c-carpet', 'Carpet extraction', 'typically $0.20–$0.35/sq ft, quarterly–semiannual'],
+    ['c-window', 'Window cleaning', 'quoted per pane/elevation, monthly or quarterly'],
+  ];
+
+  function money(n: number) {
+    return '$' + Math.round(n / 10) * 10;
+  }
+
+  function update() {
+    const type = (document.getElementById('c-type') as HTMLSelectElement).value;
+    const sqft = Math.max(500, Number((document.getElementById('c-sqft') as HTMLInputElement).value) || 0);
+    const freq = (document.getElementById('c-freq') as HTMLSelectElement).value;
+    const [lo, hi] = RATES[type];
+    const adj = FREQ_ADJ[freq];
+    const visitsPerMonth = Number(freq) * 4.33;
+    const loMo = sqft * lo * adj * visitsPerMonth;
+    const hiMo = sqft * hi * adj * visitsPerMonth;
+    const addons = ADDONS.filter(([id]) => (document.getElementById(id) as HTMLInputElement).checked);
+    const el = document.getElementById('c-result')!;
+    el.innerHTML = `
+      <span class="per">Estimated monthly range for routine cleaning</span>
+      <strong class="range">${money(loMo)} – ${money(hiMo)} / month</strong>
+      <span class="per">${sqft.toLocaleString()} sq ft · ${freq}×/week · ${Math.round(visitsPerMonth)} visits/month</span>
+      ${addons.length ? `<ul>${addons.map(([, name, note]) => `<li><strong>${name}</strong>: ${note} (separate from monthly)</li>`).join('')}</ul>` : ''}
+    `;
+  }
+
+  function initCalc() {
+    const calc = document.getElementById('calc');
+    if (!calc || calc.dataset.init) return;
+    calc.dataset.init = '1';
+    calc.addEventListener('input', update);
+    update();
+  }
+  document.addEventListener('astro:page-load', initCalc);
+</script>

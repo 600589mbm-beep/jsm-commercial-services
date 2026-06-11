@@ -3,11 +3,15 @@ import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
 import { BUSINESS, url } from '../../config';
 import { ARTICLES } from '../../data/articles';
+import { COST_GUIDES, PILLAR_SLUG } from '../../data/costGuides';
+
+const pillar = COST_GUIDES.find((g) => g.slug === PILLAR_SLUG)!;
+const clusters = COST_GUIDES.filter((g) => g.slug !== PILLAR_SLUG);
 ---
 
 <Base
-  title={`Commercial Cleaning Resources & Guides | ${BUSINESS.name}`}
-  description={`Free guides from ${BUSINESS.name}: commercial cleaning costs in Minnesota, office cleaning checklists, how to vet a janitorial company, and more.`}
+  title={`Commercial Cleaning Resources, Cost Guides & Templates | ${BUSINESS.name}`}
+  description={`Free guides from ${BUSINESS.name}: cleaning cost guides by facility type, a cost calculator, downloadable RFP and checklist templates, and vetting guides.`}
 >
   <section class="section">
     <div class="container">
@@ -16,10 +20,38 @@ import { ARTICLES } from '../../data/articles';
         <h1>Resources & Guides</h1>
         <p>
           Straight answers for facility and office managers — what cleaning should cost, what it
-          should include, and how to hold any vendor (including us) accountable.
+          should include, and how to hold any vendor (including us) accountable. Nothing gated.
         </p>
       </div>
-      <div class="grid grid-3">
+
+      <h2>Tools & Templates</h2>
+      <div class="grid grid-3 block">
+        <div class="card">
+          <h3><a href={url('/resources/cleaning-cost-calculator')}>Cleaning Cost Calculator</a></h3>
+          <p>Estimate your monthly cleaning cost in 30 seconds from published market ranges. No email required.</p>
+        </div>
+        <div class="card">
+          <h3><a href={url('/resources/templates')}>Free Templates</a></h3>
+          <p>Janitorial RFP, printable cleaning checklist, and a vendor comparison scorecard — web + PDF.</p>
+        </div>
+      </div>
+
+      <h2>Cost Guides</h2>
+      <div class="grid grid-3 block">
+        <div class="card">
+          <h3><a href={url(`/resources/${pillar.slug}`)}>{pillar.title}</a></h3>
+          <p>{pillar.description}</p>
+        </div>
+        {clusters.map((g) => (
+          <div class="card">
+            <h3><a href={url(`/resources/${g.slug}`)}>{g.title}</a></h3>
+            <p>{g.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2>Buying & Vetting Guides</h2>
+      <div class="grid grid-3 block">
         {ARTICLES.map((a) => (
           <div class="card">
             <h3><a href={url(`/resources/${a.slug}`)}>{a.title}</a></h3>
@@ -31,3 +63,8 @@ import { ARTICLES } from '../../data/articles';
   </section>
   <CTA />
 </Base>
+
+<style>
+  .block { margin-bottom: 2.5rem; }
+  h2 { margin-top: 0.5rem; }
+</style>
