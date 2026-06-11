@@ -76,9 +76,13 @@ const faqSchema =
         </details>
       </div>
       <aside class="card">
-        <h2>Get a Free Quote</h2>
-        <p>Tell us about your facility. {BUSINESS.responsePromise}</p>
-        <QuoteForm />
+        <h2>{service.slug === 'snow-removal' ? 'Get a Free Snow Quote' : 'Get a Free Quote'}</h2>
+        <p>
+          {service.slug === 'snow-removal'
+            ? `Tell us about your property. ${BUSINESS.responsePromise}`
+            : `Tell us about your facility. ${BUSINESS.responsePromise}`}
+        </p>
+        <QuoteForm variant={service.slug === 'snow-removal' ? 'snow' : 'cleaning'} />
       </aside>
     </div>
   </section>

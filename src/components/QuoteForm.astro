@@ -1,11 +1,44 @@
 ---
 // 3-step quote wizard (per CRO research: 2-click first step, progress bar,
 // contact info last). Posts everything to Formspree on the final step.
+// variant="snow" swaps in snow-removal questions; default is cleaning.
 import { BUSINESS } from '../config';
+
+interface Props {
+  variant?: 'cleaning' | 'snow';
+}
+
+const { variant = 'cleaning' } = Astro.props;
+const snow = variant === 'snow';
+
+const subject = snow
+  ? '🔔 NEW SNOW QUOTE REQUEST — jsmcommercialservice.com'
+  : '🔔 NEW QUOTE REQUEST — jsmcommercialservice.com';
+
+const facilityLegend = snow ? 'What kind of property?' : 'What kind of facility?';
+const facilities = snow
+  ? ['Office', 'Retail', 'Medical', 'Industrial / Warehouse', 'HOA / Multifamily', 'Other']
+  : ['Office', 'Medical', 'Retail', 'Industrial / Warehouse', 'Other'];
+
+const frequencyLegend = snow ? 'What kind of agreement?' : 'How often?';
+const frequencies = snow
+  ? ['Seasonal contract', 'Per-event service', 'Not sure yet']
+  : ['Recurring service', 'One-time clean'];
+
+const sizeLegend = snow ? 'Parking lot size' : 'Facility size';
+const sizes = snow
+  ? ['Under 20 spaces', '20–50 spaces', '50–150 spaces', '150+ spaces', 'Not sure']
+  : ['Under 5,000 sq ft', '5,000–20,000 sq ft', '20,000–50,000 sq ft', '50,000+ sq ft', 'Not sure'];
+
+const servicesLegend = snow ? 'What needs covering?' : 'Services needed';
+const serviceOptions = snow
+  ? ['Parking lot plowing', 'Sidewalks & entrances', 'Salting / de-icing', 'Anti-icing pre-treatment', 'Snow hauling / stacking']
+  : ['General cleaning', 'Floor care', 'Carpet cleaning', 'Windows', 'Disinfection', 'Day porter', 'Post-construction', 'Snow removal'];
 ---
 
 <form action={BUSINESS.formspreeEndpoint} method="POST" class="quote-wizard" novalidate>
-  <input type="hidden" name="_subject" value="🔔 NEW QUOTE REQUEST — jsmcommercialservice.com" />
+  <input type="hidden" name="_subject" value={subject} />
+  <input type="hidden" name="form_type" value={snow ? 'snow-removal' : 'cleaning'} />
   <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
   <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
     <div class="progress-fill" style="width: 33%"></div>
@@ -13,41 +46,41 @@ import { BUSINESS } from '../config';
   <p class="step-label">Step <span class="step-num">1</span> of 3</p>
 
   <fieldset class="step" data-step="1">
-    <legend>What kind of facility?</legend>
+    <legend>{facilityLegend}</legend>
     <div class="chips">
-      {['Office', 'Medical', 'Retail', 'Industrial / Warehouse', 'Other'].map((t) => (
+      {facilities.map((t) => (
         <label class="chip">
           <input type="radio" name="facility_type" value={t} />
           <span>{t}</span>
         </label>
       ))}
     </div>
-    <legend>How often?</legend>
+    <legend>{frequencyLegend}</legend>
     <div class="chips">
-      {['Recurring service', 'One-time clean'].map((f) => (
+      {frequencies.map((f) => (
         <label class="chip">
           <input type="radio" name="frequency" value={f} />
           <span>{f}</span>
         </label>
       ))}
     </div>
-    <p class="err" hidden>Please pick a facility type and frequency.</p>
+    <p class="err" hidden>Please pick one option from each question.</p>
     <button type="button" class="btn btn-primary next">Next →</button>
   </fieldset>
 
   <fieldset class="step" data-step="2" hidden>
-    <legend>Facility size</legend>
+    <legend>{sizeLegend}</legend>
     <div class="chips">
-      {['Under 5,000 sq ft', '5,000–20,000 sq ft', '20,000–50,000 sq ft', '50,000+ sq ft', 'Not sure'].map((s) => (
+      {sizes.map((s) => (
         <label class="chip">
           <input type="radio" name="square_footage" value={s} />
           <span>{s}</span>
         </label>
       ))}
     </div>
-    <legend>Services needed</legend>
+    <legend>{servicesLegend}</legend>
     <div class="chips">
-      {['General cleaning', 'Floor care', 'Carpet cleaning', 'Windows', 'Disinfection', 'Day porter', 'Post-construction', 'Snow removal'].map((s) => (
+      {serviceOptions.map((s) => (
         <label class="chip">
           <input type="checkbox" name="services_needed" value={s} />
           <span>{s}</span>

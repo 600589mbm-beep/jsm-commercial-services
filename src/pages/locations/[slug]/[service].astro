@@ -103,9 +103,13 @@ const breadcrumbSchema = {
         )}
       </div>
       <aside class="card">
-        <h2>Free Quote in {location.name}</h2>
-        <p>Tell us about your facility. {BUSINESS.responsePromise}</p>
-        <QuoteForm />
+        <h2>Free {service.slug === 'snow-removal' ? 'Snow ' : ''}Quote in {location.name}</h2>
+        <p>
+          {service.slug === 'snow-removal'
+            ? `Tell us about your property. ${BUSINESS.responsePromise}`
+            : `Tell us about your facility. ${BUSINESS.responsePromise}`}
+        </p>
+        <QuoteForm variant={service.slug === 'snow-removal' ? 'snow' : 'cleaning'} />
       </aside>
     </div>
   </section>
