@@ -47,7 +47,7 @@ const serviceSchema = {
         <h2>Services Available in {location.name}</h2>
         <ul class="checklist">
           {SERVICES.map((s) => (
-            <li><a href={url(`/services/${s.slug}`)}>{s.name}</a></li>
+            <li><a href={url(`/locations/${location.slug}/${s.slug}`)}>{s.name} in {location.name}</a></li>
           ))}
         </ul>
       </div>

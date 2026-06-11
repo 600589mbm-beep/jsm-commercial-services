@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import { BUSINESS, url } from '../../config';
+import { ARTICLES } from '../../data/articles';
+---
+
+<Base
+  title={`Commercial Cleaning Resources & Guides | ${BUSINESS.name}`}
+  description={`Free guides from ${BUSINESS.name}: commercial cleaning costs in Minnesota, office cleaning checklists, how to vet a janitorial company, and more.`}
+>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs"><a href={url('/')}>Home</a> / Resources</nav>
+      <div class="section-head">
+        <h1>Resources & Guides</h1>
+        <p>
+          Straight answers for facility and office managers — what cleaning should cost, what it
+          should include, and how to hold any vendor (including us) accountable.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {ARTICLES.map((a) => (
+          <div class="card">
+            <h3><a href={url(`/resources/${a.slug}`)}>{a.title}</a></h3>
+            <p>{a.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CTA />
+</Base>

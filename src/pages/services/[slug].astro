@@ -4,6 +4,7 @@ import CTA from '../../components/CTA.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
 import { BUSINESS, url } from '../../config';
 import { SERVICES } from '../../data/services';
+import { LOCATIONS } from '../../data/locations';
 
 export function getStaticPaths() {
   return SERVICES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
@@ -65,6 +66,12 @@ const faqSchema =
             ))}
           </>
         )}
+        <h2>{service.name} Across the Metro</h2>
+        <p class="link-cloud">
+          {LOCATIONS.map((l) => (
+            <a href={url(`/locations/${l.slug}/${service.slug}`)}>{l.name}</a>
+          ))}
+        </p>
       </div>
       <aside class="card">
         <h2>Get a Free Quote</h2>
@@ -88,4 +95,7 @@ const faqSchema =
   @media (max-width: 860px) {
     .split { grid-template-columns: 1fr; }
   }
+  .link-cloud { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-size: 0.95rem; }
+  .link-cloud a { text-decoration: none; font-weight: 600; }
+  .link-cloud a:hover { text-decoration: underline; }
 </style>
