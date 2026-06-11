@@ -5,6 +5,8 @@ import { BUSINESS } from '../config';
 ---
 
 <form action={BUSINESS.formspreeEndpoint} method="POST" class="quote-wizard" novalidate>
+  <input type="hidden" name="_subject" value="🔔 NEW QUOTE REQUEST — jsmcommercialservice.com" />
+  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
   <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
     <div class="progress-fill" style="width: 33%"></div>
   </div>
