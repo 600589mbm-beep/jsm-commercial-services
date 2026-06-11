@@ -29,14 +29,23 @@ const year = new Date().getFullYear();
       </ul>
     </div>
     <div>
-      <h3>Service Area</h3>
+      <h3>Company</h3>
       <ul>
-        {LOCATIONS.slice(0, 12).map((l) => (
-          <li><a href={url(`/locations/${l.slug}`)}>{l.name}, MN</a></li>
-        ))}
-        <li><a href={url('/locations')}><strong>All {LOCATIONS.length} cities →</strong></a></li>
+        <li><a href={url('/about')}>About Us</a></li>
+        <li><a href={url('/services')}>All Services</a></li>
+        <li><a href={url('/locations')}>Service Area</a></li>
+        <li><a href={url('/contact')}>Contact</a></li>
+        <li><a href={url('/quote')}>Get a Free Quote</a></li>
       </ul>
     </div>
+  </div>
+  <div class="container cities">
+    <h3>Serving {LOCATIONS.length} Cities Across the {BUSINESS.serviceArea}</h3>
+    <p class="city-links">
+      {LOCATIONS.map((l) => (
+        <a href={url(`/locations/${l.slug}`)}>{l.name}</a>
+      ))}
+    </p>
   </div>
   <div class="container legal">
     <p>© {year} {BUSINESS.legalName}. All rights reserved.</p>
@@ -57,5 +66,18 @@ const year = new Date().getFullYear();
   li { margin-bottom: 0.4rem; }
   a { color: #c4d3df; text-decoration: none; }
   a:hover { color: #fff; }
+  .cities {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .cities h3 { font-size: 0.95rem; margin-bottom: 0.8rem; }
+  .city-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.1rem;
+    font-size: 0.85rem;
+    margin: 0;
+  }
   .legal { border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 1rem; padding-bottom: 1.5rem; font-size: 0.85rem; }
 </style>

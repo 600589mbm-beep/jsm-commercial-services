@@ -119,16 +119,12 @@ import { TESTIMONIALS } from '../data/testimonials';
     <div class="container">
       <div class="section-head">
         <h2>Serving the {BUSINESS.serviceArea}</h2>
-        <p>Local crews across the metro mean fast response and consistent service.</p>
+        <p>
+          Local crews across {LOCATIONS.length} metro cities — from {LOCATIONS[0].name} to
+          Stillwater — mean fast response and consistent service wherever your facility is.
+        </p>
       </div>
-      <div class="grid grid-4">
-        {LOCATIONS.map((l) => (
-          <div class="card">
-            <h3><a href={url(`/locations/${l.slug}`)}>{l.name}, MN</a></h3>
-            <p>{l.county}</p>
-          </div>
-        ))}
-      </div>
+      <a class="btn btn-navy" href={url('/locations')}>View All {LOCATIONS.length} Cities →</a>
     </div>
   </section>
 
