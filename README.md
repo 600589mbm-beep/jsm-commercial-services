@@ -2,7 +2,7 @@
 
 Static marketing site for JSM Commercial Services (commercial cleaning & janitorial, Twin Cities metro). Built with [Astro](https://astro.build), deployed to GitHub Pages.
 
-**Live:** https://600589mbm-beep.github.io/jsm-commercial-services/
+**Live:** https://jsmcommercialservice.com/
 
 ## Pages
 

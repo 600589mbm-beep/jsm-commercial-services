@@ -1,10 +1,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// When you add a custom domain, change `site` and set `base` to '/'.
+// Custom domain (set in repo Settings → Pages) serves the site at the root.
 export default defineConfig({
-  site: 'https://600589mbm-beep.github.io',
-  base: '/jsm-commercial-services',
+  site: 'https://jsmcommercialservice.com',
+  base: '/',
   trailingSlash: 'always',
   integrations: [sitemap()],
 });

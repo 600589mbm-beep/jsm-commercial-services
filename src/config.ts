@@ -38,8 +38,8 @@ export const BUSINESS = {
   },
 };
 
-// Prefix internal links with the deploy base path (GitHub Pages serves
-// the site from /jsm-commercial-services/).
+// Prefix internal links with the deploy base path (currently '/' on the
+// custom domain jsmcommercialservice.com).
 export function url(path: string): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   if (!path.startsWith('/')) path = '/' + path;
