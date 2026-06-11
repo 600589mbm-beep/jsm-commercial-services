@@ -7,13 +7,19 @@ export const BUSINESS = {
   name: 'JSM Commercial Services',
   legalName: 'JSM Commercial Services LLC',
   tagline: 'Commercial Cleaning & Janitorial Services in the Twin Cities Metro',
-  phone: '(612) 555-0123',                        // <-- your phone
-  phoneHref: 'tel:+16125550123',                  // <-- tel: link (digits only)
+  phone: '(651) 447-8036',
+  phoneHref: 'tel:+16514478036',
   email: 'sales@jsmcommercialservices.com',
   infoEmail: 'info@jsmcommercialservices.com',
   // Create a free form at https://formspree.io, paste your endpoint here:
   formspreeEndpoint: 'https://formspree.io/f/YOUR_FORM_ID',
-  hours: 'Mon–Sat 7am–7pm · 24/7 for emergencies',
+  hours: 'Mon–Fri 9am–5pm',
+  address: {
+    street: '7287 153rd St W #240868',
+    city: 'Apple Valley',
+    state: 'MN',
+    zip: '55124',
+  },
   serviceArea: 'Minneapolis–St. Paul metro',
   foundingYear: 2018,                             // <-- your real founding year
   // What we promise on the quote form. Only promise what you can keep —

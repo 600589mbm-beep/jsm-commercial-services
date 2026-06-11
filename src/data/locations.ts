@@ -6,6 +6,7 @@ export interface Location {
 }
 
 export const LOCATIONS: Location[] = [
+  { slug: 'apple-valley', name: 'Apple Valley', county: 'Dakota County', blurb: 'Our home base — offices, retail, and clinics across Apple Valley get our fastest response.' },
   { slug: 'minneapolis', name: 'Minneapolis', county: 'Hennepin County', blurb: 'From North Loop offices to industrial space along the river, we keep Minneapolis businesses clean.' },
   { slug: 'st-paul', name: 'St. Paul', county: 'Ramsey County', blurb: 'Downtown offices, clinics, and warehouses across St. Paul trust JSM for nightly janitorial.' },
   { slug: 'bloomington', name: 'Bloomington', county: 'Hennepin County', blurb: 'Serving the I-494 corridor — offices, hotels-adjacent retail, and medical suites.' },

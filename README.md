@@ -23,7 +23,7 @@ Static marketing site for JSM Commercial Services (commercial cleaning & janitor
 
 ## 🚫 Launch blockers — do these before pointing any traffic at the site
 
-1. **Real phone number** in `src/config.ts` (`phone` + `phoneHref`). The current `(612) 555-0123` is a dead line, and click-to-call is the highest-value conversion path. Tap-test it on a phone after deploying.
+1. ~~Real phone number~~ ✅ Done — `(651) 447-8036` is live everywhere. Tap-test the "Call Now" links on a phone to confirm.
 2. **Real Formspree endpoint** in `src/config.ts`, then fire a **test submission end-to-end**: form → Formspree → instant email/SMS alert on your phone. The 5-minute callback habit is worth more than anything on the page.
 3. **Trust content stays hidden until real.** Stats (facilities served, years, star rating) render only when `showStats: true` in `src/config.ts`, and testimonials render only when `src/data/testimonials.ts` is non-empty. Fill them with **real numbers from your Google Business Profile** and real client quotes (verbatim, with permission) — fabricated reviews are checkable in two clicks and an FTC violation. Until then the site leads with what's true: bonded & insured, background-checked, re-clean guarantee.
 4. **Verify `foundingYear`** in `src/config.ts` — it drives the "founded in…" line on the About page.

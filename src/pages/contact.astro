@@ -23,6 +23,11 @@ import { BUSINESS, url } from '../config';
         </p>
         <h2>Hours</h2>
         <p>{BUSINESS.hours}</p>
+        <h2>Address</h2>
+        <p>
+          {BUSINESS.address.street}<br />
+          {BUSINESS.address.city}, {BUSINESS.address.state} {BUSINESS.address.zip}
+        </p>
         <h2>Service Area</h2>
         <p>{BUSINESS.serviceArea} — <a href={url('/locations')}>see all cities</a></p>
       </div>

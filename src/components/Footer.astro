@@ -15,6 +15,8 @@ const year = new Date().getFullYear();
         <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a><br />
         <a href="mailto:sales@jsmcommercialservices.com">sales@jsmcommercialservices.com</a><br />
         <a href="mailto:info@jsmcommercialservices.com">info@jsmcommercialservices.com</a><br />
+        {BUSINESS.address.street}<br />
+        {BUSINESS.address.city}, {BUSINESS.address.state} {BUSINESS.address.zip}<br />
         {BUSINESS.hours}
       </p>
     </div>
