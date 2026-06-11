@@ -9,6 +9,7 @@ export const SERVICE_ICONS: Record<string, string> = {
   'day-porter-services': '🛎️',
   'medical-office-cleaning': '🏥',
   'industrial-warehouse-cleaning': '🏭',
+  'snow-removal': '❄️',
 };
 
 export interface Service {
@@ -191,6 +192,26 @@ export const SERVICES: Service[] = [
     ],
     faq: [
       { q: 'Can you clean around our production schedule?', a: 'Yes — we routinely work between shifts, overnights, and weekends, and our staff follow your site safety requirements.' },
+    ],
+  },
+  {
+    slug: 'snow-removal',
+    name: 'Snow Removal & Ice Management',
+    short: 'Commercial snow plowing, sidewalk clearing, and ice management that keeps your property open — and your slip-and-fall liability closed.',
+    description:
+      'Every inch of unplowed lot and untreated sidewalk is a slip-and-fall claim waiting to happen — and in Minnesota, courts expect commercial property owners to keep walkways reasonably safe. Our snow program covers parking lot plowing, sidewalk and entrance clearing, and salting/de-icing on a defined trigger depth, with documented service logs you can produce if a claim ever lands. Crews deploy automatically when snow hits your trigger — no 5 AM phone calls required.',
+    bullets: [
+      'Parking lot plowing with defined trigger depth and priority routing',
+      'Sidewalk, entrance, and fire-exit clearing by shovel and snow blower',
+      'Salting, de-icing, and anti-icing treatment for lots and walkways',
+      'Documented service logs (time in/out, conditions, materials) for liability defense',
+      'Seasonal contracts or per-event pricing — your choice',
+    ],
+    faq: [
+      { q: 'Do you offer seasonal snow contracts?', a: 'Yes. A seasonal contract gives you a fixed price for the whole winter — unlimited events — so budgeting is predictable and you\'re never choosing between cost and safety in a heavy year. Per-event (per-push) pricing is also available if you prefer to pay only when it snows.' },
+      { q: 'When do crews deploy?', a: 'Automatically, at the trigger depth written into your agreement — typically 1" or 2" of accumulation, your call. Lots are plowed and walks cleared before your business opens, and we return for follow-up passes during ongoing storms. You never have to call us out.' },
+      { q: 'Do you handle salting and ice management?', a: 'Yes — salting and de-icing of lots and sidewalks is part of the program, including freeze-thaw and ice-storm response when there\'s no new snow to plow. Anti-icing pre-treatment ahead of storms is available too.' },
+      { q: 'When should I lock in a snow contract?', a: 'Before the first snowfall — ideally August through October. Quality providers fill their routes in the fall, and waiting until the first storm usually means higher pricing and leftover route slots. Locking in early also guarantees your property\'s priority position.' },
     ],
   },
 ];
