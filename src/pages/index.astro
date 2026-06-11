@@ -13,9 +13,14 @@ import { TESTIMONIALS } from '../data/testimonials';
   description={`${BUSINESS.name} provides office cleaning, janitorial, floor care, and disinfection services across the ${BUSINESS.serviceArea}. Free quotes within 24 hours.`}
 >
   <section class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
     <div class="blob blob-a" aria-hidden="true"></div>
     <div class="blob blob-b" aria-hidden="true"></div>
     <div class="blob blob-c" aria-hidden="true"></div>
+    <span class="spark" style="top: 18%; left: 12%; --tw: 3.2s" aria-hidden="true">✦</span>
+    <span class="spark" style="top: 32%; right: 14%; --tw: 4.1s" aria-hidden="true">✦</span>
+    <span class="spark" style="bottom: 24%; left: 38%; --tw: 5s" aria-hidden="true">✦</span>
+    <span class="spark" style="top: 12%; right: 38%; --tw: 3.7s" aria-hidden="true">✦</span>
     <div class="container hero-inner">
       <p class="kicker">★ {BUSINESS.serviceArea} commercial cleaning</p>
       <h1>
@@ -60,6 +65,32 @@ import { TESTIMONIALS } from '../data/testimonials';
   <section class="section">
     <div class="container">
       <div class="section-head">
+        <h2>How It Works</h2>
+        <p>From first call to spotless floors in three steps — no pressure, no lock-in.</p>
+      </div>
+      <div class="steps">
+        <div class="step-card">
+          <span class="num">1</span>
+          <h3>Free Walkthrough</h3>
+          <p>We tour your facility, listen to what's been missed before, and map every square foot that matters.</p>
+        </div>
+        <div class="step-card">
+          <span class="num">2</span>
+          <h3>Custom Plan & Quote</h3>
+          <p>You get a written scope and a clear price — built off your facility, not assumptions. Month-to-month, always.</p>
+        </div>
+        <div class="step-card">
+          <span class="num">3</span>
+          <h3>Spotless, Inspected Clean</h3>
+          <p>Trained crews follow your checklist; supervisors inspect the work. Miss the mark? We re-clean it free.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
         <h2>Our Services</h2>
         <p>One vendor for every cleaning need in your building — on a schedule built around your business.</p>
       </div>
@@ -75,7 +106,7 @@ import { TESTIMONIALS } from '../data/testimonials';
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section">
     <div class="container">
       <div class="section-head">
         <h2>Why Businesses Choose JSM</h2>
@@ -140,12 +171,34 @@ import { TESTIMONIALS } from '../data/testimonials';
     padding: 5.5rem 0 4.5rem;
   }
   .hero-inner { position: relative; z-index: 1; }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 30%, transparent 75%);
+    pointer-events: none;
+  }
+  .spark {
+    position: absolute;
+    color: var(--teal-bright);
+    font-size: 1.1rem;
+    animation: twinkle var(--tw, 4s) ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
   .blob {
     position: absolute;
     border-radius: 50%;
     filter: blur(70px);
     opacity: 0.55;
     pointer-events: none;
+    /* parallax uses the separate `translate` property so it composes
+       with the transform-based float keyframes */
+    transition: translate 0.6s var(--ease-out);
   }
   .blob-a {
     width: 480px;
@@ -198,3 +251,30 @@ import { TESTIMONIALS } from '../data/testimonials';
   .testimonial { margin: 0; }
   .testimonial footer { color: var(--text-soft); font-size: 0.88rem; font-weight: 600; }
 </style>
+
+<script>
+  // Subtle mouse parallax on the hero blobs (desktop, motion-allowed only)
+  document.addEventListener('astro:page-load', () => {
+    const hero = document.querySelector<HTMLElement>('.hero');
+    if (
+      !hero ||
+      matchMedia('(pointer: coarse)').matches ||
+      matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      return;
+    const blobs = hero.querySelectorAll<HTMLElement>('.blob');
+    const depths = [18, 28, 40];
+    hero.addEventListener(
+      'pointermove',
+      (e) => {
+        const r = hero.getBoundingClientRect();
+        const dx = (e.clientX - r.left) / r.width - 0.5;
+        const dy = (e.clientY - r.top) / r.height - 0.5;
+        blobs.forEach((b, i) => {
+          b.style.translate = `${dx * depths[i]}px ${dy * depths[i]}px`;
+        });
+      },
+      { passive: true }
+    );
+  });
+</script>

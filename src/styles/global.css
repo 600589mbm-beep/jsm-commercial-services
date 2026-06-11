@@ -116,6 +116,8 @@ p { margin: 0 0 1em; }
 .grid-4 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 
 .card {
+  position: relative;
+  overflow: hidden;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -125,6 +127,22 @@ p { margin: 0 0 1em; }
     border-color 0.35s var(--ease-out);
   will-change: transform;
 }
+/* Cursor-tracking glow — --mx/--my set from a delegated pointermove listener */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    320px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(25, 163, 154, 0.1),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.card:hover::before { opacity: 1; }
+.card > * { position: relative; }
 .card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lift);
@@ -163,6 +181,92 @@ p { margin: 0 0 1em; }
 .faq-item { border-bottom: 1px solid var(--border); padding: 1rem 0; }
 .faq-item h3 { margin-bottom: 0.3rem; font-size: 1.05rem; }
 .faq-item p { color: var(--text-soft); margin: 0; }
+
+/* ---------- FAQ accordion ---------- */
+.faq-acc {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 0.7rem;
+  background: #fff;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.faq-acc[open] {
+  border-color: rgba(25, 163, 154, 0.5);
+  box-shadow: var(--shadow);
+}
+.faq-acc summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 700;
+  color: var(--navy);
+  padding: 0.95rem 1.15rem;
+}
+.faq-acc summary::-webkit-details-marker { display: none; }
+.faq-acc .plus {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--bg-alt);
+  color: var(--teal-dark);
+  font-weight: 800;
+  transition: transform 0.3s var(--ease-out), background 0.3s, color 0.3s;
+}
+.faq-acc[open] .plus {
+  transform: rotate(45deg);
+  background: var(--teal);
+  color: #fff;
+}
+.faq-acc p {
+  color: var(--text-soft);
+  margin: 0;
+  padding: 0 1.15rem 1rem;
+  animation: fade-up 0.35s var(--ease-out);
+}
+
+/* ---------- How-it-works steps ---------- */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; counter-reset: step; }
+.step-card {
+  position: relative;
+  padding: 1.8rem 1.6rem 1.6rem;
+  border-radius: var(--radius);
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.step-card .num {
+  display: inline-grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), var(--blue));
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 16px rgba(25, 163, 154, 0.35);
+}
+.step-card h3 { margin-bottom: 0.4rem; }
+.step-card p { color: var(--text-soft); margin: 0; }
+@media (min-width: 800px) {
+  .step-card:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -1.25rem;
+    top: 2rem;
+    color: var(--teal);
+    font-size: 1.4rem;
+    font-weight: 800;
+    z-index: 1;
+  }
+}
 
 /* ---------- Forms ---------- */
 form label { display: block; font-weight: 700; margin: 1rem 0 0.3rem; color: var(--navy); }
@@ -247,6 +351,43 @@ form button { margin-top: 1.25rem; cursor: pointer; border: none; font: inherit;
   from { opacity: 0; transform: translateX(18px); }
   to { opacity: 1; transform: none; }
 }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.7) rotate(0deg); }
+  50% { opacity: 0.9; transform: scale(1.15) rotate(20deg); }
+}
+
+/* ---------- Back-to-top ---------- */
+.to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 60;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(15, 42, 67, 0.35);
+  opacity: 0;
+  transform: translateY(16px) scale(0.8);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+}
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { transform: translateY(-3px); }
+@media (max-width: 720px) {
+  .to-top { bottom: 4.6rem; }
+}
+
+/* ---------- View-transition page fade ---------- */
+::view-transition-old(root) { animation: vt-out 0.18s ease both; }
+::view-transition-new(root) { animation: vt-in 0.26s ease both; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
 
 /* ---------- Reduced motion: calm everything down ---------- */
 @media (prefers-reduced-motion: reduce) {

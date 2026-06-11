@@ -32,10 +32,10 @@ const { service } = Astro.props;
           <>
             <h2>Frequently Asked Questions</h2>
             {service.faq.map((f) => (
-              <div class="faq-item">
-                <h3>{f.q}</h3>
+              <details class="faq-acc">
+                <summary>{f.q}<span class="plus">+</span></summary>
                 <p>{f.a}</p>
-              </div>
+              </details>
             ))}
           </>
         )}

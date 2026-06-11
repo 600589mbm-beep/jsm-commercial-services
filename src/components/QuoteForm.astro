@@ -159,7 +159,10 @@ import { BUSINESS } from '../config';
     return true;
   }
 
+  function initWizards() {
   document.querySelectorAll<HTMLFormElement>('.quote-wizard').forEach((form) => {
+    if (form.dataset.wizardInit) return;
+    form.dataset.wizardInit = '1';
     let step = 1;
     form.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
@@ -187,4 +190,7 @@ import { BUSINESS } from '../config';
       }
     });
   });
+  }
+  // Re-bind after every ClientRouter page swap (and on initial load)
+  document.addEventListener('astro:page-load', initWizards);
 </script>
