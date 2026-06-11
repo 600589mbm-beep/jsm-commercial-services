@@ -11,10 +11,23 @@ export function getStaticPaths() {
 }
 
 const { location } = Astro.props;
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: `Commercial Cleaning & Janitorial Services in ${location.name}, MN`,
+  description: location.blurb,
+  areaServed: { '@type': 'City', name: `${location.name}, MN` },
+  provider: {
+    '@type': 'LocalBusiness',
+    name: BUSINESS.name,
+    telephone: BUSINESS.phone,
+  },
+};
 ---
 
 <Base
-  title={`Commercial Cleaning in ${location.name}, MN | ${BUSINESS.name}`}
+  title={`Commercial Cleaning & Janitorial in ${location.name}, MN | ${BUSINESS.name}`}
   description={`Commercial cleaning and janitorial services in ${location.name}, Minnesota (${location.county}). ${location.blurb} Free quotes from ${BUSINESS.name}.`}
 >
   <section class="section">
@@ -46,6 +59,7 @@ const { location } = Astro.props;
     </div>
   </section>
   <CTA heading={`Need a cleaning crew in ${location.name}?`} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 </Base>
 
 <style>

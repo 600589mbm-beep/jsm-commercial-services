@@ -10,10 +10,36 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props;
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.name,
+  description: service.short,
+  areaServed: BUSINESS.serviceArea,
+  provider: {
+    '@type': 'LocalBusiness',
+    name: BUSINESS.name,
+    telephone: BUSINESS.phone,
+  },
+};
+
+const faqSchema =
+  service.faq.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: service.faq.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      }
+    : null;
 ---
 
 <Base
-  title={`${service.name} | ${BUSINESS.name}`}
+  title={`${service.name} — Twin Cities & Apple Valley, MN | ${BUSINESS.name}`}
   description={`${service.short} ${BUSINESS.name} serves the ${BUSINESS.serviceArea}. Free quotes within 24 hours.`}
 >
   <section class="section">
@@ -48,6 +74,8 @@ const { service } = Astro.props;
     </div>
   </section>
   <CTA heading={`Need ${service.name.toLowerCase()}?`} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 </Base>
 
 <style>

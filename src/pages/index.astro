@@ -6,11 +6,46 @@ import { BUSINESS, url } from '../config';
 import { SERVICES, SERVICE_ICONS } from '../data/services';
 import { LOCATIONS } from '../data/locations';
 import { TESTIMONIALS } from '../data/testimonials';
+
+// Targets real search queries from Search Console / GBP insights
+// (e.g. "cleaning service apple valley mn", "janitorial contracts near me").
+const FAQS = [
+  {
+    q: 'Do you offer janitorial contracts in the Twin Cities?',
+    a: `Yes — we provide contract janitorial services across the ${BUSINESS.serviceArea}, with documented scopes of work, trained crews, and supervisor inspections. Unlike most janitorial contracts, ours are month-to-month: no long-term lock-in.`,
+  },
+  {
+    q: 'What areas does JSM Commercial Services serve?',
+    a: `We're headquartered in Apple Valley, MN and serve 43 cities across the metro — including Minneapolis, St. Paul, Bloomington, Eagan, Burnsville, Eden Prairie, and Lakeville.`,
+  },
+  {
+    q: 'How much does commercial cleaning cost?',
+    a: 'Pricing depends on square footage, cleaning frequency, and scope, so we quote from a free on-site walkthrough rather than guessing. Most offices land on a flat monthly rate. The walkthrough and written quote are free with no obligation.',
+  },
+  {
+    q: 'Are your cleaners insured and background-checked?',
+    a: 'Yes. Every crew member is background-checked, trained, and uniformed, and we carry general liability and workers’ compensation coverage. We can name your company as additionally insured on request.',
+  },
+  {
+    q: 'What types of facilities do you clean?',
+    a: 'Offices, medical and dental clinics, retail, schools, warehouses, and industrial facilities — plus specialty work like floor stripping and waxing, carpet cleaning, post-construction cleanup, and disinfection.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <Base
-  title={`${BUSINESS.name} | Commercial Cleaning & Janitorial — ${BUSINESS.serviceArea}`}
-  description={`${BUSINESS.name} provides office cleaning, janitorial, floor care, and disinfection services across the ${BUSINESS.serviceArea}. Free quotes within 24 hours.`}
+  title={`Commercial Cleaning & Janitorial Services — Apple Valley & Twin Cities, MN | ${BUSINESS.name}`}
+  description={`Commercial cleaning company in Apple Valley, MN serving the entire ${BUSINESS.serviceArea}: office cleaning, janitorial contracts, floor care, and disinfection. Bonded & insured. Free quotes.`}
 >
   <section class="hero">
     <div class="hero-grid" aria-hidden="true"></div>
@@ -22,10 +57,10 @@ import { TESTIMONIALS } from '../data/testimonials';
     <span class="spark" style="bottom: 24%; left: 38%; --tw: 5s" aria-hidden="true">✦</span>
     <span class="spark" style="top: 12%; right: 38%; --tw: 3.7s" aria-hidden="true">✦</span>
     <div class="container hero-inner">
-      <p class="kicker">★ {BUSINESS.serviceArea} commercial cleaning</p>
+      <p class="kicker">★ Apple Valley · Minneapolis · St. Paul & 40+ metro cities</p>
       <h1>
-        <span class="line" style="--d: 0.05s">A Cleaner Building.</span>
-        <span class="line" style="--d: 0.18s">A Better First Impression.</span>
+        <span class="line" style="--d: 0.05s">Commercial Cleaning &amp; Janitorial</span>
+        <span class="line" style="--d: 0.18s">for the Twin Cities Metro.</span>
         <span class="line accent-line" style="--d: 0.31s"><span class="accent">Guaranteed.</span></span>
       </h1>
       <p class="sub" style="--d: 0.45s">
@@ -149,6 +184,23 @@ import { TESTIMONIALS } from '../data/testimonials';
   <section class="section alt">
     <div class="container">
       <div class="section-head">
+        <h2>Commercial Cleaning Questions, Answered</h2>
+      </div>
+      <div class="faq-wrap">
+        {FAQS.map((f) => (
+          <details class="faq-acc">
+            <summary>{f.q}<span class="plus">+</span></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
         <h2>Serving the {BUSINESS.serviceArea}</h2>
         <p>
           Local crews across {LOCATIONS.length} metro cities — from {LOCATIONS[0].name} to
@@ -248,6 +300,7 @@ import { TESTIMONIALS } from '../data/testimonials';
   .stats div { display: flex; flex-direction: column; }
   .stats strong { font-size: 1.6rem; color: var(--teal); }
   .stats span { color: #c4d3df; font-size: 0.9rem; }
+  .faq-wrap { max-width: 800px; }
   .testimonial { margin: 0; }
   .testimonial footer { color: var(--text-soft); font-size: 0.88rem; font-weight: 600; }
 </style>
