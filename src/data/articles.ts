@@ -22,7 +22,8 @@ export const ARTICLES: Article[] = [
     sections: [
       {
         ps: [
-          'The honest answer: it depends on square footage, frequency, and what you need cleaned — which is why any company quoting you a price before seeing your facility is guessing. But "it depends" isn\'t useful when you\'re budgeting, so here are the ranges most Twin Cities businesses actually pay.',
+          'Most Twin Cities businesses pay roughly $0.08–$0.25 per square foot per visit for routine commercial cleaning, which works out to about $400–$900 per month for a small office cleaned 2–3 times a week and $1,000–$3,000 per month for mid-size facilities. Hourly work runs $35–$60 per cleaner-hour, and specialty jobs like floor strip-and-wax are priced separately.',
+          'Your exact number depends on square footage, frequency, and scope — which is why any company quoting a price before seeing your facility is guessing. Here is how those ranges break down and what moves your quote up or down.',
         ],
       },
       {
@@ -64,6 +65,7 @@ export const ARTICLES: Article[] = [
     sections: [
       {
         ps: [
+          'A complete office cleaning program covers four tiers: daily (trash, restrooms, high-touch disinfection, floors in traffic lanes), weekly (full vacuuming, dusting, interior glass), monthly (high dusting, blinds, floor buffing), and quarterly (carpet extraction, strip-and-wax, exterior windows). The full checklist for each tier is below.',
           'Whether you\'re auditing your current cleaning company or setting expectations for a new one, this is the checklist professional crews actually work from. If items on the daily list are only happening weekly at your facility, that\'s the conversation to have with your vendor.',
         ],
       },
@@ -129,6 +131,7 @@ export const ARTICLES: Article[] = [
     sections: [
       {
         ps: [
+          'The fastest way to vet a commercial cleaning company: confirm insurance in writing, demand a written scope of work, ask who actually shows up (employees or subcontractors, same crew or rotating), verify there\'s a documented inspection process, and refuse long-term contracts. The ten questions below cover each of those — with the red flags that should end the conversation.',
           'Most commercial cleaning relationships don\'t fail on price — they fail on accountability. The company starts strong, quality drifts, and complaints take a week to fix. These ten questions surface that risk before you sign.',
         ],
       },
@@ -176,6 +179,7 @@ export const ARTICLES: Article[] = [
     sections: [
       {
         ps: [
+          'Janitorial service is the recurring, scheduled upkeep — trash, restrooms, floors, high-touch surfaces — done nightly or weekly under an ongoing agreement. Commercial cleaning, used precisely, is the bigger project work: floor stripping and waxing, carpet extraction, post-construction cleanup, deep disinfection. Most facilities need both, and they\'re cheapest bought from one vendor.',
           'The terms get used interchangeably, but in the industry they mean different things — and knowing the difference helps you buy the right service instead of overpaying for the wrong one.',
         ],
       },

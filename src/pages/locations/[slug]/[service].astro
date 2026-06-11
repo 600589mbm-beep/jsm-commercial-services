@@ -26,10 +26,11 @@ const li = LOCATIONS.findIndex((l) => l.slug === location.slug);
 const si = SERVICES.findIndex((s) => s.slug === service.slug);
 const v = (li + si) % 3;
 
+// Answer-first: every variant states who/what/where + the offer in sentence one.
 const intros = [
-  `Looking for ${service.name.toLowerCase()} in ${location.name}, MN? ${BUSINESS.name} sends trained, background-checked crews to facilities across ${location.name} and the rest of ${location.county} — on a schedule built around your business, not ours. ${location.blurb}`,
-  `${BUSINESS.name} provides ${service.name.toLowerCase()} to businesses throughout ${location.name}, Minnesota. ${location.blurb} Every account in ${location.county} gets a documented scope of work, supervisor inspections, and our free re-clean guarantee.`,
-  `${location.name} businesses trust ${BUSINESS.name} for ${service.name.toLowerCase()} because we show up, follow the checklist, and inspect our own work. ${location.blurb} We serve all of ${location.county} on month-to-month agreements — no long-term contracts.`,
+  `${BUSINESS.name} provides ${service.name.toLowerCase()} for commercial properties in ${location.name}, MN — free on-site walkthrough, written scope, and pricing within 24 hours. Trained, background-checked crews serve ${location.name} and the rest of ${location.county} on a schedule built around your business. ${location.blurb}`,
+  `${BUSINESS.name} delivers ${service.name.toLowerCase()} to businesses throughout ${location.name}, Minnesota, with a documented scope of work, supervisor inspections, and a free re-clean guarantee — quoted free from an on-site walkthrough. ${location.blurb}`,
+  `Businesses in ${location.name}, MN get ${service.name.toLowerCase()} from ${BUSINESS.name} on month-to-month agreements — no long-term contracts — with a free walkthrough and written pricing within 24 hours. We serve all of ${location.county}. ${location.blurb}`,
 ];
 
 const nearby = LOCATIONS.filter((l) => l.county === location.county && l.slug !== location.slug).slice(0, 6);
@@ -57,8 +58,8 @@ const breadcrumbSchema = {
 ---
 
 <Base
-  title={`${service.name} in ${location.name}, MN | ${BUSINESS.name}`}
-  description={`${service.name} for businesses in ${location.name}, Minnesota (${location.county}). ${service.short} Free quotes from ${BUSINESS.name}.`}
+  title={`${service.name} in ${location.name}, MN | Free Quote in 24 Hrs — JSM`}
+  description={`${service.name} in ${location.name}, MN — free walkthrough and written quote within 24 hours from JSM. Serving all of ${location.county}.`}
 >
   <section class="section">
     <div class="container split">

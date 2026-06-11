@@ -27,8 +27,8 @@ const serviceSchema = {
 ---
 
 <Base
-  title={`Commercial Cleaning & Janitorial in ${location.name}, MN | ${BUSINESS.name}`}
-  description={`Commercial cleaning and janitorial services in ${location.name}, Minnesota (${location.county}). ${location.blurb} Free quotes from ${BUSINESS.name}.`}
+  title={`Commercial Cleaning in ${location.name}, MN | Free Quote in 24 Hrs — JSM`}
+  description={`JSM provides commercial cleaning & janitorial in ${location.name}, MN (${location.county}). Free on-site walkthrough and written quote within 24 hours.`}
 >
   <section class="section">
     <div class="container split">
@@ -37,12 +37,16 @@ const serviceSchema = {
           <a href={url('/')}>Home</a> / <a href={url('/locations')}>Locations</a> / {location.name}
         </nav>
         <h1>Commercial Cleaning in {location.name}, MN</h1>
-        <p>{location.blurb}</p>
         <p>
-          {BUSINESS.name} provides recurring janitorial and one-time cleaning services to
-          businesses throughout {location.name} and the rest of {location.county}. Our crews are
-          trained, insured, and background-checked, and every account gets a documented scope of
-          work with supervisor inspections.
+          <strong>{BUSINESS.name} provides commercial cleaning and janitorial services in
+          {location.name}, Minnesota</strong> — office cleaning, floor care, carpet, windows,
+          disinfection, day porter, and snow removal, quoted free from an on-site walkthrough
+          with a written scope and pricing within 24 hours. {location.blurb}
+        </p>
+        <p>
+          Our crews are trained, insured, and background-checked, and every account throughout
+          {location.name} and the rest of {location.county} gets a documented scope of work with
+          supervisor inspections — on month-to-month agreements, never long-term contracts.
         </p>
         <h2>Services Available in {location.name}</h2>
         <ul class="checklist">

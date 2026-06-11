@@ -40,8 +40,8 @@ const faqSchema =
 ---
 
 <Base
-  title={`${service.name} — Twin Cities & Apple Valley, MN | ${BUSINESS.name}`}
-  description={`${service.short} ${BUSINESS.name} serves the ${BUSINESS.serviceArea}. Free quotes within 24 hours.`}
+  title={`${service.name} in the Twin Cities, MN | Free Quote in 24 Hrs — JSM`}
+  description={`JSM provides ${service.name.toLowerCase()} across the Twin Cities metro. Free on-site walkthrough and written quote within 24 hours, no obligation.`}
 >
   <section class="section">
     <div class="container split">
@@ -50,6 +50,11 @@ const faqSchema =
           <a href={url('/')}>Home</a> / <a href={url('/services')}>Services</a> / {service.name}
         </nav>
         <h1>{service.name}</h1>
+        <p>
+          <strong>{BUSINESS.name} provides {service.name.toLowerCase()} for commercial facilities
+          across the {BUSINESS.serviceArea}</strong> — quoted free from an on-site walkthrough,
+          with a written scope and pricing within 24 hours. {service.short}
+        </p>
         <p>{service.description}</p>
         <h2>What's Included</h2>
         <ul class="checklist">

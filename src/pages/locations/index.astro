@@ -6,8 +6,8 @@ import { LOCATIONS } from '../../data/locations';
 ---
 
 <Base
-  title={`Service Area | ${BUSINESS.name}`}
-  description={`${BUSINESS.name} provides commercial cleaning across the ${BUSINESS.serviceArea}, including ${LOCATIONS.slice(0, 5).map((l) => l.name).join(', ')}, and more.`}
+  title={`Service Area: ${LOCATIONS.length} Twin Cities Metro Cities | ${BUSINESS.name}`}
+  description={`JSM provides commercial cleaning in ${LOCATIONS.length} metro cities including ${LOCATIONS.slice(0, 4).map((l) => l.name).join(', ')}. Free quotes within 24 hours.`}
 >
   <section class="section">
     <div class="container">
