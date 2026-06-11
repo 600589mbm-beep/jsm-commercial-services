@@ -5,6 +5,7 @@ import QuoteForm from '../../components/QuoteForm.astro';
 import { BUSINESS, url } from '../../config';
 import { LOCATIONS } from '../../data/locations';
 import { SERVICES } from '../../data/services';
+import { breadcrumbList } from '../../lib/breadcrumbs';
 
 export function getStaticPaths() {
   return LOCATIONS.map((location) => ({ params: { slug: location.slug }, props: { location } }));
@@ -24,6 +25,12 @@ const serviceSchema = {
     telephone: BUSINESS.phone,
   },
 };
+
+const breadcrumbSchema = breadcrumbList(Astro.site, [
+  ['Home', '/'],
+  ['Locations', '/locations'],
+  [location.name, null],
+]);
 ---
 
 <Base
@@ -64,6 +71,7 @@ const serviceSchema = {
   </section>
   <CTA heading={`Need a cleaning crew in ${location.name}?`} />
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Base>
 
 <style>

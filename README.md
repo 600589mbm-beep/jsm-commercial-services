@@ -7,9 +7,11 @@ Static marketing site for JSM Commercial Services (commercial cleaning & janitor
 ## Pages
 
 - Home, About, Contact, Free Quote
-- 10 service pages (generated from `src/data/services.ts`)
-- 12 city pages (generated from `src/data/locations.ts`)
-- Sitemap + LocalBusiness JSON-LD on every page
+- 11 service pages (generated from `src/data/services.ts`)
+- 8 industry pages + hub (generated from `src/data/industries.ts`)
+- 43 city pages + 473 city×service combo pages (generated from `src/data/locations.ts`)
+- Resources hub: cost-guide cluster, articles, templates, cost calculator
+- Segmented sitemaps + LocalBusiness/Service/FAQPage/BreadcrumbList JSON-LD
 
 ## Editing
 

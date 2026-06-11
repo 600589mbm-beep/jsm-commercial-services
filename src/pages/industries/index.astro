@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import { BUSINESS, url } from '../../config';
+import { INDUSTRIES, INDUSTRY_ICONS } from '../../data/industries';
+import { breadcrumbList } from '../../lib/breadcrumbs';
+
+const breadcrumbSchema = breadcrumbList(Astro.site, [
+  ['Home', '/'],
+  ['Industries', null],
+]);
+---
+
+<Base
+  title={`Industries We Serve — Commercial Cleaning by Facility Type | JSM Twin Cities`}
+  description={`Specialized commercial cleaning for gyms, churches, schools, restaurants, dealerships, banks, managed properties, and retail across the ${BUSINESS.serviceArea}. Free quote in 24 hours.`}
+>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs"><a href={url('/')}>Home</a> / Industries</nav>
+      <div class="section-head">
+        <h1>Industries We Serve</h1>
+        <p>
+          Every facility type gets judged on different things — a gym on its equipment, a bank on
+          its lobby, a daycare on its licensing binder. We scope the cleaning to what your
+          industry actually gets measured on, across the {BUSINESS.serviceArea}.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {INDUSTRIES.map((ind) => (
+          <div class="card">
+            <span class="icon">{INDUSTRY_ICONS[ind.slug]}</span>
+            <h3><a href={url(`/industries/${ind.slug}`)}>{ind.name}</a></h3>
+            <p>{ind.short}</p>
+          </div>
+        ))}
+        <div class="card">
+          <span class="icon">🏥</span>
+          <h3><a href={url('/services/medical-office-cleaning')}>Medical & Dental Offices</a></h3>
+          <p>Healthcare-grade cleaning and disinfection for clinics, dental practices, and medical office buildings.</p>
+        </div>
+        <div class="card">
+          <span class="icon">🏭</span>
+          <h3><a href={url('/services/industrial-warehouse-cleaning')}>Warehouses & Industrial</a></h3>
+          <p>Floor scrubbing, office-area cleaning, and high-area dusting for warehouses and light industrial facilities.</p>
+        </div>
+      </div>
+      <p class="not-listed">
+        Don't see your facility type? We quote any commercial property from a free walkthrough —
+        <a href={url('/quote')}>tell us what you have</a> or call {BUSINESS.phone}.
+      </p>
+    </div>
+  </section>
+  <CTA heading="Get a quote scoped to your facility type" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</Base>
+
+<style>
+  .not-listed { margin-top: 2.5rem; text-align: center; color: var(--text-soft); }
+</style>

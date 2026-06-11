@@ -1,0 +1,118 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { BUSINESS, url } from '../../config';
+import { INDUSTRIES } from '../../data/industries';
+import { SERVICES } from '../../data/services';
+import { COST_GUIDES } from '../../data/costGuides';
+import { breadcrumbList } from '../../lib/breadcrumbs';
+
+export function getStaticPaths() {
+  return INDUSTRIES.map((industry) => ({ params: { slug: industry.slug }, props: { industry } }));
+}
+
+const { industry } = Astro.props;
+
+const related = SERVICES.filter((s) => industry.relatedServices.includes(s.slug));
+const guide = industry.costGuide ? COST_GUIDES.find((g) => g.slug === industry.costGuide) : null;
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: industry.name,
+  description: industry.short,
+  areaServed: BUSINESS.serviceArea,
+  provider: {
+    '@type': 'LocalBusiness',
+    name: BUSINESS.name,
+    telephone: BUSINESS.phone,
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: industry.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const breadcrumbSchema = breadcrumbList(Astro.site, [
+  ['Home', '/'],
+  ['Industries', '/industries'],
+  [industry.name, null],
+]);
+---
+
+<Base
+  title={`${industry.name} in the Twin Cities, MN | Free Quote in 24 Hrs — JSM`}
+  description={`${BUSINESS.name} provides ${industry.name.toLowerCase()} across the ${BUSINESS.serviceArea}. Free on-site walkthrough and written quote within 24 hours, no obligation.`}
+>
+  <section class="section">
+    <div class="container split">
+      <div>
+        <nav class="crumbs">
+          <a href={url('/')}>Home</a> / <a href={url('/industries')}>Industries</a> / {industry.name}
+        </nav>
+        <h1>{industry.name}</h1>
+        <p>
+          <strong>{BUSINESS.name} provides {industry.name.toLowerCase()} across the
+          {BUSINESS.serviceArea}</strong> — quoted free from an on-site walkthrough of your
+          {industry.noun}, with a written scope and pricing within 24 hours. {industry.short}
+        </p>
+        <p>{industry.description}</p>
+        <h2>Why {industry.name} Is Different</h2>
+        <ul class="checklist">
+          {industry.painPoints.map((p) => <li>{p}</li>)}
+        </ul>
+        <h2>What's Included</h2>
+        <ul class="checklist">
+          {industry.included.map((b) => <li>{b}</li>)}
+        </ul>
+        <h2>Frequently Asked Questions</h2>
+        {industry.faq.map((f) => (
+          <details class="faq-acc">
+            <summary>{f.q}<span class="plus">+</span></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+        <h2>Related Services{guide && ' & Pricing'}</h2>
+        <ul class="checklist">
+          {related.map((s) => (
+            <li><a href={url(`/services/${s.slug}`)}>{s.name}</a> — {s.short}</li>
+          ))}
+          {guide && (
+            <li>
+              <a href={url(`/resources/${guide.slug}`)}>{guide.title}</a> — what facilities like
+              yours actually pay, and what drives the price.
+            </li>
+          )}
+        </ul>
+      </div>
+      <aside class="card">
+        <h2>Get a Free Quote</h2>
+        <p>Tell us about your {industry.noun}. {BUSINESS.responsePromise}</p>
+        <QuoteForm variant="cleaning" />
+      </aside>
+    </div>
+  </section>
+  <CTA heading={`Need cleaning for your ${industry.noun}?`} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</Base>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .split { grid-template-columns: 1fr; }
+  }
+</style>

@@ -4,6 +4,7 @@ import CTA from '../../components/CTA.astro';
 import { BUSINESS, url } from '../../config';
 import { ARTICLES } from '../../data/articles';
 import { COST_GUIDES, PILLAR_SLUG } from '../../data/costGuides';
+import { breadcrumbList } from '../../lib/breadcrumbs';
 
 export function getStaticPaths() {
   return [
@@ -27,6 +28,12 @@ const articleSchema = {
   author: { '@type': 'Organization', name: BUSINESS.name },
   publisher: { '@type': 'Organization', name: BUSINESS.name },
 };
+
+const breadcrumbSchema = breadcrumbList(Astro.site, [
+  ['Home', '/'],
+  ['Resources', '/resources'],
+  [article.title, null],
+]);
 ---
 
 <Base title={`${article.title} | ${BUSINESS.name}`} description={article.description}>
@@ -85,6 +92,7 @@ const articleSchema = {
   </section>
   <CTA />
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Base>
 
 <style>

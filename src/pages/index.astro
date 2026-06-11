@@ -4,6 +4,7 @@ import CTA from '../components/CTA.astro';
 import TrustBar from '../components/TrustBar.astro';
 import { BUSINESS, url } from '../config';
 import { SERVICES, SERVICE_ICONS } from '../data/services';
+import { INDUSTRIES, INDUSTRY_ICONS } from '../data/industries';
 import { LOCATIONS } from '../data/locations';
 import { TESTIMONIALS } from '../data/testimonials';
 
@@ -144,6 +145,26 @@ const faqSchema = {
   <section class="section">
     <div class="container">
       <div class="section-head">
+        <h2>Industries We Serve</h2>
+        <p>
+          A gym gets judged on its equipment, a bank on its lobby, a daycare on its licensing
+          binder. We scope cleaning to what your facility type actually gets measured on.
+        </p>
+      </div>
+      <p class="industry-links">
+        {INDUSTRIES.map((ind) => (
+          <a href={url(`/industries/${ind.slug}`)}>{INDUSTRY_ICONS[ind.slug]} {ind.name}</a>
+        ))}
+        <a href={url('/services/medical-office-cleaning')}>🏥 Medical & Dental Offices</a>
+        <a href={url('/services/industrial-warehouse-cleaning')}>🏭 Warehouses & Industrial</a>
+        <a class="all" href={url('/industries')}>All industries →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
         <h2>Why Businesses Choose JSM</h2>
       </div>
       <div class="grid grid-3">
@@ -215,6 +236,34 @@ const faqSchema = {
 </Base>
 
 <style>
+  .industry-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem 1rem;
+    margin: 0 auto;
+    max-width: 880px;
+  }
+  .industry-links a {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.5rem 1.1rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background: var(--bg);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .industry-links a:hover {
+    border-color: var(--teal);
+    box-shadow: var(--shadow);
+  }
+  .industry-links a.all {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+
   .hero {
     position: relative;
     overflow: hidden;
