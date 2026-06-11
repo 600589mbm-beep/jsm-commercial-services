@@ -28,6 +28,18 @@ import { BUSINESS, url } from '../config';
           {BUSINESS.address.street}<br />
           {BUSINESS.address.city}, {BUSINESS.address.state} {BUSINESS.address.zip}
         </p>
+        <iframe
+          class="map"
+          src={`https://www.google.com/maps?q=${encodeURIComponent(
+            `${BUSINESS.name}, ${BUSINESS.address.street}, ${BUSINESS.address.city}, ${BUSINESS.address.state} ${BUSINESS.address.zip}`
+          )}&output=embed`}
+          width="100%"
+          height="260"
+          style="border:0; border-radius: 12px;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title={`Map of ${BUSINESS.name} in ${BUSINESS.address.city}, ${BUSINESS.address.state}`}
+        ></iframe>
         <h2>Service Area</h2>
         <p>{BUSINESS.serviceArea} — <a href={url('/locations')}>see all cities</a></p>
       </div>

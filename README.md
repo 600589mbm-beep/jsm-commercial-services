@@ -35,6 +35,8 @@ Static marketing site for JSM Commercial Services (commercial cleaning & janitor
 These out-rank any design change, in priority order:
 
 1. **Google Business Profile** — set up as a service-area business (hide street address, list service cities), local phone number, identical Name/Address/Phone everywhere, and relentlessly collect Google reviews. #1 free lead source for a local cleaner.
+   - Set the GBP **website link with a UTM tag** so profile clicks are measurable in analytics: `https://<your-domain>/?utm_source=google&utm_medium=organic&utm_campaign=gbp`
+   - ~40% of profile views come from **Google Maps** — photos, reviews, and correct categories drive that surface far more than the website does. Add real photos (crews, before/after, trucks) and aim for steady review velocity.
 2. **5-minute speed-to-lead** — in Formspree, turn on instant email notifications (and forward to SMS via your carrier's email-to-text gateway). Call every lead back within 5 minutes during business hours. Responding in 5 min vs 30 min makes contact ~100x more likely (MIT/HBR, 2.24M leads).
 3. **Track calls + form submits** — add [Plausible](https://plausible.io) (~$9/mo, no cookie banner) or GA4; track `tel:` clicks and form submissions as conversions. Target ≥8% on the quote page; below 3% means fix message-match/trust first.
 4. **Update the real review numbers** — once Google reviews exist, put the real rating + count in `src/config.ts` (the hero trust bar reads from there). A visible real review count is the most imitable edge over competitors (cf. Stratus's review widget).
