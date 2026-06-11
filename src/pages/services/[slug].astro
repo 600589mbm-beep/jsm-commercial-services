@@ -66,12 +66,14 @@ const faqSchema =
             ))}
           </>
         )}
-        <h2>{service.name} Across the Metro</h2>
-        <p class="link-cloud">
-          {LOCATIONS.map((l) => (
-            <a href={url(`/locations/${l.slug}/${service.slug}`)}>{l.name}</a>
-          ))}
-        </p>
+        <details class="faq-acc">
+          <summary>{service.name} across the metro — view all {LOCATIONS.length} cities<span class="plus">+</span></summary>
+          <p class="link-cloud">
+            {LOCATIONS.map((l) => (
+              <a href={url(`/locations/${l.slug}/${service.slug}`)}>{l.name}</a>
+            ))}
+          </p>
+        </details>
       </div>
       <aside class="card">
         <h2>Get a Free Quote</h2>
