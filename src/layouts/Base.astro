@@ -64,11 +64,12 @@ const schema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href={url('/fonts/manrope-latin.woff2').replace(/\/$/, '')}
     />
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg').replace(/\/$/, '')} />
     <ClientRouter />
