@@ -31,9 +31,10 @@ const year = new Date().getFullYear();
     <div>
       <h3>Service Area</h3>
       <ul>
-        {LOCATIONS.map((l) => (
+        {LOCATIONS.slice(0, 12).map((l) => (
           <li><a href={url(`/locations/${l.slug}`)}>{l.name}, MN</a></li>
         ))}
+        <li><a href={url('/locations')}><strong>All {LOCATIONS.length} cities →</strong></a></li>
       </ul>
     </div>
   </div>
