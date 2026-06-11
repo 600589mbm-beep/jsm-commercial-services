@@ -1,0 +1,31 @@
+---
+// Mobile-only sticky click-to-call bar — the highest-converting element
+// for a local service business.
+import { BUSINESS } from '../config';
+---
+
+<a class="sticky-call" href={BUSINESS.phoneHref}>
+  📞 Call Now for a Free Quote — {BUSINESS.phone}
+</a>
+
+<style>
+  .sticky-call {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: var(--teal);
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.9rem 1rem;
+    box-shadow: 0 -2px 12px rgba(15, 42, 67, 0.25);
+  }
+  @media (max-width: 720px) {
+    .sticky-call { display: block; }
+    :global(body) { padding-bottom: 3.4rem; }
+  }
+</style>

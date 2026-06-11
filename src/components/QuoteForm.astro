@@ -1,30 +1,184 @@
 ---
+// 3-step quote wizard (per CRO research: 2-click first step, progress bar,
+// contact info last). Posts everything to Formspree on the final step.
 import { BUSINESS } from '../config';
-import { SERVICES } from '../data/services';
 ---
 
-<form action={BUSINESS.formspreeEndpoint} method="POST" class="quote-form">
-  <label for="name">Name</label>
-  <input id="name" name="name" type="text" required autocomplete="name" />
+<form action={BUSINESS.formspreeEndpoint} method="POST" class="quote-wizard" novalidate>
+  <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+    <div class="progress-fill" style="width: 33%"></div>
+  </div>
+  <p class="step-label">Step <span class="step-num">1</span> of 3</p>
 
-  <label for="company">Company</label>
-  <input id="company" name="company" type="text" autocomplete="organization" />
+  <fieldset class="step" data-step="1">
+    <legend>What kind of facility?</legend>
+    <div class="chips">
+      {['Office', 'Medical', 'Retail', 'Industrial / Warehouse', 'Other'].map((t) => (
+        <label class="chip">
+          <input type="radio" name="facility_type" value={t} />
+          <span>{t}</span>
+        </label>
+      ))}
+    </div>
+    <legend>How often?</legend>
+    <div class="chips">
+      {['Recurring service', 'One-time clean'].map((f) => (
+        <label class="chip">
+          <input type="radio" name="frequency" value={f} />
+          <span>{f}</span>
+        </label>
+      ))}
+    </div>
+    <p class="err" hidden>Please pick a facility type and frequency.</p>
+    <button type="button" class="btn btn-primary next">Next →</button>
+  </fieldset>
 
-  <label for="email">Email</label>
-  <input id="email" name="email" type="email" required autocomplete="email" />
+  <fieldset class="step" data-step="2" hidden>
+    <legend>Facility size</legend>
+    <div class="chips">
+      {['Under 5,000 sq ft', '5,000–20,000 sq ft', '20,000–50,000 sq ft', '50,000+ sq ft', 'Not sure'].map((s) => (
+        <label class="chip">
+          <input type="radio" name="square_footage" value={s} />
+          <span>{s}</span>
+        </label>
+      ))}
+    </div>
+    <legend>Services needed</legend>
+    <div class="chips">
+      {['General cleaning', 'Floor care', 'Carpet cleaning', 'Windows', 'Disinfection', 'Day porter', 'Post-construction'].map((s) => (
+        <label class="chip">
+          <input type="checkbox" name="services_needed" value={s} />
+          <span>{s}</span>
+        </label>
+      ))}
+    </div>
+    <label for="qw-city">City or ZIP</label>
+    <input id="qw-city" name="city_zip" type="text" autocomplete="postal-code" />
+    <div class="nav">
+      <button type="button" class="btn btn-back back">← Back</button>
+      <button type="button" class="btn btn-primary next">Next →</button>
+    </div>
+  </fieldset>
 
-  <label for="phone">Phone</label>
-  <input id="phone" name="phone" type="tel" autocomplete="tel" />
-
-  <label for="service">Service Needed</label>
-  <select id="service" name="service">
-    <option value="">Select a service…</option>
-    {SERVICES.map((s) => <option value={s.name}>{s.name}</option>)}
-    <option value="Other">Other / not sure</option>
-  </select>
-
-  <label for="message">Tell us about your facility</label>
-  <textarea id="message" name="message" rows="5" placeholder="Square footage, cleaning frequency, location…"></textarea>
-
-  <button class="btn btn-primary" type="submit">Send Quote Request</button>
+  <fieldset class="step" data-step="3" hidden>
+    <legend>Where do we send your quote?</legend>
+    <label for="qw-name">Name *</label>
+    <input id="qw-name" name="name" type="text" required autocomplete="name" />
+    <label for="qw-company">Company</label>
+    <input id="qw-company" name="company" type="text" autocomplete="organization" />
+    <label for="qw-phone">Phone *</label>
+    <input id="qw-phone" name="phone" type="tel" required autocomplete="tel" />
+    <label for="qw-email">Email</label>
+    <input id="qw-email" name="email" type="email" autocomplete="email" />
+    <p class="err" hidden>Please add your name and a phone number.</p>
+    <div class="nav">
+      <button type="button" class="btn btn-back back">← Back</button>
+      <button type="submit" class="btn btn-primary">Get My Free Quote</button>
+    </div>
+    <p class="reassure">No obligation. We respond within one business day — usually much faster.</p>
+  </fieldset>
 </form>
+
+<style>
+  .progress {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--teal);
+    transition: width 0.25s;
+  }
+  .step-label { font-size: 0.8rem; color: var(--text-soft); margin: 0.4rem 0 0.8rem; }
+  fieldset { border: none; padding: 0; margin: 0; }
+  legend {
+    font-weight: 700;
+    color: var(--navy);
+    padding: 0;
+    margin: 0.8rem 0 0.5rem;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip span {
+    display: inline-block;
+    padding: 0.5rem 0.9rem;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    user-select: none;
+    transition: border-color 0.1s, background 0.1s;
+  }
+  .chip input:checked + span {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #fff;
+    font-weight: 600;
+  }
+  .chip input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .nav { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+  .btn-back { background: none; border: 1.5px solid var(--border); color: var(--text-soft); }
+  .err { color: #b3261e; font-size: 0.88rem; margin: 0.5rem 0 0; }
+  .reassure { font-size: 0.82rem; color: var(--text-soft); margin-top: 0.9rem; margin-bottom: 0; }
+  button.next, fieldset button[type='submit'] { margin-top: 1rem; }
+</style>
+
+<script>
+  function setStep(form: HTMLFormElement, n: number) {
+    form.querySelectorAll<HTMLFieldSetElement>('.step').forEach((fs) => {
+      fs.hidden = Number(fs.dataset.step) !== n;
+    });
+    const fill = form.querySelector<HTMLElement>('.progress-fill');
+    if (fill) fill.style.width = `${(n / 3) * 100}%`;
+    const bar = form.querySelector('.progress');
+    if (bar) bar.setAttribute('aria-valuenow', String(n));
+    const num = form.querySelector('.step-num');
+    if (num) num.textContent = String(n);
+  }
+
+  function validStep(form: HTMLFormElement, n: number): boolean {
+    if (n === 1) {
+      return (
+        !!form.querySelector('input[name="facility_type"]:checked') &&
+        !!form.querySelector('input[name="frequency"]:checked')
+      );
+    }
+    if (n === 3) {
+      const name = form.querySelector<HTMLInputElement>('input[name="name"]');
+      const phone = form.querySelector<HTMLInputElement>('input[name="phone"]');
+      return !!name?.value.trim() && !!phone?.value.trim();
+    }
+    return true;
+  }
+
+  document.querySelectorAll<HTMLFormElement>('.quote-wizard').forEach((form) => {
+    let step = 1;
+    form.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const fs = target.closest<HTMLFieldSetElement>('.step');
+      const err = fs?.querySelector<HTMLElement>('.err');
+      if (target.classList.contains('next')) {
+        if (!validStep(form, step)) {
+          if (err) err.hidden = false;
+          return;
+        }
+        if (err) err.hidden = true;
+        step = Math.min(step + 1, 3);
+        setStep(form, step);
+      } else if (target.classList.contains('back')) {
+        step = Math.max(step - 1, 1);
+        setStep(form, step);
+      }
+    });
+    form.addEventListener('submit', (e) => {
+      const fs = form.querySelector<HTMLFieldSetElement>('.step[data-step="3"]');
+      const err = fs?.querySelector<HTMLElement>('.err');
+      if (!validStep(form, 3)) {
+        e.preventDefault();
+        if (err) err.hidden = false;
+      }
+    });
+  });
+</script>

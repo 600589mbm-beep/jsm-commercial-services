@@ -1,9 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
+import TrustBar from '../components/TrustBar.astro';
 import { BUSINESS, url } from '../config';
 import { SERVICES } from '../data/services';
 import { LOCATIONS } from '../data/locations';
+import { TESTIMONIALS } from '../data/testimonials';
 ---
 
 <Base
@@ -12,19 +14,20 @@ import { LOCATIONS } from '../data/locations';
 >
   <section class="hero">
     <div class="container">
-      <h1>Commercial Cleaning Your Business Can Count On</h1>
+      <h1>Commercial Cleaning in the {BUSINESS.serviceArea} — Inspected, Insured, Guaranteed</h1>
       <p class="sub">
         Offices, medical facilities, warehouses, and everything in between — cleaned on schedule,
-        every time, across the {BUSINESS.serviceArea}.
+        every time, by bonded and background-checked crews. If a visit misses the mark, we re-clean
+        it free.
       </p>
       <div class="buttons">
-        <a class="btn btn-primary" href={url('/quote')}>Get a Free Quote</a>
-        <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+        <a class="btn btn-primary" href={url('/quote')}>Get My Free Quote</a>
+        <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call Now — {BUSINESS.phone}</a>
       </div>
+      <TrustBar />
       <div class="stats">
         <div><strong>{BUSINESS.stats.facilitiesServed}</strong><span>Facilities served</span></div>
         <div><strong>{BUSINESS.stats.yearsInBusiness}</strong><span>Years in business</span></div>
-        <div><strong>{BUSINESS.stats.rating}★</strong><span>{BUSINESS.stats.reviewCount} reviews</span></div>
         <div><strong>24/7</strong><span>Emergency response</span></div>
       </div>
     </div>
@@ -72,6 +75,22 @@ import { LOCATIONS } from '../data/locations';
   <section class="section">
     <div class="container">
       <div class="section-head">
+        <h2>What Clients Say</h2>
+      </div>
+      <div class="grid grid-3">
+        {TESTIMONIALS.map((t) => (
+          <blockquote class="card testimonial">
+            <p>“{t.quote}”</p>
+            <footer>— {t.name}, {t.company}</footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
         <h2>Serving the {BUSINESS.serviceArea}</h2>
         <p>Local crews across the metro mean fast response and consistent service.</p>
       </div>
@@ -102,4 +121,7 @@ import { LOCATIONS } from '../data/locations';
   .stats div { display: flex; flex-direction: column; }
   .stats strong { font-size: 1.6rem; color: var(--teal); }
   .stats span { color: #c4d3df; font-size: 0.9rem; }
+  .stats { margin-top: 2rem; }
+  .testimonial { margin: 0; }
+  .testimonial footer { color: var(--text-soft); font-size: 0.88rem; font-weight: 600; }
 </style>

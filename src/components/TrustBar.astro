@@ -1,0 +1,26 @@
+---
+import { BUSINESS } from '../config';
+
+const years = new Date().getFullYear() - BUSINESS.foundingYear;
+---
+
+<div class="trust-bar">
+  <span class="stars" aria-label={`Rated ${BUSINESS.stats.rating} out of 5`}>
+    ★★★★★ <strong>{BUSINESS.stats.rating}</strong> from {BUSINESS.stats.reviewCount} reviews
+  </span>
+  <span>✓ Bonded &amp; Insured</span>
+  <span>✓ Background-Checked Staff</span>
+  <span>✓ Serving the metro for {years}+ years</span>
+</div>
+
+<style>
+  .trust-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.92rem;
+    color: #c4d3df;
+  }
+  .stars { color: #ffc857; font-weight: 600; }
+  .stars strong { color: #fff; }
+</style>
