@@ -80,6 +80,20 @@ const schema = {
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg').replace(/\/$/, '')} />
     <ClientRouter />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <!-- Cookieless self-hosted analytics beacon (no third-party, no PII stored). -->
+    <script>
+      function jsmTrack() {
+        try {
+          new Image().src = 'https://191-101-2-203.sslip.io/track?s=' +
+            encodeURIComponent(location.hostname) + '&p=' +
+            encodeURIComponent(location.pathname) + '&r=' +
+            encodeURIComponent(document.referrer ? new URL(document.referrer).hostname : '') +
+            '&t=' + Date.now();
+        } catch (e) {}
+      }
+      jsmTrack();
+      document.addEventListener('astro:page-load', jsmTrack);
+    </script>
   </head>
   <body>
     <div class="scroll-progress" aria-hidden="true"></div>
