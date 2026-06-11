@@ -1,3 +1,16 @@
+export const SERVICE_ICONS: Record<string, string> = {
+  'office-cleaning': '🏢',
+  'janitorial-services': '🧹',
+  'floor-care': '✨',
+  'carpet-cleaning': '🧼',
+  'window-cleaning': '🪟',
+  'disinfection-services': '🧴',
+  'post-construction-cleaning': '🏗️',
+  'day-porter-services': '🛎️',
+  'medical-office-cleaning': '🏥',
+  'industrial-warehouse-cleaning': '🏭',
+};
+
 export interface Service {
   slug: string;
   name: string;

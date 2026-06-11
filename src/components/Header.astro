@@ -23,10 +23,16 @@ import { BUSINESS, url } from '../config';
 
 <style>
   .site-header {
-    background: var(--navy);
+    background: rgba(15, 42, 67, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
     z-index: 50;
+    transition: box-shadow 0.3s var(--ease-out);
+  }
+  :global(body.scrolled) .site-header {
+    box-shadow: 0 6px 24px rgba(10, 31, 51, 0.45);
   }
   .bar {
     display: flex;
@@ -38,13 +44,31 @@ import { BUSINESS, url } from '../config';
   }
   .logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
   .logo-mark {
-    background: var(--teal);
+    background: linear-gradient(135deg, var(--teal), var(--blue));
     color: #fff;
     font-weight: 800;
     padding: 0.3rem 0.55rem;
     border-radius: 6px;
     letter-spacing: 0.5px;
+    transition: transform 0.3s var(--ease-out);
   }
+  .logo:hover .logo-mark { transform: rotate(-5deg) scale(1.08); }
+  nav a {
+    position: relative;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background: var(--teal-bright);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out);
+  }
+  nav a:hover::after { transform: scaleX(1); }
   .logo-text { color: #fff; font-weight: 700; }
   nav { display: flex; gap: 1.1rem; flex: 1; flex-wrap: wrap; }
   nav a { color: #d7e3ec; text-decoration: none; font-weight: 500; }

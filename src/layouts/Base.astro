@@ -63,14 +63,57 @@ const schema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap"
+    />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
     <StickyCall />
+    <script>
+      // Scroll-reveal: stagger cards and section heads as they enter the viewport.
+      const revealables = document.querySelectorAll(
+        '.card, .section-head, .faq-item, blockquote, .trust-bar'
+      );
+      const groups = new Map<Element | null, number>();
+      revealables.forEach((el) => {
+        const parent = el.parentElement;
+        const i = groups.get(parent) ?? 0;
+        groups.set(parent, i + 1);
+        (el as HTMLElement).style.setProperty('--reveal-delay', `${Math.min(i, 5) * 80}ms`);
+        el.classList.add('reveal');
+      });
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      );
+      revealables.forEach((el) => io.observe(el));
+
+      // Scroll progress bar
+      const bar = document.querySelector<HTMLElement>('.scroll-progress');
+      const onScroll = () => {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (bar) bar.style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
+        document.body.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    </script>
   </body>
 </html>

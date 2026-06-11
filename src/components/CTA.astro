@@ -20,7 +20,18 @@ const { heading = 'Ready for a cleaner facility?' } = Astro.props;
 </section>
 
 <style>
-  .cta { background: var(--navy); padding: 3.5rem 0; }
+  .cta {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, var(--navy), #14385a, var(--navy-dark), var(--navy));
+    background-size: 300% 300%;
+    animation: cta-pan 14s ease infinite;
+    padding: 4rem 0;
+  }
+  @keyframes cta-pan {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
   .inner { text-align: center; }
   h2 { color: #fff; }
   p { color: #c4d3df; }

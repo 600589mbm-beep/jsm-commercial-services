@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
 import { BUSINESS, url } from '../../config';
-import { SERVICES } from '../../data/services';
+import { SERVICES, SERVICE_ICONS } from '../../data/services';
 ---
 
 <Base
@@ -22,6 +22,7 @@ import { SERVICES } from '../../data/services';
       <div class="grid grid-3">
         {SERVICES.map((s) => (
           <div class="card">
+            <span class="icon">{SERVICE_ICONS[s.slug]}</span>
             <h3><a href={url(`/services/${s.slug}`)}>{s.name}</a></h3>
             <p>{s.short}</p>
           </div>
