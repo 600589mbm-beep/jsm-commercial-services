@@ -9,7 +9,8 @@ export const BUSINESS = {
   tagline: 'Commercial Cleaning & Janitorial Services in the Twin Cities Metro',
   phone: '(612) 555-0123',                        // <-- your phone
   phoneHref: 'tel:+16125550123',                  // <-- tel: link (digits only)
-  email: 'quotes@jsmcommercialservices.com',      // <-- your email
+  email: 'sales@jsmcommercialservices.com',
+  infoEmail: 'info@jsmcommercialservices.com',
   // Create a free form at https://formspree.io, paste your endpoint here:
   formspreeEndpoint: 'https://formspree.io/f/YOUR_FORM_ID',
   hours: 'Mon–Sat 7am–7pm · 24/7 for emergencies',

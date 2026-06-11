@@ -17,7 +17,10 @@ import { BUSINESS, url } from '../config';
         <h2>Phone</h2>
         <p><a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a></p>
         <h2>Email</h2>
-        <p><a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></p>
+        <p>
+          Sales: <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a><br />
+          General: <a href={`mailto:${BUSINESS.infoEmail}`}>{BUSINESS.infoEmail}</a>
+        </p>
         <h2>Hours</h2>
         <p>{BUSINESS.hours}</p>
         <h2>Service Area</h2>
