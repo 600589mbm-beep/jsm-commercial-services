@@ -20,47 +20,65 @@ export function getStaticPaths() {
 }
 
 const { location, service } = Astro.props;
+const local = CITY_LOCAL[location.slug];
 
-// Deterministic copy variation so 430 pages don't share one boilerplate intro.
+// Google warns against indexing large sets of substantially similar city pages.
+// Keep all combinations useful and crawlable for visitors, but index only the
+// strongest city/service pages with real local context and core buyer demand.
+const CORE_INDEXED_SERVICES = new Set([
+  'janitorial-services',
+  'office-cleaning',
+  'day-porter-services',
+  'floor-care',
+  'medical-office-cleaning',
+  'industrial-warehouse-cleaning',
+]);
+const shouldIndex = Boolean(local) && CORE_INDEXED_SERVICES.has(service.slug);
+
 const li = LOCATIONS.findIndex((l) => l.slug === location.slug);
 const si = SERVICES.findIndex((s) => s.slug === service.slug);
 const v = (li + si) % 3;
 
-// Answer-first: every variant states who/what/where + the offer in sentence one.
 const intros = [
-  `${BUSINESS.name} provides ${service.name.toLowerCase()} for commercial properties in ${location.name}, MN — free on-site walkthrough, written scope, and pricing within 24 hours. Trained, background-checked crews serve ${location.name} and the rest of ${location.county} on a schedule built around your business. ${location.blurb}`,
-  `${BUSINESS.name} delivers ${service.name.toLowerCase()} to businesses throughout ${location.name}, Minnesota, with a documented scope of work, supervisor inspections, and a free re-clean guarantee — quoted free from an on-site walkthrough. ${location.blurb}`,
-  `Businesses in ${location.name}, MN get ${service.name.toLowerCase()} from ${BUSINESS.name} on month-to-month agreements — no long-term contracts — with a free walkthrough and written pricing within 24 hours. We serve all of ${location.county}. ${location.blurb}`,
+  `${BUSINESS.name} provides ${service.name.toLowerCase()} for commercial properties in ${location.name}, MN. Every proposal starts with a free facility walkthrough, a written scope, and clear pricing. Trained, background-checked crews serve ${location.name} and the rest of ${location.county} on a schedule built around your operations. ${location.blurb}`,
+  `${BUSINESS.name} delivers ${service.name.toLowerCase()} to businesses throughout ${location.name}, Minnesota, with a documented scope of work, supervisor inspections, and a free re-clean guarantee. ${location.blurb}`,
+  `Businesses in ${location.name}, MN can use ${BUSINESS.name} for ${service.name.toLowerCase()} on month-to-month agreements with an assigned local team and direct accountability. We serve ${location.name} and surrounding communities throughout ${location.county}. ${location.blurb}`,
 ];
 
-const local = CITY_LOCAL[location.slug];
 const nearby = LOCATIONS.filter((l) => l.county === location.county && l.slug !== location.slug).slice(0, 6);
 const otherServices = SERVICES.filter((s) => s.slug !== service.slug);
+const businessId = `${new URL('/', BUSINESS.website).href}#localbusiness`;
+const canonical = new URL(`/locations/${location.slug}/${service.slug}/`, BUSINESS.website).href;
 
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: `${service.name} in ${location.name}, MN`,
+  '@id': `${canonical}#service`,
+  name: `${service.name} in ${location.name}, Minnesota`,
   description: service.short,
-  areaServed: { '@type': 'City', name: `${location.name}, MN` },
-  provider: { '@type': 'LocalBusiness', name: BUSINESS.name, telephone: BUSINESS.phone },
+  url: canonical,
+  areaServed: { '@type': 'City', name: `${location.name}, Minnesota` },
+  provider: { '@id': businessId },
 };
 
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL(url('/'), Astro.site).href },
-    { '@type': 'ListItem', position: 2, name: 'Locations', item: new URL(url('/locations'), Astro.site).href },
-    { '@type': 'ListItem', position: 3, name: location.name, item: new URL(url(`/locations/${location.slug}`), Astro.site).href },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL(url('/'), BUSINESS.website).href },
+    { '@type': 'ListItem', position: 2, name: 'Locations', item: new URL(url('/locations'), BUSINESS.website).href },
+    { '@type': 'ListItem', position: 3, name: location.name, item: new URL(url(`/locations/${location.slug}`), BUSINESS.website).href },
     { '@type': 'ListItem', position: 4, name: service.name },
   ],
 };
 ---
 
 <Base
-  title={`${service.name} in ${location.name}, MN | Free Quote in 24 Hrs — JSM`}
-  description={`${service.name} in ${location.name}, MN — free walkthrough and written quote within 24 hours from JSM. Serving all of ${location.county}.`}
+  title={`${service.name} in ${location.name}, MN | JSM Commercial Services`}
+  description={`${service.name} for commercial facilities in ${location.name}, MN. Written scopes, background-checked crews, supervisor inspections, and free walkthroughs from JSM.`}
+  robots={shouldIndex
+    ? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
+    : 'noindex,follow'}
 >
   <section class="section">
     <div class="container split">
@@ -74,75 +92,64 @@ const breadcrumbSchema = {
         <p>{service.description}</p>
         {local && (
           <>
-            <h2>Working in {location.name}</h2>
+            <h2>Commercial Facilities in {location.name}</h2>
             <p>{local.context}</p>
           </>
         )}
-        <h2>What's Included</h2>
+        <h2>What’s Included</h2>
         <ul class="checklist">
-          {service.bullets.map((b) => <li>{b}</li>)}
+          {service.bullets.map((bullet) => <li>{bullet}</li>)}
         </ul>
         {(service.faq.length > 0 || local) && (
           <>
             <h2>Common Questions</h2>
-            {(local?.faqs ?? []).map((f) => (
+            {(local?.faqs ?? []).map((faq) => (
               <details class="faq-acc">
-                <summary>{f.q}<span class="plus">+</span></summary>
-                <p>{f.a}</p>
+                <summary>{faq.q}<span class="plus">+</span></summary>
+                <p>{faq.a}</p>
               </details>
             ))}
-            {service.faq.map((f) => (
+            {service.faq.map((faq) => (
               <details class="faq-acc">
-                <summary>{f.q}<span class="plus">+</span></summary>
-                <p>{f.a}</p>
+                <summary>{faq.q}<span class="plus">+</span></summary>
+                <p>{faq.a}</p>
               </details>
             ))}
           </>
         )}
-        <h2>Other Services in {location.name}</h2>
+        <h2>Other Commercial Cleaning Services in {location.name}</h2>
         <p class="link-cloud">
-          {otherServices.map((s) => (
-            <a href={url(`/locations/${location.slug}/${s.slug}`)}>{SERVICE_ICONS[s.slug]} {s.name}</a>
+          {otherServices.map((otherService) => (
+            <a href={url(`/locations/${location.slug}/${otherService.slug}`)}>{SERVICE_ICONS[otherService.slug]} {otherService.name}</a>
           ))}
         </p>
         {nearby.length > 0 && (
           <>
             <h2>{service.name} Near {location.name}</h2>
             <p class="link-cloud">
-              {nearby.map((l) => (
-                <a href={url(`/locations/${l.slug}/${service.slug}`)}>{l.name}, MN</a>
+              {nearby.map((nearbyLocation) => (
+                <a href={url(`/locations/${nearbyLocation.slug}/${service.slug}`)}>{nearbyLocation.name}, MN</a>
               ))}
             </p>
           </>
         )}
       </div>
       <aside class="card">
-        <h2>Free {service.slug === 'snow-removal' ? 'Snow ' : ''}Quote in {location.name}</h2>
-        <p>
-          {service.slug === 'snow-removal'
-            ? `Tell us about your property. ${BUSINESS.responsePromise}`
-            : `Tell us about your facility. ${BUSINESS.responsePromise}`}
-        </p>
+        <h2>Request a Free {service.slug === 'snow-removal' ? 'Snow ' : ''}Walkthrough in {location.name}</h2>
+        <p>{service.slug === 'snow-removal' ? 'Tell us about your property.' : 'Tell us about your facility.'} {BUSINESS.responsePromise}</p>
         <QuoteForm variant={service.slug === 'snow-removal' ? 'snow' : 'cleaning'} />
       </aside>
     </div>
   </section>
   <CTA heading={`Need ${service.name.toLowerCase()} in ${location.name}?`} />
-  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  {shouldIndex && <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />}
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Base>
 
 <style>
-  .split {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-  @media (max-width: 860px) {
-    .split { grid-template-columns: 1fr; }
-  }
-  .link-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; }
+  .split { display: grid; grid-template-columns: 1.6fr 1fr; gap: 3rem; align-items: start; }
+  .link-cloud { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; }
   .link-cloud a { text-decoration: none; font-weight: 600; }
   .link-cloud a:hover { text-decoration: underline; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
 </style>
