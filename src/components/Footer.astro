@@ -10,7 +10,7 @@ const year = new Date().getFullYear();
   <div class="container cols">
     <div>
       <h3>{BUSINESS.name}</h3>
-      <p>Enterprise-level cleaning standards with owner-led local accountability across the Twin Cities.</p>
+      <p>Commercial cleaning and janitorial services with enterprise-level standards and owner-led local accountability across the Twin Cities.</p>
       <p>
         <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a><br />
         <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a><br />
@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
       </p>
     </div>
     <div>
-      <h3>Services</h3>
+      <h3>Commercial Cleaning Services</h3>
       <ul>
         {SERVICES.map((service) => (
           <li><a href={url(`/services/${service.slug}`)}>{service.name}</a></li>
@@ -29,32 +29,33 @@ const year = new Date().getFullYear();
       </ul>
     </div>
     <div>
-      <h3>Facility Resources</h3>
+      <h3>Contracts &amp; Facility Resources</h3>
       <ul>
+        <li><a href={url('/janitorial-contracts')}>Commercial Janitorial Contracts</a></li>
         <li><a href={url('/facility-care-program')}>JSM Facility Care Program</a></li>
         <li><a href={url('/switching-cleaning-companies')}>Switch Cleaning Providers</a></li>
-        <li><a href={url('/industries')}>Industries We Serve</a></li>
-        <li><a href={url('/locations')}>Twin Cities Service Area</a></li>
-        <li><a href={url('/resources/templates')}>Janitorial RFP &amp; Templates</a></li>
+        <li><a href={url('/resources/templates')}>Janitorial RFP &amp; Vendor Scorecard</a></li>
         <li><a href={url('/resources/cleaning-cost-calculator')}>Cleaning Cost Calculator</a></li>
         <li><a href={url('/resources')}>All Resources &amp; Guides</a></li>
       </ul>
     </div>
     <div>
-      <h3>Company</h3>
+      <h3>Company &amp; Service Area</h3>
       <ul>
+        <li><a href={url('/locations/apple-valley')}>Commercial Cleaning in Apple Valley</a></li>
+        <li><a href={url('/locations')}>Twin Cities Service Area</a></li>
+        <li><a href={url('/industries')}>Industries We Serve</a></li>
         <li><a href={url('/about')}>About JSM</a></li>
-        <li><a href={url('/services')}>All Services</a></li>
-        <li><a href={url('/contact')}>Contact</a></li>
+        <li><a href={url('/contact')}>Contact JSM</a></li>
         <li><a href={url('/quote')}>Request a Free Walkthrough</a></li>
       </ul>
     </div>
   </div>
   <div class="container cities">
-    <h3>Serving {LOCATIONS.length} Cities Across the {BUSINESS.serviceArea}</h3>
+    <h3>Commercial Cleaning Across {LOCATIONS.length} Twin Cities Communities</h3>
     <p class="city-links">
       {LOCATIONS.map((location) => (
-        <a href={url(`/locations/${location.slug}`)}>{location.name}</a>
+        <a href={url(`/locations/${location.slug}`)}>{location.name}, MN</a>
       ))}
     </p>
   </div>
