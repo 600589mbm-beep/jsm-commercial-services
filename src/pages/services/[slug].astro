@@ -21,6 +21,7 @@ const serviceSchema = {
   '@type': 'Service',
   '@id': `${canonical}#service`,
   name: service.name,
+  ...(service.aliases?.length ? { alternateName: service.aliases, serviceType: service.aliases } : { serviceType: service.name }),
   description: service.short,
   url: canonical,
   areaServed: { '@type': 'AdministrativeArea', name: BUSINESS.serviceArea },
@@ -49,8 +50,8 @@ const title = isJanitorial
   ? `Commercial Janitorial Services | Twin Cities, MN | ${BUSINESS.shortName}`
   : `${service.name} | Twin Cities, MN | ${BUSINESS.shortName}`;
 const description = isJanitorial
-  ? `Recurring commercial janitorial services across the Twin Cities. Written scopes, assigned background-checked crews, supervisor inspections, and month-to-month agreements.`
-  : `${BUSINESS.name} provides ${service.name.toLowerCase()} across the Twin Cities with written scopes, trained crews, supervisor inspections, and free facility walkthroughs.`;
+  ? 'Recurring commercial janitorial and nightly cleaning across the Twin Cities with written scopes, background-checked crews, supervisor inspections, and month-to-month agreements.'
+  : `${service.name} for Twin Cities commercial facilities. Written scopes, trained crews, supervisor inspections, and free facility walkthroughs from ${BUSINESS.shortName}.`;
 ---
 
 <Base title={title} description={description}>
@@ -89,6 +90,11 @@ const description = isJanitorial
     <div class="container split">
       <div>
         <p>{service.description}</p>
+        {service.aliases?.length && (
+          <p class="service-terms">
+            <strong>Related service names:</strong> {service.aliases.join(' · ')}
+          </p>
+        )}
         <h2>What’s Included</h2>
         <ul class="checklist">
           {service.bullets.map((bullet) => <li>{bullet}</li>)}
@@ -160,6 +166,8 @@ const description = isJanitorial
   .service-summary li::before { content: '✓'; position: absolute; left: 0; color: var(--teal-bright); font-weight: 800; }
   .split { display: grid; grid-template-columns: 1.25fr .75fr; gap: 3rem; align-items: start; }
   .quote-card { position: sticky; top: 8.5rem; }
+  .service-terms { padding: .8rem 1rem; border-left: 3px solid var(--teal); background: var(--bg-alt); color: var(--text-soft); font-size: .86rem; }
+  .service-terms strong { color: var(--navy); }
   .contract-callout { margin: 2rem 0; padding: 1.6rem; border-left: 4px solid var(--teal); border-radius: 0 12px 12px 0; background: var(--bg-alt); }
   .link-cloud { display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; font-size: .95rem; }
   .link-cloud a { text-decoration: none; font-weight: 600; }
