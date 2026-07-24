@@ -1,0 +1,247 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import { BUSINESS, url } from '../config';
+
+const FAQS = [
+  {
+    q: 'Can JSM start immediately after our current contract ends?',
+    a: 'Startup timing depends on facility size, access, staffing, equipment, and the scope of work. JSM builds a written transition schedule before service begins so keys, supplies, crew orientation, and first-service expectations are not left until the final day.',
+  },
+  {
+    q: 'Will you quote our existing cleaning scope?',
+    a: 'Yes. JSM can price your current scope line by line and show recommended changes separately. That keeps the comparison fair while still identifying tasks, frequencies, or accountability requirements that may be missing.',
+  },
+  {
+    q: 'How do we avoid a service gap during the changeover?',
+    a: 'The safest approach is to select the new provider before issuing final notice, confirm the outgoing contract requirements, establish a firm start date, and complete access and site orientation before the first scheduled cleaning. JSM coordinates its startup plan around those dates.',
+  },
+  {
+    q: 'Do we need to sign a long-term agreement with JSM?',
+    a: 'No. Recurring JSM service agreements are month-to-month with a 30-day notice, so continued business depends on service quality and accountability rather than a long lock-in period.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+---
+
+<Base
+  title={`Switch Commercial Cleaning Companies Without Disruption | ${BUSINESS.name}`}
+  description={`A practical Twin Cities transition plan for replacing an underperforming janitorial provider without missed service, unclear scope, or startup confusion.`}
+>
+  <section class="transition-hero">
+    <div class="container hero-layout">
+      <div>
+        <nav class="crumbs dark"><a href={url('/')}>Home</a> / Switch Cleaning Providers</nav>
+        <p class="eyebrow">Commercial cleaning transition planning</p>
+        <h1>Replace an underperforming cleaning company without creating a service gap</h1>
+        <p class="lead">
+          Switching vendors should solve problems—not create a chaotic first month. JSM uses a
+          documented transition plan to move from the current provider to an assigned local team
+          with clear tasks, access, contacts, and quality expectations.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/quote')}>Request a Transition Walkthrough</a>
+          <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+        </div>
+      </div>
+      <aside class="signal-card">
+        <p class="card-label">Common reasons facilities switch</p>
+        <ul>
+          <li>Quality changes from night to night</li>
+          <li>Restrooms or high-visibility areas are repeatedly missed</li>
+          <li>Too many crew changes and too little supervision</li>
+          <li>Service concerns require repeated follow-up</li>
+          <li>The scope no longer matches current occupancy</li>
+          <li>Specialty floor and carpet care stays reactive</li>
+          <li>The account feels buried inside a large system</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head wide">
+        <p class="eyebrow navy">The JSM transition framework</p>
+        <h2>A controlled changeover from decision to first inspection</h2>
+        <p>The exact schedule varies by facility, but these six checkpoints keep the important details visible.</p>
+      </div>
+      <div class="timeline">
+        <article class="transition-step">
+          <span>01</span>
+          <div><h3>Review the current agreement</h3><p>Confirm notice requirements, end dates, included tasks, consumable ownership, keys, equipment, and any existing service documentation.</p></div>
+        </article>
+        <article class="transition-step">
+          <span>02</span>
+          <div><h3>Walk the facility with decision-makers</h3><p>Document current problems, priority areas, restricted spaces, operating hours, traffic patterns, flooring, and occupant expectations.</p></div>
+        </article>
+        <article class="transition-step">
+          <span>03</span>
+          <div><h3>Build a comparable written scope</h3><p>Quote the requested work clearly, separate optional improvements, and define daily, weekly, monthly, and periodic responsibilities.</p></div>
+        </article>
+        <article class="transition-step">
+          <span>04</span>
+          <div><h3>Set the startup calendar</h3><p>Coordinate final notice, JSM start date, key transfer, alarm access, deliveries, crew orientation, and the first quality-control checkpoint.</p></div>
+        </article>
+        <article class="transition-step">
+          <span>05</span>
+          <div><h3>Launch with an assigned team</h3><p>Orient the crew to the site-specific scope, safety requirements, communication path, priority spaces, and first-week expectations.</p></div>
+        </article>
+        <article class="transition-step">
+          <span>06</span>
+          <div><h3>Inspect and stabilize</h3><p>Review early service against the written scope, correct misses quickly, and adjust the plan before small misunderstandings become ongoing problems.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container comparison-layout">
+      <div>
+        <p class="eyebrow navy">Before issuing notice</p>
+        <h2>Protect the facility and the transition</h2>
+        <p>Use this checklist before ending the current relationship or announcing a start date.</p>
+      </div>
+      <div class="checklist-card">
+        <ul class="checklist">
+          <li>Confirm the exact contract notice period and termination method</li>
+          <li>Identify who owns dispensers, equipment, chemicals, and stored supplies</li>
+          <li>List keys, badges, access codes, loading instructions, and alarm procedures</li>
+          <li>Preserve the current scope, inspection records, and recurring complaint history</li>
+          <li>Define who approves the new scope and who handles daily service communication</li>
+          <li>Set expectations for the final service by the outgoing provider</li>
+          <li>Schedule the incoming provider’s orientation before the first cleaning night</li>
+          <li>Plan an early inspection with the facility contact and new supervisor</li>
+        </ul>
+        <a class="btn btn-navy" href={url('/resources/templates')}>Use the Free Vendor Scorecard</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section local-section">
+    <div class="container local-layout">
+      <div>
+        <p class="eyebrow">Why facilities choose a local alternative</p>
+        <h2>Fewer layers between the concern and the person responsible</h2>
+        <p>
+          Large national companies can provide scale, but local facility teams often need faster
+          decisions and a clearer escalation path. JSM combines a documented operating structure
+          with owner-led accountability across the Twin Cities.
+        </p>
+      </div>
+      <div class="advantage-grid">
+        <article><strong>Direct access</strong><p>One local contact for the scope, startup, service concerns, and corrective action.</p></article>
+        <article><strong>Building-specific scope</strong><p>Tasks and frequencies designed around the actual facility rather than a generic package.</p></article>
+        <article><strong>Active accountability</strong><p>Month-to-month agreements and a free re-clean guarantee keep performance central.</p></article>
+        <article><strong>Regional coordination</strong><p>One framework can support multiple locations throughout the Twin Cities service area.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container proposal-layout">
+      <div>
+        <p class="eyebrow navy">Already collecting bids?</p>
+        <h2>Send JSM the current scope or RFP</h2>
+        <p>
+          JSM can quote the requested work as written, then identify optional changes separately.
+          This gives your team a clean comparison without hiding recommendations inside a different scope.
+        </p>
+        <div class="actions light-actions">
+          <a class="btn btn-primary" href={url('/contact')}>Send the Current Scope</a>
+          <a class="btn btn-navy" href={url('/resources/templates')}>Download an RFP Template</a>
+        </div>
+      </div>
+      <aside class="proposal-card">
+        <p class="card-label navy-label">A professional proposal should show</p>
+        <ul>
+          <li>Exact tasks and service frequencies</li>
+          <li>Recurring monthly price and optional project pricing</li>
+          <li>Staffing and service schedule assumptions</li>
+          <li>Insurance and onboarding requirements</li>
+          <li>Quality-control and issue-escalation process</li>
+          <li>Start date, agreement term, and cancellation terms</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-layout">
+      <div class="section-head">
+        <p class="eyebrow navy">Transition questions</p>
+        <h2>What facility teams ask before changing vendors</h2>
+      </div>
+      <div>
+        {FAQS.map((faq) => (
+          <details class="faq-acc">
+            <summary>{faq.q}<span class="plus">+</span></summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <CTA heading="Ready to plan a cleaner, controlled vendor transition?" />
+</Base>
+
+<style>
+  .transition-hero { position: relative; overflow: hidden; background: linear-gradient(145deg, #071a2a, var(--navy) 62%, #174654); color: #fff; padding: 5.3rem 0; }
+  .transition-hero::after { content: ''; position: absolute; width: 520px; height: 520px; border-radius: 50%; right: -240px; bottom: -300px; background: rgba(25,163,154,.32); filter: blur(70px); }
+  .hero-layout { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
+  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--teal-dark); }
+  h1 { color: #fff; font-size: clamp(2.5rem, 5.2vw, 4.35rem); }
+  .lead { color: #c8d7e3; font-size: 1.12rem; max-width: 750px; }
+  .actions { display: flex; gap: .9rem; flex-wrap: wrap; margin-top: 1.8rem; }
+  .signal-card { background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); border-radius: 18px; padding: 2rem; backdrop-filter: blur(12px); box-shadow: 0 24px 60px rgba(0,0,0,.25); }
+  .card-label { color: var(--teal-bright); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .signal-card ul, .proposal-card ul { list-style: none; padding: 0; margin: 0; }
+  .signal-card li { position: relative; padding: .72rem 0 .72rem 1.65rem; border-bottom: 1px solid rgba(255,255,255,.12); color: #e3edf3; }
+  .signal-card li::before { content: '!'; position: absolute; left: 0; display: grid; place-items: center; width: 1.15rem; height: 1.15rem; top: .88rem; border-radius: 50%; background: rgba(255,200,87,.15); color: var(--gold); font-size: .72rem; font-weight: 800; }
+  .wide { max-width: 850px; }
+  .timeline { position: relative; display: grid; gap: .9rem; }
+  .timeline::before { content: ''; position: absolute; left: 2.15rem; top: 2rem; bottom: 2rem; width: 2px; background: linear-gradient(var(--teal), var(--blue)); }
+  .transition-step { position: relative; display: grid; grid-template-columns: 4.4rem 1fr; gap: 1.2rem; align-items: start; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.35rem; box-shadow: var(--shadow); }
+  .transition-step > span { position: relative; z-index: 1; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: linear-gradient(135deg, var(--teal), var(--blue)); color: #fff; font-weight: 800; box-shadow: 0 7px 18px rgba(25,163,154,.28); }
+  .transition-step h3 { margin-bottom: .3rem; }
+  .transition-step p { color: var(--text-soft); margin: 0; }
+  .comparison-layout, .proposal-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 3.5rem; align-items: center; }
+  .checklist-card, .proposal-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 2rem; box-shadow: var(--shadow-lift); }
+  .checklist-card .btn { margin-top: 1rem; }
+  .local-section { background: linear-gradient(135deg, var(--navy-dark), var(--navy)); color: #fff; }
+  .local-section h2 { color: #fff; }
+  .local-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 4rem; align-items: start; }
+  .local-layout > div:first-child p:last-child { color: #c8d7e3; }
+  .advantage-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+  .advantage-grid article { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; padding: 1.25rem; }
+  .advantage-grid strong { color: var(--teal-bright); }
+  .advantage-grid p { color: #c8d7e3; margin: .3rem 0 0; }
+  .navy-label { color: var(--teal-dark); }
+  .proposal-card li { position: relative; padding: .7rem 0 .7rem 1.6rem; border-bottom: 1px solid var(--border); color: var(--text-soft); }
+  .proposal-card li::before { content: '✓'; position: absolute; left: 0; color: var(--teal); font-weight: 800; }
+  .light-actions { margin-top: 1.2rem; }
+  .faq-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 3rem; }
+  @media (max-width: 900px) {
+    .hero-layout, .comparison-layout, .local-layout, .proposal-layout, .faq-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 600px) {
+    .transition-hero { padding: 4rem 0; }
+    .advantage-grid { grid-template-columns: 1fr; }
+    .timeline::before { left: 1.75rem; }
+    .transition-step { grid-template-columns: 3.4rem 1fr; padding: 1rem; }
+    .transition-step > span { width: 2.5rem; height: 2.5rem; font-size: .8rem; }
+  }
+</style>
