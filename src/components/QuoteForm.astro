@@ -1,5 +1,5 @@
 ---
-// Three-step quote wizard. The default flow captures recurring cleaning needs;
+// Three-step quote wizard. The default flow captures commercial cleaning needs;
 // variant="snow" swaps in snow-removal questions. Contact information stays last.
 import { BUSINESS } from '../config';
 
@@ -14,15 +14,34 @@ const subject = snow
   ? '🔔 NEW SNOW QUOTE REQUEST — jsmcommercialservice.com'
   : '🔔 NEW FACILITY WALKTHROUGH REQUEST — jsmcommercialservice.com';
 
-const facilityLegend = snow ? 'What kind of property?' : 'What kind of facility?';
+const facilityLegend = snow ? 'What kind of property?' : 'What kind of commercial facility?';
 const facilities = snow
   ? ['Office', 'Retail', 'Medical', 'Industrial / Warehouse', 'HOA / Multifamily', 'Other']
-  : ['Office', 'Commercial real estate', 'Medical / Dental', 'Retail', 'Education', 'Industrial / Warehouse', 'Multifamily', 'Other'];
+  : [
+      'Office',
+      'Commercial real estate / Multi-tenant',
+      'Medical / Dental / Clinic',
+      'Retail / Shopping center',
+      'Fitness center / Gym',
+      'School / Campus',
+      'Stadium / Event venue',
+      'Industrial / Warehouse',
+      'Vacant commercial suite / Turnover',
+      'Multifamily',
+      'Other',
+    ];
 
 const frequencyLegend = snow ? 'What kind of agreement?' : 'What do you need?';
 const frequencies = snow
   ? ['Seasonal contract', 'Per-event service', 'Not sure yet']
-  : ['Recurring janitorial', 'Replace current provider', 'One-time project', 'Not sure yet'];
+  : [
+      'Recurring janitorial',
+      'Nightly cleaning',
+      'Replace current provider',
+      'Move-out / Tenant turnover',
+      'One-time project',
+      'Not sure yet',
+    ];
 
 const sizeLegend = snow ? 'Parking lot size' : 'Facility size';
 const sizes = snow
@@ -34,7 +53,25 @@ const submitText = snow ? 'Get My Snow Quote' : 'Request My Walkthrough';
 
 const serviceOptions = snow
   ? ['Parking lot plowing', 'Sidewalks & entrances', 'Salting / de-icing', 'Anti-icing pre-treatment', 'Snow hauling / stacking']
-  : ['General cleaning', 'Contract janitorial', 'Day porter', 'Floor care', 'Carpet cleaning', 'Windows', 'Disinfection', 'Post-construction', 'Snow removal'];
+  : [
+      'Janitorial / Commercial cleaning',
+      'Office / Nightly cleaning',
+      'Gym / Fitness center',
+      'Multi-tenant / Common areas',
+      'Clinic / Medical office',
+      'Retail / Shopping center',
+      'School / Campus',
+      'Warehouse / Industrial',
+      'Stadium / Event venue',
+      'Move-out / Tenant turnover',
+      'Day porter',
+      'Floor care',
+      'Carpet cleaning',
+      'Window cleaning',
+      'Disinfection',
+      'Post-construction',
+      'Snow removal',
+    ];
 ---
 
 <form action={BUSINESS.formspreeEndpoint} method="POST" class="quote-wizard" novalidate>
