@@ -3,31 +3,93 @@ import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
 import { BUSINESS, url } from '../../config';
 import { LOCATIONS } from '../../data/locations';
+
+const appleValley = LOCATIONS.find((location) => location.slug === 'apple-valley')!;
+const otherLocations = LOCATIONS.filter((location) => location.slug !== 'apple-valley');
 ---
 
 <Base
-  title={`Service Area: ${LOCATIONS.length} Twin Cities Metro Cities | ${BUSINESS.name}`}
-  description={`JSM provides commercial cleaning in ${LOCATIONS.length} metro cities including ${LOCATIONS.slice(0, 4).map((l) => l.name).join(', ')}. Free quotes within 24 hours.`}
+  title={`Commercial Cleaning Service Areas | Twin Cities, MN | ${BUSINESS.shortName}`}
+  description={`JSM provides commercial cleaning and janitorial services from Apple Valley across ${LOCATIONS.length} Twin Cities communities. Explore local service pages and request a free walkthrough.`}
 >
+  <section class="locations-hero">
+    <div class="container">
+      <nav class="crumbs dark"><a href={url('/')}>Home</a> / Locations</nav>
+      <p class="eyebrow">Twin Cities commercial cleaning coverage</p>
+      <h1>Commercial Cleaning &amp; Janitorial Service Areas</h1>
+      <p>
+        JSM is headquartered in Apple Valley and serves offices, clinics, retail, warehouses,
+        schools, and other commercial facilities throughout the Minneapolis–St. Paul metro.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href={url('/quote')}>Request a Free Facility Walkthrough</a>
+        <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
-      <nav class="crumbs"><a href={url('/')}>Home</a> / Locations</nav>
-      <div class="section-head">
-        <h1>Our Service Area</h1>
-        <p>
-          Local crews positioned across the {BUSINESS.serviceArea} for fast response and
-          consistent recurring service. Don't see your city? Call us — we likely cover it.
-        </p>
+      <a class="home-base-card" href={url(`/locations/${appleValley.slug}`)}>
+        <div>
+          <p class="label">JSM home base</p>
+          <h2>Commercial Cleaning in Apple Valley, MN</h2>
+          <p>{appleValley.blurb} Explore recurring janitorial, office cleaning, medical-office cleaning, floor care, day porter, and other local facility services.</p>
+        </div>
+        <span>View Apple Valley services →</span>
+      </a>
+
+      <div class="section-head locations-head">
+        <p class="eyebrow navy">Metro coverage</p>
+        <h2>Explore Commercial Cleaning Near Your Facility</h2>
+        <p>Choose a city for local service information, available cleaning programs, nearby coverage, and a facility walkthrough request.</p>
       </div>
       <div class="grid grid-3">
-        {LOCATIONS.map((l) => (
-          <div class="card">
-            <h3><a href={url(`/locations/${l.slug}`)}>{l.name}, MN</a></h3>
-            <p>{l.blurb}</p>
-          </div>
+        {otherLocations.map((location) => (
+          <article class="card">
+            <h3><a href={url(`/locations/${location.slug}`)}>Commercial Cleaning in {location.name}, MN</a></h3>
+            <p>{location.blurb}</p>
+          </article>
         ))}
       </div>
     </div>
   </section>
-  <CTA />
+
+  <section class="section alt">
+    <div class="container support-layout">
+      <div>
+        <p class="eyebrow navy">Regional facility support</p>
+        <h2>Managing more than one Twin Cities location?</h2>
+        <p>JSM can create a shared cleaning standard with site-specific schedules and requirements for each facility.</p>
+      </div>
+      <div class="support-actions">
+        <a class="btn btn-navy" href={url('/facility-care-program')}>Explore Multi-Site Facility Care</a>
+        <a class="btn btn-primary" href={url('/janitorial-contracts')}>Review Janitorial Contracts</a>
+      </div>
+    </div>
+  </section>
+
+  <CTA heading="Need commercial cleaning in the Twin Cities?" />
 </Base>
+
+<style>
+  .locations-hero { padding: 4.8rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
+  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--teal-dark); }
+  .locations-hero h1 { color: #fff; }
+  .locations-hero p:last-of-type { color: #c8d7e3; max-width: 760px; font-size: 1.08rem; }
+  .actions, .support-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.5rem; }
+  .home-base-card { display: flex; justify-content: space-between; align-items: center; gap: 2rem; margin-bottom: 3rem; padding: 2rem; border-radius: 16px; color: #fff; background: linear-gradient(120deg, var(--teal-dark), var(--navy)); text-decoration: none; box-shadow: var(--shadow-lift); }
+  .home-base-card h2 { color: #fff; }
+  .home-base-card p:not(.label) { color: #d7e5ec; margin-bottom: 0; max-width: 780px; }
+  .home-base-card .label { color: var(--teal-bright); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .home-base-card > span { color: var(--teal-bright); font-weight: 800; white-space: nowrap; }
+  .locations-head { margin-top: 1rem; }
+  .support-layout { display: flex; justify-content: space-between; align-items: center; gap: 3rem; }
+  .support-layout > div:first-child { max-width: 680px; }
+  @media (max-width: 760px) {
+    .home-base-card, .support-layout { flex-direction: column; align-items: flex-start; }
+    .home-base-card > span { white-space: normal; }
+  }
+</style>

@@ -1,36 +1,50 @@
 ---
-// Mobile-only sticky click-to-call bar — the highest-converting element
-// for a local service business.
-import { BUSINESS } from '../config';
+// Mobile-only persistent conversion bar. Keeps both the immediate phone action
+// and the lower-pressure walkthrough action visible without covering menu links.
+import { BUSINESS, url } from '../config';
 ---
 
-<a class="sticky-call" href={BUSINESS.phoneHref}>
-  📞 Call Now for a Free Quote — {BUSINESS.phone}
-</a>
+<div class="mobile-conversion-bar" aria-label="Quick contact actions">
+  <a class="call" href={BUSINESS.phoneHref}>
+    <span aria-hidden="true">☎</span>
+    <span><small>Call JSM</small><strong>{BUSINESS.phone}</strong></span>
+  </a>
+  <a class="quote" href={url('/quote')}>Free Walkthrough</a>
+</div>
 
 <style>
-  .sticky-call {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 60;
-    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-    color: #fff;
-    text-align: center;
-    font-weight: 700;
-    text-decoration: none;
-    padding: 0.9rem 1rem;
-    box-shadow: 0 -2px 12px rgba(15, 42, 67, 0.25);
-    animation: sticky-rise 0.5s var(--ease-out) 0.8s both;
+  .mobile-conversion-bar { display: none; }
+  @media (max-width: 720px) {
+    .mobile-conversion-bar {
+      position: fixed;
+      z-index: 90;
+      left: .65rem;
+      right: .65rem;
+      bottom: max(.65rem, env(safe-area-inset-bottom));
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: .5rem;
+      padding: .45rem;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      background: rgba(10,31,51,.97);
+      box-shadow: 0 12px 35px rgba(4,18,30,.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      animation: sticky-rise .45s var(--ease-out) .55s both;
+    }
+    .mobile-conversion-bar a { min-height: 48px; border-radius: 10px; text-decoration: none; }
+    .call { display: flex; align-items: center; justify-content: center; gap: .55rem; color: #fff; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); }
+    .call > span:first-child { color: var(--teal-bright); font-size: 1.05rem; }
+    .call > span:last-child { display: flex; flex-direction: column; line-height: 1.08; }
+    .call small { color: #a9bcc9; font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; }
+    .call strong { color: #fff; font-size: .78rem; }
+    .quote { display: grid; place-items: center; padding: 0 .7rem; color: #fff; background: linear-gradient(135deg, var(--teal), var(--teal-dark)); font-size: .75rem; font-weight: 800; text-align: center; box-shadow: 0 6px 16px rgba(25,163,154,.25); }
+    :global(body) { padding-bottom: calc(5rem + env(safe-area-inset-bottom)); }
+    :global(.mobile-panel-inner) { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom)); }
   }
   @keyframes sticky-rise {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-  }
-  @media (max-width: 720px) {
-    .sticky-call { display: block; }
-    :global(body) { padding-bottom: 3.4rem; }
+    from { opacity: 0; transform: translateY(120%); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>

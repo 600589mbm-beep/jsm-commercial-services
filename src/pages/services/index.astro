@@ -3,32 +3,178 @@ import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
 import { BUSINESS, url } from '../../config';
 import { SERVICES, SERVICE_ICONS } from '../../data/services';
+import { breadcrumbList } from '../../lib/breadcrumbs';
+
+const publishedServices = [
+  { name: 'Fitness Center & Gym Cleaning', href: '/industries/gym-fitness-cleaning', note: 'Equipment, locker rooms, mirrors, restrooms, floors, and high-touch surfaces.' },
+  { name: 'Commercial Move-Out Cleaning', href: '/services/commercial-move-out-cleaning', note: 'Vacant offices, retail suites, managed properties, and tenant-turnover cleaning.' },
+  { name: 'Multi-Tenant Cleaning', href: '/industries/property-management-cleaning', note: 'Lobbies, corridors, elevators, common restrooms, amenities, and shared building areas.' },
+  { name: 'Office Cleaning', href: '/services/office-cleaning', note: 'Nightly, weekly, and custom recurring commercial office schedules.' },
+  { name: 'Post-Construction Cleaning', href: '/services/post-construction-cleaning', note: 'Rough, final, and touch-up cleaning for remodels, new construction, and tenant improvements.' },
+  { name: 'School & Campus Cleaning', href: '/industries/school-daycare-cleaning', note: 'Classrooms, learning centers, common areas, restrooms, and scheduled disinfection.' },
+  { name: 'Stadium & Event Venue Cleaning', href: '/industries/stadium-event-venue-cleaning', note: 'Planned pre-event, post-event, concourse, restroom, seating-area, and common-area cleaning.' },
+  { name: 'Janitorial Services', href: '/services/janitorial-services', note: 'Recurring commercial janitorial contracts with written scopes and supervisor inspections.' },
+  { name: 'Commercial Window Cleaning', href: '/services/window-cleaning', note: 'Storefront, office, entrance, interior, and low-rise exterior glass cleaning.' },
+  { name: 'Commercial Cleaning Service', href: '/services/janitorial-services', note: 'One accountable provider for recurring and scheduled facility cleaning.' },
+  { name: 'Nightly Cleaning Service', href: '/services/office-cleaning', note: 'After-hours commercial cleaning planned around business operations.' },
+  { name: 'Clinic Cleaning Service', href: '/services/medical-office-cleaning', note: 'Medical-office, dental-office, clinic, waiting-room, and high-touch cleaning.' },
+  { name: 'Retail Cleaning Service', href: '/industries/retail-store-cleaning', note: 'Sales floors, fitting rooms, entries, restrooms, glass, and stockroom support.' },
+  { name: 'Shopping Center Cleaning', href: '/industries/retail-store-cleaning', note: 'Retail common areas, entrances, floors, shared restrooms, and visible customer spaces.' },
+  { name: 'Warehouse Cleaning', href: '/services/industrial-warehouse-cleaning', note: 'Warehouse floors, offices, breakrooms, restrooms, high dusting, and shift-aware schedules.' },
+];
+
+const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
+  ['Home', '/'],
+  ['Services', null],
+]);
+
+const catalogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'JSM Commercial Cleaning Services',
+  itemListElement: publishedServices.map((service, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Service',
+      name: service.name,
+      description: service.note,
+      url: new URL(url(service.href), BUSINESS.website).href,
+      provider: { '@id': `${new URL('/', BUSINESS.website).href}#localbusiness` },
+      areaServed: { '@type': 'AdministrativeArea', name: BUSINESS.serviceArea },
+    },
+  })),
+};
 ---
 
 <Base
-  title={`Commercial Cleaning Services — Twin Cities, MN | Free Quote in 24 Hrs — JSM`}
-  description={`All 11 JSM commercial cleaning & janitorial services: offices, floors, carpet, windows, disinfection, snow. Free walkthrough and quote within 24 hours.`}
+  title={`Commercial Cleaning & Janitorial Services | Twin Cities, MN | ${BUSINESS.shortName}`}
+  description={`Explore JSM commercial cleaning services: janitorial, office, clinic, gym, school, retail, shopping center, warehouse, window, construction, move-out, and venue cleaning.`}
 >
+  <section class="services-hero">
+    <div class="container hero-layout">
+      <div>
+        <nav class="crumbs dark"><a href={url('/')}>Home</a> / Services</nav>
+        <p class="eyebrow">Twin Cities commercial cleaning company</p>
+        <h1>Commercial Cleaning &amp; Janitorial Services</h1>
+        <p class="lead">
+          JSM provides recurring janitorial service, nightly cleaning, specialty projects, and
+          facility-specific cleaning programs from its Apple Valley home base across the Twin Cities.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/quote')}>Request a Free Facility Walkthrough</a>
+          <a class="btn btn-outline" href={url('/janitorial-contracts')}>Review Janitorial Contracts</a>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <p class="card-label">How JSM scopes service</p>
+        <ul>
+          <li>Facility walkthrough and priority review</li>
+          <li>Written tasks and cleaning frequencies</li>
+          <li>Schedule aligned with operating hours</li>
+          <li>Supervisor inspections and correction path</li>
+          <li>Recurring and optional project pricing</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
-      <nav class="crumbs"><a href={url('/')}>Home</a> / Services</nav>
-      <div class="section-head">
-        <h1>Commercial Cleaning Services</h1>
-        <p>
-          Everything your facility needs from one accountable vendor. Every service below is
-          available one-time or on a recurring schedule across the {BUSINESS.serviceArea}.
-        </p>
+      <div class="section-head wide">
+        <p class="eyebrow navy">Core service programs</p>
+        <h2>Detailed commercial cleaning services</h2>
+        <p>Each page explains the scope, common tasks, scheduling considerations, and questions facility teams ask before requesting pricing.</p>
       </div>
       <div class="grid grid-3">
-        {SERVICES.map((s) => (
-          <div class="card">
-            <span class="icon">{SERVICE_ICONS[s.slug]}</span>
-            <h3><a href={url(`/services/${s.slug}`)}>{s.name}</a></h3>
-            <p>{s.short}</p>
-          </div>
+        {SERVICES.map((service) => (
+          <article class="card service-card">
+            <span class="icon">{SERVICE_ICONS[service.slug]}</span>
+            <h3><a href={url(`/services/${service.slug}`)}>{service.name}</a></h3>
+            <p>{service.short}</p>
+            {service.aliases && <small>Also listed as: {service.aliases.join(' · ')}</small>}
+          </article>
         ))}
       </div>
     </div>
   </section>
-  <CTA />
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head wide">
+        <p class="eyebrow navy">Published service catalog</p>
+        <h2>Services customers can find on JSM’s Google Business Profile</h2>
+        <p>
+          These names mirror the services published on JSM’s business profile and connect each term
+          to the most relevant website page. JSM focuses on commercial facilities—not residential housekeeping.
+        </p>
+      </div>
+      <div class="catalog-grid">
+        {publishedServices.map((service) => (
+          <a class="catalog-item" href={url(service.href)}>
+            <strong>{service.name}</strong>
+            <span>{service.note}</span>
+            <small>View service details →</small>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section local-section">
+    <div class="container local-layout">
+      <div>
+        <p class="eyebrow">Apple Valley home base</p>
+        <h2>Local commercial cleaning across the Twin Cities</h2>
+        <p>JSM is headquartered in Apple Valley and provides commercial facility services throughout Dakota County and the Minneapolis–St. Paul metro.</p>
+      </div>
+      <div class="local-actions">
+        <a class="btn btn-outline" href={url('/locations/apple-valley')}>Cleaning Services in Apple Valley</a>
+        <a class="btn btn-primary" href={url('/locations')}>Explore the Full Service Area</a>
+      </div>
+    </div>
+  </section>
+
+  <CTA heading="Build a commercial cleaning scope around your facility" />
+  <script type="application/ld+json" set:html={JSON.stringify(catalogSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Base>
+
+<style>
+  .services-hero { padding: 4.9rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
+  .hero-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
+  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--teal-dark); }
+  h1 { color: #fff; font-size: clamp(2.5rem, 5vw, 4.15rem); }
+  .lead { color: #c8d7e3; font-size: 1.1rem; max-width: 760px; }
+  .actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.7rem; }
+  .hero-card { padding: 1.9rem; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(255,255,255,.09); }
+  .card-label { color: var(--teal-bright); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .hero-card ul { list-style: none; padding: 0; margin: 0; }
+  .hero-card li { position: relative; padding: .7rem 0 .7rem 1.6rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .hero-card li::before { content: '✓'; position: absolute; left: 0; color: var(--teal-bright); font-weight: 800; }
+  .wide { max-width: 880px; }
+  .service-card small { display: block; margin-top: .8rem; color: var(--text-soft); font-size: .72rem; line-height: 1.45; }
+  .catalog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .85rem; }
+  .catalog-item { display: flex; flex-direction: column; gap: .35rem; min-height: 165px; padding: 1.15rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; text-decoration: none; box-shadow: var(--shadow); transition: transform .2s var(--ease-out), box-shadow .2s; }
+  .catalog-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+  .catalog-item strong { color: var(--navy); }
+  .catalog-item span { color: var(--text-soft); font-size: .84rem; line-height: 1.5; }
+  .catalog-item small { color: var(--teal-dark); font-weight: 800; margin-top: auto; }
+  .local-section { color: #fff; background: linear-gradient(120deg, var(--teal-dark), var(--navy)); }
+  .local-section h2 { color: #fff; }
+  .local-section p { color: #d7e5ec; }
+  .local-layout { display: flex; justify-content: space-between; align-items: center; gap: 3rem; }
+  .local-layout > div:first-child { max-width: 720px; }
+  .local-actions { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: flex-end; }
+  @media (max-width: 960px) {
+    .catalog-grid { grid-template-columns: repeat(2,1fr); }
+    .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 700px) {
+    .catalog-grid { grid-template-columns: 1fr; }
+    .local-layout { flex-direction: column; align-items: flex-start; }
+    .local-actions { justify-content: flex-start; }
+  }
+</style>

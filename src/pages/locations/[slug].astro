@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
 import { BUSINESS, url } from '../../config';
-import { LOCATIONS } from '../../data/locations';
+import { LOCATIONS, CITY_LOCAL } from '../../data/locations';
 import { SERVICES } from '../../data/services';
 import { breadcrumbList } from '../../lib/breadcrumbs';
 
@@ -12,76 +12,215 @@ export function getStaticPaths() {
 }
 
 const { location } = Astro.props;
+const local = CITY_LOCAL[location.slug];
+const isAppleValley = location.slug === 'apple-valley';
+const nearby = LOCATIONS.filter((item) => item.county === location.county && item.slug !== location.slug).slice(0, 6);
+const canonical = new URL(`/locations/${location.slug}/`, BUSINESS.website).href;
+const businessId = `${new URL('/', BUSINESS.website).href}#localbusiness`;
 
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: `Commercial Cleaning & Janitorial Services in ${location.name}, MN`,
+  '@id': `${canonical}#commercial-cleaning`,
+  name: `Commercial Cleaning and Janitorial Services in ${location.name}, Minnesota`,
   description: location.blurb,
-  areaServed: { '@type': 'City', name: `${location.name}, MN` },
-  provider: {
-    '@type': 'LocalBusiness',
-    name: BUSINESS.name,
-    telephone: BUSINESS.phone,
-  },
+  url: canonical,
+  serviceType: 'Commercial cleaning and recurring janitorial services',
+  areaServed: { '@type': 'City', name: `${location.name}, Minnesota` },
+  provider: { '@id': businessId },
 };
 
-const breadcrumbSchema = breadcrumbList(Astro.site, [
+const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
   ['Home', '/'],
   ['Locations', '/locations'],
   [location.name, null],
 ]);
+
+const faqSchema = local
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: local.faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: { '@type': 'Answer', text: faq.a },
+      })),
+    }
+  : null;
+
+const title = isAppleValley
+  ? `Commercial Cleaning & Janitorial Services in Apple Valley, MN | ${BUSINESS.shortName}`
+  : `Commercial Cleaning & Janitorial Services in ${location.name}, MN | ${BUSINESS.shortName}`;
+const description = isAppleValley
+  ? `Apple Valley commercial cleaning and janitorial services from local JSM. Written scopes, background-checked crews, supervisor inspections, and free facility walkthroughs.`
+  : `${BUSINESS.name} provides commercial cleaning and recurring janitorial services in ${location.name}, MN with written scopes, supervisor inspections, and free walkthroughs.`;
 ---
 
-<Base
-  title={`Commercial Cleaning in ${location.name}, MN | Free Quote in 24 Hrs — JSM`}
-  description={`JSM provides commercial cleaning & janitorial in ${location.name}, MN (${location.county}). Free on-site walkthrough and written quote within 24 hours.`}
->
+<Base title={title} description={description}>
+  <section class:list={{ 'location-hero': true, 'home-base': isAppleValley }}>
+    <div class="container hero-layout">
+      <div>
+        <nav class="crumbs dark">
+          <a href={url('/')}>Home</a> / <a href={url('/locations')}>Locations</a> / {location.name}
+        </nav>
+        <p class="eyebrow">{isAppleValley ? 'JSM home base' : `${location.county} service area`}</p>
+        <h1>Commercial Cleaning &amp; Janitorial Services in {location.name}, MN</h1>
+        <p class="lead">
+          <strong>{BUSINESS.name}</strong> provides recurring janitorial, office cleaning, floor care,
+          day porter, medical-office cleaning, warehouse cleaning, and specialty facility services
+          throughout {location.name} and surrounding communities.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/quote')}>Request a Free Facility Walkthrough</a>
+          <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+        </div>
+      </div>
+      <aside class="local-card">
+        <p class="card-label">Why facilities choose JSM</p>
+        <ul>
+          <li>Written facility-specific scope</li>
+          <li>Background-checked, trained crews</li>
+          <li>Supervisor quality inspections</li>
+          <li>Direct local point of contact</li>
+          <li>Free re-clean guarantee</li>
+          <li>Month-to-month agreements</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container split">
       <div>
-        <nav class="crumbs">
-          <a href={url('/')}>Home</a> / <a href={url('/locations')}>Locations</a> / {location.name}
-        </nav>
-        <h1>Commercial Cleaning in {location.name}, MN</h1>
         <p>
-          <strong>{BUSINESS.name} provides commercial cleaning and janitorial services in
-          {location.name}, Minnesota</strong> — office cleaning, floor care, carpet, windows,
-          disinfection, day porter, and snow removal, quoted free from an on-site walkthrough
-          with a written scope and pricing within 24 hours. {location.blurb}
+          {location.blurb} Every recurring account begins with a walkthrough and written scope that
+          identifies tasks, service frequencies, access requirements, priorities, and pricing.
         </p>
-        <p>
-          Our crews are trained, insured, and background-checked, and every account throughout
-          {location.name} and the rest of {location.county} gets a documented scope of work with
-          supervisor inspections — on month-to-month agreements, never long-term contracts.
-        </p>
-        <h2>Services Available in {location.name}</h2>
-        <ul class="checklist">
-          {SERVICES.map((s) => (
-            <li><a href={url(`/locations/${location.slug}/${s.slug}`)}>{s.name} in {location.name}</a></li>
+        {local && (
+          <>
+            <h2>Commercial Facilities in {location.name}</h2>
+            <p>{local.context}</p>
+          </>
+        )}
+        <h2>Commercial Cleaning Services in {location.name}</h2>
+        <div class="service-links">
+          {SERVICES.map((service) => (
+            <a href={url(`/locations/${location.slug}/${service.slug}`)}>
+              <strong>{service.name}</strong><span>{service.short}</span>
+            </a>
           ))}
-        </ul>
+        </div>
       </div>
-      <aside class="card">
-        <h2>Get a Free Quote in {location.name}</h2>
-        <p>Tell us about your facility. {BUSINESS.responsePromise}</p>
+      <aside class="card quote-card">
+        <h2>Get Commercial Cleaning Pricing in {location.name}</h2>
+        <p>Tell JSM about your facility, current provider, required schedule, and priority services. {BUSINESS.responsePromise}</p>
         <QuoteForm />
       </aside>
     </div>
   </section>
-  <CTA heading={`Need a cleaning crew in ${location.name}?`} />
+
+  {isAppleValley && (
+    <section class="section apple-section">
+      <div class="container apple-layout">
+        <div>
+          <p class="eyebrow">Apple Valley commercial cleaning company</p>
+          <h2>JSM is headquartered in Apple Valley</h2>
+          <p>
+            Apple Valley is the center of JSM’s Twin Cities service area. Local proximity supports
+            responsive walkthrough scheduling, direct account communication, and coordinated service
+            for offices, medical and dental suites, retail properties, and other commercial facilities
+            around Cedar Avenue, County Road 42, and the broader Dakota County area.
+          </p>
+        </div>
+        <div class="apple-actions">
+          <a href={url('/janitorial-contracts')}><strong>Janitorial Contracts</strong><span>Build a measurable recurring cleaning agreement →</span></a>
+          <a href={url('/facility-care-program')}><strong>JSM Facility Care Program</strong><span>See how JSM scopes, starts, and inspects accounts →</span></a>
+          <a href={url('/switching-cleaning-companies')}><strong>Switch Cleaning Providers</strong><span>Plan a controlled transition from the current vendor →</span></a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {local && (
+    <section class="section alt">
+      <div class="container faq-layout">
+        <div>
+          <p class="eyebrow navy">Local questions</p>
+          <h2>Commercial Cleaning in {location.name}: FAQs</h2>
+        </div>
+        <div>
+          {local.faqs.map((faq) => (
+            <details class="faq-acc">
+              <summary>{faq.q}<span class="plus">+</span></summary>
+              <p>{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {nearby.length > 0 && (
+    <section class="section">
+      <div class="container nearby-layout">
+        <div>
+          <p class="eyebrow navy">Nearby coverage</p>
+          <h2>Commercial Cleaning Near {location.name}</h2>
+        </div>
+        <p class="nearby-links">
+          {nearby.map((nearbyLocation) => (
+            <a href={url(`/locations/${nearbyLocation.slug}`)}>{nearbyLocation.name}, MN</a>
+          ))}
+        </p>
+      </div>
+    </section>
+  )}
+
+  <CTA heading={`Need a more accountable cleaning company in ${location.name}?`} />
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Base>
 
 <style>
-  .split {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 3rem;
-    align-items: start;
+  .location-hero { position: relative; overflow: hidden; padding: 5rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
+  .location-hero.home-base::after { content: ''; position: absolute; width: 520px; height: 520px; top: -270px; right: -230px; border-radius: 50%; background: rgba(25,163,154,.32); filter: blur(70px); }
+  .hero-layout { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
+  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--teal-dark); }
+  h1 { color: #fff; font-size: clamp(2.45rem, 5vw, 4.15rem); }
+  .lead { color: #c8d7e3; font-size: 1.1rem; max-width: 750px; }
+  .lead strong { color: #fff; }
+  .actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.7rem; }
+  .local-card { padding: 2rem; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(255,255,255,.09); backdrop-filter: blur(12px); box-shadow: 0 24px 60px rgba(0,0,0,.24); }
+  .card-label { color: var(--teal-bright); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .local-card ul { list-style: none; padding: 0; margin: 0; }
+  .local-card li { position: relative; padding: .72rem 0 .72rem 1.6rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .local-card li::before { content: '✓'; position: absolute; left: 0; color: var(--teal-bright); font-weight: 800; }
+  .split { display: grid; grid-template-columns: 1.2fr .8fr; gap: 3rem; align-items: start; }
+  .quote-card { position: sticky; top: 8.5rem; }
+  .service-links { display: grid; grid-template-columns: repeat(2,1fr); gap: .8rem; }
+  .service-links a { display: flex; flex-direction: column; gap: .25rem; padding: 1rem; border: 1px solid var(--border); border-radius: 10px; background: #fff; text-decoration: none; }
+  .service-links strong { color: var(--navy); }
+  .service-links span { color: var(--text-soft); font-size: .82rem; line-height: 1.45; }
+  .apple-section { color: #fff; background: linear-gradient(120deg, var(--teal-dark), var(--navy)); }
+  .apple-section h2 { color: #fff; }
+  .apple-section p { color: #d7e5ec; }
+  .apple-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 3rem; align-items: center; }
+  .apple-actions { display: grid; gap: .8rem; }
+  .apple-actions a { display: flex; flex-direction: column; gap: .25rem; padding: 1rem 1.1rem; border: 1px solid rgba(255,255,255,.15); border-radius: 10px; background: rgba(255,255,255,.08); text-decoration: none; }
+  .apple-actions strong { color: #fff; }
+  .apple-actions span { color: var(--teal-bright); font-size: .82rem; font-weight: 700; }
+  .faq-layout, .nearby-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 3rem; align-items: start; }
+  .nearby-links { display: flex; flex-wrap: wrap; gap: .7rem; }
+  .nearby-links a { padding: .55rem .9rem; border: 1px solid var(--border); border-radius: 999px; background: #fff; text-decoration: none; font-weight: 700; }
+  @media (max-width: 900px) {
+    .hero-layout, .split, .apple-layout, .faq-layout, .nearby-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .quote-card { position: static; }
   }
-  @media (max-width: 860px) {
-    .split { grid-template-columns: 1fr; }
+  @media (max-width: 620px) {
+    .location-hero { padding: 4rem 0; }
+    .service-links { grid-template-columns: 1fr; }
   }
 </style>

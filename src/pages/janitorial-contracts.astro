@@ -1,0 +1,282 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { BUSINESS, url } from '../config';
+import { breadcrumbList } from '../lib/breadcrumbs';
+
+const FAQS = [
+  {
+    q: 'What is included in a commercial janitorial contract?',
+    a: 'A professional janitorial agreement should identify the rooms and surfaces covered, daily through periodic task frequencies, service days and times, supply responsibilities, quality-control procedures, pricing, start date, and cancellation terms. JSM documents those items in the written scope rather than relying on a generic promise to clean the building.',
+  },
+  {
+    q: 'How much does a janitorial contract cost in the Twin Cities?',
+    a: 'Pricing depends on facility size, occupancy, facility type, cleaning frequency, restroom count, flooring, service window, consumables, and project work. JSM uses a free walkthrough to build the scope and then provides written pricing, instead of quoting from square footage alone.',
+  },
+  {
+    q: 'Does JSM require a long-term cleaning contract?',
+    a: 'No. JSM recurring janitorial agreements are month-to-month with a 30-day notice. The scope and pricing are documented, but the relationship is maintained through service quality rather than a long lock-in period.',
+  },
+  {
+    q: 'Can JSM quote our existing janitorial scope or RFP?',
+    a: 'Yes. JSM can price the current scope line by line and show recommended improvements separately. This gives facility teams a clean, comparable bid without silently changing the requested work.',
+  },
+  {
+    q: 'Can one agreement cover several Twin Cities locations?',
+    a: 'Yes. Multi-site programs can use a shared service standard with site-specific schedules, access procedures, and scope addenda, supported by one primary account contact.',
+  },
+  {
+    q: 'How does JSM check janitorial quality?',
+    a: 'Recurring accounts use a written scope, facility checklist, assigned crew, supervisor inspections, and direct issue escalation. If a completed visit misses the agreed scope, JSM re-cleans the affected area at no charge.',
+  },
+];
+
+const canonical = new URL('/janitorial-contracts/', BUSINESS.website).href;
+const businessId = `${new URL('/', BUSINESS.website).href}#localbusiness`;
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${canonical}#service`,
+  name: 'Commercial Janitorial Contracts in the Twin Cities',
+  serviceType: 'Recurring commercial janitorial service agreements',
+  description: 'Custom commercial janitorial contracts with written scopes, assigned crews, supervisor inspections, and month-to-month terms across the Twin Cities.',
+  url: canonical,
+  areaServed: { '@type': 'AdministrativeArea', name: BUSINESS.serviceArea },
+  provider: { '@id': businessId },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+
+const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
+  ['Home', '/'],
+  ['Janitorial Contracts', null],
+]);
+---
+
+<Base
+  title={`Janitorial Contracts & Commercial Cleaning | Twin Cities, MN | ${BUSINESS.shortName}`}
+  description={`Get a commercial janitorial contract built around your facility. Written scope, assigned background-checked crews, supervisor inspections, and month-to-month terms from JSM.`}
+>
+  <section class="contract-hero">
+    <div class="container hero-layout">
+      <div>
+        <nav class="crumbs dark"><a href={url('/')}>Home</a> / Janitorial Contracts</nav>
+        <p class="eyebrow">Recurring commercial cleaning agreements</p>
+        <h1>Janitorial contracts built around your facility—not a generic checklist</h1>
+        <p class="lead">
+          JSM provides recurring commercial janitorial service across the Twin Cities with a written
+          scope, assigned team, supervisor inspections, direct escalation, and month-to-month terms.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/quote')}>Request a Contract Walkthrough</a>
+          <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+        </div>
+        <p class="search-note">Looking for a janitorial contract near your Twin Cities facility? JSM is headquartered in Apple Valley and serves commercial properties across the metro.</p>
+      </div>
+      <aside class="contract-summary">
+        <p class="card-label">Every JSM proposal defines</p>
+        <ul>
+          <li>Rooms, surfaces, and responsibilities</li>
+          <li>Daily, weekly, monthly, and periodic tasks</li>
+          <li>Service schedule and access requirements</li>
+          <li>Supply and consumable responsibilities</li>
+          <li>Inspection and issue-response process</li>
+          <li>Recurring and optional project pricing</li>
+          <li>Startup date and month-to-month terms</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-layout">
+      <div>
+        <p class="eyebrow navy">What a janitorial agreement should solve</p>
+        <h2>Clear expectations before service starts</h2>
+        <p>
+          Cleaning problems often begin with a vague scope. When tasks, frequency, ownership, and
+          escalation are not written down, the facility and cleaning team measure performance differently.
+          JSM starts by turning the walkthrough into a practical operating document.
+        </p>
+      </div>
+      <div class="outcome-grid">
+        <article><span>01</span><h3>Consistent appearance</h3><p>Priority spaces receive defined attention on a schedule aligned with traffic and occupancy.</p></article>
+        <article><span>02</span><h3>Accountable quality</h3><p>Supervisors inspect against the scope, giving concerns a specific standard and correction path.</p></article>
+        <article><span>03</span><h3>Predictable budgeting</h3><p>Recurring work and optional projects are separated so facility teams understand the monthly commitment.</p></article>
+        <article><span>04</span><h3>Less management time</h3><p>One accountable local contact replaces repeated handoffs and unclear ownership.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container program-layout">
+      <div>
+        <p class="eyebrow navy">Inside the written scope</p>
+        <h2>Tasks organized by frequency and facility priority</h2>
+        <p>The final schedule depends on the building, but recurring scopes commonly organize work into these categories.</p>
+      </div>
+      <div class="frequency-grid">
+        <article><strong>Each service visit</strong><p>Trash, restrooms, entrances, common areas, high-touch surfaces, vacuuming, mopping, and site-specific priorities.</p></article>
+        <article><strong>Weekly and rotating</strong><p>Detail dusting, edges, interior glass, baseboards, conference rooms, low-use spaces, and scheduled deep-clean tasks.</p></article>
+        <article><strong>Monthly and periodic</strong><p>High dusting, floor maintenance, carpet programs, interior detail work, and tasks that protect long-term facility condition.</p></article>
+        <article><strong>Optional project work</strong><p>Floor stripping and waxing, extraction carpet cleaning, windows, post-construction work, disinfection, and seasonal services.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contract-types">
+    <div class="container">
+      <div class="section-head wide">
+        <p class="eyebrow">Facilities JSM supports</p>
+        <h2>Commercial janitorial programs for different operating environments</h2>
+        <p>Frequency, supplies, staffing, and quality checks change based on how a facility is used.</p>
+      </div>
+      <div class="facility-grid">
+        <a href={url('/services/office-cleaning')}><strong>Professional offices</strong><span>Evening and early-morning recurring cleaning →</span></a>
+        <a href={url('/services/medical-office-cleaning')}><strong>Medical and dental offices</strong><span>Protocol-driven cleaning and disinfection →</span></a>
+        <a href={url('/services/industrial-warehouse-cleaning')}><strong>Industrial and warehouse</strong><span>Office, restroom, breakroom, and production-support care →</span></a>
+        <a href={url('/industries')}><strong>Retail, education, and other facilities</strong><span>See industry-specific cleaning plans →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container buying-layout">
+      <div>
+        <p class="eyebrow navy">Comparing janitorial bids</p>
+        <h2>Make every vendor price the same requested work</h2>
+        <p>
+          A low monthly number is not useful when one proposal excludes periodic tasks, consumables,
+          supervision, or required service days. Use one RFP and scorecard so vendors respond to a
+          comparable scope.
+        </p>
+        <div class="actions light-actions">
+          <a class="btn btn-navy" href={url('/resources/templates')}>Use the Free Janitorial RFP</a>
+          <a class="btn btn-primary" href={url('/switching-cleaning-companies')}>Plan a Vendor Transition</a>
+        </div>
+      </div>
+      <aside class="bid-card">
+        <p class="card-label navy-label">Compare these items</p>
+        <ul class="checklist">
+          <li>Exact tasks and service frequencies</li>
+          <li>Staffing assumptions and service window</li>
+          <li>Consumables, liners, equipment, and chemicals</li>
+          <li>Quality inspections and issue escalation</li>
+          <li>Recurring price versus periodic project pricing</li>
+          <li>Insurance, onboarding, agreement, and cancellation terms</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section apple-valley-section">
+    <div class="container apple-layout">
+      <div>
+        <p class="eyebrow">Apple Valley home base</p>
+        <h2>Local janitorial contracts for Apple Valley and the Twin Cities</h2>
+        <p>
+          JSM is headquartered in Apple Valley, supporting offices, clinics, retail, warehouses,
+          and other commercial facilities throughout Dakota County and the broader metro.
+        </p>
+        <a class="btn btn-outline" href={url('/locations/apple-valley')}>Commercial Cleaning in Apple Valley</a>
+      </div>
+      <div class="local-points">
+        <span>Direct local account contact</span>
+        <span>Free facility walkthrough</span>
+        <span>Written scope and pricing</span>
+        <span>Month-to-month service</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container quote-layout">
+      <div>
+        <p class="eyebrow navy">Request pricing</p>
+        <h2>Start with the facility, current problems, and required schedule</h2>
+        <p>Share enough information for JSM to prepare the right walkthrough and proposal conversation.</p>
+      </div>
+      <aside class="card form-card"><QuoteForm /></aside>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container faq-layout">
+      <div class="section-head">
+        <p class="eyebrow navy">Contract questions</p>
+        <h2>Commercial janitorial agreements, explained</h2>
+      </div>
+      <div>
+        {FAQS.map((faq) => (
+          <details class="faq-acc">
+            <summary>{faq.q}<span class="plus">+</span></summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA heading="Build a janitorial contract your facility can measure" />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</Base>
+
+<style>
+  .contract-hero { position: relative; overflow: hidden; padding: 5.3rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 62%, #174654); }
+  .contract-hero::after { content: ''; position: absolute; width: 520px; height: 520px; right: -240px; top: -260px; border-radius: 50%; background: rgba(25,163,154,.3); filter: blur(70px); }
+  .hero-layout { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
+  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--teal-dark); }
+  h1 { color: #fff; font-size: clamp(2.5rem, 5.2vw, 4.3rem); }
+  .lead { color: #c8d7e3; font-size: 1.12rem; max-width: 760px; }
+  .actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.7rem; }
+  .search-note { color: #9fb4c4; font-size: .83rem; max-width: 700px; margin-top: 1.25rem; }
+  .contract-summary { padding: 2rem; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(255,255,255,.09); backdrop-filter: blur(12px); box-shadow: 0 24px 60px rgba(0,0,0,.24); }
+  .card-label { color: var(--teal-bright); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .contract-summary ul { list-style: none; padding: 0; margin: 0; }
+  .contract-summary li { position: relative; padding: .72rem 0 .72rem 1.6rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .contract-summary li::before { content: '✓'; position: absolute; left: 0; color: var(--teal-bright); font-weight: 800; }
+  .section-layout, .program-layout, .buying-layout, .quote-layout, .faq-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 3.5rem; align-items: start; }
+  .outcome-grid, .frequency-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+  .outcome-grid article, .frequency-grid article { padding: 1.25rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; box-shadow: var(--shadow); }
+  .outcome-grid span { color: var(--teal-dark); font-size: .72rem; font-weight: 800; }
+  .outcome-grid p, .frequency-grid p { color: var(--text-soft); margin: .3rem 0 0; }
+  .frequency-grid strong { color: var(--navy); }
+  .wide { max-width: 850px; }
+  .contract-types { background: linear-gradient(135deg, var(--navy-dark), var(--navy)); color: #fff; }
+  .contract-types h2 { color: #fff; }
+  .contract-types .section-head p { color: #c8d7e3; }
+  .facility-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+  .facility-grid a { display: flex; flex-direction: column; gap: .35rem; padding: 1.35rem; border: 1px solid rgba(255,255,255,.14); border-radius: 12px; background: rgba(255,255,255,.07); text-decoration: none; }
+  .facility-grid strong { color: #fff; }
+  .facility-grid span { color: var(--teal-bright); font-size: .86rem; font-weight: 700; }
+  .bid-card { padding: 2rem; border: 1px solid var(--border); border-radius: 16px; background: #fff; box-shadow: var(--shadow-lift); }
+  .navy-label { color: var(--teal-dark); }
+  .light-actions { margin-top: 1.2rem; }
+  .apple-valley-section { color: #fff; background: linear-gradient(120deg, var(--teal-dark), var(--navy)); }
+  .apple-valley-section h2 { color: #fff; }
+  .apple-valley-section p { color: #d7e5ec; }
+  .apple-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .local-points { display: grid; grid-template-columns: repeat(2,1fr); gap: .8rem; }
+  .local-points span { padding: 1rem; border: 1px solid rgba(255,255,255,.15); border-radius: 10px; background: rgba(255,255,255,.08); font-weight: 700; }
+  .form-card { padding: 2rem; }
+  @media (max-width: 900px) {
+    .hero-layout, .section-layout, .program-layout, .buying-layout, .quote-layout, .faq-layout, .apple-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 620px) {
+    .contract-hero { padding: 4rem 0; }
+    .outcome-grid, .frequency-grid, .facility-grid, .local-points { grid-template-columns: 1fr; }
+  }
+</style>

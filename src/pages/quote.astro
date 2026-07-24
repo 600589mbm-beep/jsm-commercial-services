@@ -5,27 +5,38 @@ import { BUSINESS, url } from '../config';
 ---
 
 <Base
-  title={`Free Commercial Cleaning Quote in 24 Hrs | ${BUSINESS.name}`}
-  description={`Get a free commercial cleaning quote: on-site walkthrough, written scope, pricing within 24 hours. No obligation, month-to-month. ${BUSINESS.serviceArea}.`}
+  title={`Free Commercial Cleaning Walkthrough & Quote | ${BUSINESS.name}`}
+  description={`Request a free Twin Cities facility walkthrough and written commercial cleaning proposal. Recurring janitorial, multi-site programs, specialty cleaning, and provider transitions.`}
 >
+  <section class="quote-hero">
+    <div class="container">
+      <nav class="crumbs"><a href={url('/')}>Home</a> / Free Walkthrough</nav>
+      <p class="eyebrow">No-obligation facility review</p>
+      <h1>Request a Free Facility Walkthrough</h1>
+      <p>Tell us what you manage, what needs to improve, and whether you are replacing a current provider. JSM will follow up to schedule a walkthrough or provide preliminary guidance.</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container split">
       <div>
-        <nav class="crumbs"><a href={url('/')}>Home</a> / Free Quote</nav>
-        <h1>Request a Free Quote</h1>
-        <p>
-          Tell us a little about your facility and what you need cleaned. {BUSINESS.responsePromise}
-          Usually that means a quick walkthrough scheduled, or a ballpark estimate if you just want
-          numbers first.
-        </p>
+        <h2>What you receive</h2>
         <ul class="checklist">
-          <li>No obligation, no pressure</li>
-          <li>Walkthrough and written quote at no cost</li>
-          <li>Month-to-month agreements — no long-term lock-in</li>
+          <li>Walkthrough and needs assessment at no cost</li>
+          <li>Written scope with tasks and service frequencies</li>
+          <li>Clear pricing for recurring and optional project work</li>
+          <li>Transition planning when replacing a current provider</li>
+          <li>Multi-site planning for Twin Cities portfolios</li>
+          <li>Month-to-month agreement with no long-term lock-in</li>
         </ul>
+        <div class="contact-card">
+          <h3>Already have an RFP or current scope?</h3>
+          <p>JSM can quote it line by line and show suggested improvements separately.</p>
+          <a href={url('/contact')}>Send your current scope →</a>
+        </div>
         <p>Prefer the phone? Call <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>.</p>
       </div>
-      <aside class="card">
+      <aside class="card form-card">
         <QuoteForm />
       </aside>
     </div>
@@ -33,13 +44,16 @@ import { BUSINESS, url } from '../config';
 </Base>
 
 <style>
-  .split {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-  @media (max-width: 860px) {
-    .split { grid-template-columns: 1fr; }
-  }
+  .quote-hero { background: linear-gradient(145deg, var(--navy-dark), var(--navy)); color: #fff; padding: 4rem 0; }
+  .quote-hero .crumbs, .quote-hero .crumbs a { color: #c8d7e3; }
+  .quote-hero h1 { color: #fff; }
+  .quote-hero p:last-child { color: #c8d7e3; max-width: 760px; font-size: 1.08rem; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 3.5rem; align-items: start; }
+  .form-card { padding: 2rem; }
+  .contact-card { background: var(--bg-alt); border-left: 4px solid var(--teal); border-radius: 0 10px 10px 0; padding: 1.2rem; margin: 1.5rem 0; }
+  .contact-card h3 { margin-bottom: .35rem; }
+  .contact-card p { color: var(--text-soft); margin-bottom: .35rem; }
+  .contact-card a { font-weight: 700; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
 </style>

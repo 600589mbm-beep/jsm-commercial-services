@@ -10,42 +10,53 @@ const year = new Date().getFullYear();
   <div class="container cols">
     <div>
       <h3>{BUSINESS.name}</h3>
-      <p>{BUSINESS.tagline}</p>
+      <p>Commercial cleaning and janitorial services with enterprise-level standards and owner-led local accountability across the Twin Cities.</p>
       <p>
         <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a><br />
-        <a href="mailto:sales@jsmcommercialservices.com">sales@jsmcommercialservices.com</a><br />
-        <a href="mailto:info@jsmcommercialservices.com">info@jsmcommercialservices.com</a><br />
+        <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a><br />
+        <a href={`mailto:${BUSINESS.infoEmail}`}>{BUSINESS.infoEmail}</a><br />
         {BUSINESS.address.street}<br />
         {BUSINESS.address.city}, {BUSINESS.address.state} {BUSINESS.address.zip}<br />
         {BUSINESS.hours}
       </p>
     </div>
     <div>
-      <h3>Services</h3>
+      <h3>Commercial Cleaning Services</h3>
       <ul>
-        {SERVICES.map((s) => (
-          <li><a href={url(`/services/${s.slug}`)}>{s.name}</a></li>
+        {SERVICES.map((service) => (
+          <li><a href={url(`/services/${service.slug}`)}>{service.name}</a></li>
         ))}
       </ul>
     </div>
     <div>
-      <h3>Company</h3>
+      <h3>Contracts &amp; Facility Resources</h3>
       <ul>
-        <li><a href={url('/about')}>About Us</a></li>
-        <li><a href={url('/services')}>All Services</a></li>
+        <li><a href={url('/janitorial-contracts')}>Commercial Janitorial Contracts</a></li>
+        <li><a href={url('/facility-care-program')}>JSM Facility Care Program</a></li>
+        <li><a href={url('/switching-cleaning-companies')}>Switch Cleaning Providers</a></li>
+        <li><a href={url('/resources/templates')}>Janitorial RFP &amp; Vendor Scorecard</a></li>
+        <li><a href={url('/resources/cleaning-cost-calculator')}>Cleaning Cost Calculator</a></li>
+        <li><a href={url('/resources')}>All Resources &amp; Guides</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Company &amp; Facility Types</h3>
+      <ul>
+        <li><a href={url('/locations/apple-valley')}>Commercial Cleaning in Apple Valley</a></li>
+        <li><a href={url('/locations')}>Twin Cities Service Area</a></li>
         <li><a href={url('/industries')}>Industries We Serve</a></li>
-        <li><a href={url('/locations')}>Service Area</a></li>
-        <li><a href={url('/resources')}>Resources & Guides</a></li>
-        <li><a href={url('/contact')}>Contact</a></li>
-        <li><a href={url('/quote')}>Get a Free Quote</a></li>
+        <li><a href={url('/industries/stadium-event-venue-cleaning')}>Stadium &amp; Event Venue Cleaning</a></li>
+        <li><a href={url('/about')}>About JSM</a></li>
+        <li><a href={url('/contact')}>Contact JSM</a></li>
+        <li><a href={url('/quote')}>Request a Free Walkthrough</a></li>
       </ul>
     </div>
   </div>
   <div class="container cities">
-    <h3>Serving {LOCATIONS.length} Cities Across the {BUSINESS.serviceArea}</h3>
+    <h3>Commercial Cleaning Across {LOCATIONS.length} Twin Cities Communities</h3>
     <p class="city-links">
-      {LOCATIONS.map((l) => (
-        <a href={url(`/locations/${l.slug}`)}>{l.name}</a>
+      {LOCATIONS.map((location) => (
+        <a href={url(`/locations/${location.slug}`)}>{location.name}, MN</a>
       ))}
     </p>
   </div>
@@ -56,30 +67,14 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer { background: var(--navy-dark); color: #c4d3df; margin-top: 3rem; }
-  .cols {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-    padding-top: 3rem;
-    padding-bottom: 2rem;
-  }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 2rem; padding-top: 3rem; padding-bottom: 2rem; }
   h3 { color: #fff; font-size: 1rem; }
   ul { list-style: none; padding: 0; margin: 0; }
-  li { margin-bottom: 0.4rem; }
+  li { margin-bottom: .4rem; }
   a { color: #c4d3df; text-decoration: none; }
   a:hover { color: #fff; }
-  .cities {
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
-  .cities h3 { font-size: 0.95rem; margin-bottom: 0.8rem; }
-  .city-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 1.1rem;
-    font-size: 0.85rem;
-    margin: 0;
-  }
-  .legal { border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 1rem; padding-bottom: 1.5rem; font-size: 0.85rem; }
+  .cities { border-top: 1px solid rgba(255,255,255,.12); padding-top: 1.5rem; padding-bottom: 1.5rem; }
+  .cities h3 { font-size: .95rem; margin-bottom: .8rem; }
+  .city-links { display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; font-size: .85rem; margin: 0; }
+  .legal { border-top: 1px solid rgba(255,255,255,.12); padding-top: 1rem; padding-bottom: 1.5rem; font-size: .85rem; }
 </style>

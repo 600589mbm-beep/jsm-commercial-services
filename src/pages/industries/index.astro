@@ -5,56 +5,87 @@ import { BUSINESS, url } from '../../config';
 import { INDUSTRIES, INDUSTRY_ICONS } from '../../data/industries';
 import { breadcrumbList } from '../../lib/breadcrumbs';
 
-const breadcrumbSchema = breadcrumbList(Astro.site, [
+const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
   ['Home', '/'],
   ['Industries', null],
 ]);
 ---
 
 <Base
-  title={`Industries We Serve — Commercial Cleaning by Facility Type | JSM Twin Cities`}
-  description={`Specialized commercial cleaning for gyms, churches, schools, restaurants, dealerships, banks, managed properties, and retail across the ${BUSINESS.serviceArea}. Free quote in 24 hours.`}
+  title={`Commercial Cleaning by Facility Type | Twin Cities, MN | ${BUSINESS.shortName}`}
+  description={`Commercial cleaning for gyms, schools, offices, clinics, retail, shopping centers, multi-tenant buildings, warehouses, stadiums, and event venues across the Twin Cities.`}
 >
+  <section class="industries-hero">
+    <div class="container">
+      <nav class="crumbs dark"><a href={url('/')}>Home</a> / Industries</nav>
+      <p class="eyebrow">Facility-specific commercial cleaning</p>
+      <h1>Industries &amp; Facilities JSM Serves</h1>
+      <p>
+        Different facilities require different schedules, products, equipment, access procedures,
+        and quality checks. JSM builds the written scope around how the property is actually used.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href={url('/quote')}>Request a Free Facility Walkthrough</a>
+        <a class="btn btn-outline" href={url('/services')}>Explore All Services</a>
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
-      <nav class="crumbs"><a href={url('/')}>Home</a> / Industries</nav>
-      <div class="section-head">
-        <h1>Industries We Serve</h1>
-        <p>
-          Every facility type gets judged on different things — a gym on its equipment, a bank on
-          its lobby, a daycare on its licensing binder. We scope the cleaning to what your
-          industry actually gets measured on, across the {BUSINESS.serviceArea}.
-        </p>
+      <div class="section-head wide">
+        <p class="eyebrow navy">Commercial cleaning applications</p>
+        <h2>Find the plan closest to your facility</h2>
+        <p>Each page explains facility-specific risks, common scope items, related services, and questions to resolve before pricing.</p>
       </div>
       <div class="grid grid-3">
-        {INDUSTRIES.map((ind) => (
-          <div class="card">
-            <span class="icon">{INDUSTRY_ICONS[ind.slug]}</span>
-            <h3><a href={url(`/industries/${ind.slug}`)}>{ind.name}</a></h3>
-            <p>{ind.short}</p>
-          </div>
+        {INDUSTRIES.map((industry) => (
+          <article class="card">
+            <span class="icon">{INDUSTRY_ICONS[industry.slug]}</span>
+            <h3><a href={url(`/industries/${industry.slug}`)}>{industry.name}</a></h3>
+            <p>{industry.short}</p>
+          </article>
         ))}
-        <div class="card">
+        <article class="card featured-card">
+          <span class="icon">🏟️</span>
+          <h3><a href={url('/industries/stadium-event-venue-cleaning')}>Stadium &amp; Event Venue Cleaning</a></h3>
+          <p>Pre-event, during-event, post-event, and scheduled facility cleaning based on the venue calendar and available staffing capacity.</p>
+        </article>
+        <article class="card">
           <span class="icon">🏥</span>
-          <h3><a href={url('/services/medical-office-cleaning')}>Medical & Dental Offices</a></h3>
-          <p>Healthcare-grade cleaning and disinfection for clinics, dental practices, and medical office buildings.</p>
-        </div>
-        <div class="card">
+          <h3><a href={url('/services/medical-office-cleaning')}>Medical Office &amp; Clinic Cleaning</a></h3>
+          <p>Protocol-driven commercial cleaning for clinics, dental practices, outpatient facilities, waiting rooms, and exam areas.</p>
+        </article>
+        <article class="card">
           <span class="icon">🏭</span>
-          <h3><a href={url('/services/industrial-warehouse-cleaning')}>Warehouses & Industrial</a></h3>
-          <p>Floor scrubbing, office-area cleaning, and high-area dusting for warehouses and light industrial facilities.</p>
-        </div>
+          <h3><a href={url('/services/industrial-warehouse-cleaning')}>Warehouse &amp; Industrial Cleaning</a></h3>
+          <p>Floor scrubbing, high dusting, office-area janitorial, restrooms, breakrooms, and shift-aware commercial cleaning.</p>
+        </article>
+        <article class="card">
+          <span class="icon">📦</span>
+          <h3><a href={url('/services/commercial-move-out-cleaning')}>Commercial Move-Out Cleaning</a></h3>
+          <p>Vacant office, retail-suite, managed-property, make-ready, and tenant-turnover cleaning—not residential housekeeping.</p>
+        </article>
       </div>
       <p class="not-listed">
-        Don't see your facility type? We quote any commercial property from a free walkthrough —
-        <a href={url('/quote')}>tell us what you have</a> or call {BUSINESS.phone}.
+        Don’t see your facility type? JSM reviews commercial properties through a free walkthrough—
+        <a href={url('/quote')}>tell us what you manage</a> or call {BUSINESS.phone}.
       </p>
     </div>
   </section>
-  <CTA heading="Get a quote scoped to your facility type" />
+  <CTA heading="Get a cleaning scope built for your facility type" />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Base>
 
 <style>
+  .industries-hero { padding: 4.9rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
+  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--teal-dark); }
+  .industries-hero h1 { color: #fff; font-size: clamp(2.5rem, 5vw, 4.15rem); }
+  .industries-hero p:last-of-type { color: #c8d7e3; max-width: 780px; font-size: 1.08rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.7rem; }
+  .wide { max-width: 860px; }
+  .featured-card { border-color: rgba(25,163,154,.45); background: linear-gradient(145deg, rgba(25,163,154,.07), #fff); }
   .not-listed { margin-top: 2.5rem; text-align: center; color: var(--text-soft); }
 </style>
