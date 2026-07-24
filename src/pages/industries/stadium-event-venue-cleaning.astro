@@ -1,0 +1,210 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { BUSINESS, url } from '../../config';
+import { breadcrumbList } from '../../lib/breadcrumbs';
+
+const FAQS = [
+  {
+    q: 'Does JSM provide stadium cleaning?',
+    a: 'JSM can quote stadium, arena, athletic-facility, and event-venue cleaning when the location, event schedule, required turnaround, staffing plan, and scope fit available capacity. A walkthrough and event calendar review are required before service is confirmed.',
+  },
+  {
+    q: 'Can cleaning be scheduled before and after events?',
+    a: 'Yes. Venue scopes can separate pre-event presentation cleaning, during-event porter coverage, and post-event reset work so staffing and responsibilities are clear for each phase.',
+  },
+  {
+    q: 'What areas can be included in an event-venue scope?',
+    a: 'Common areas may include entrances, concourses, restrooms, seating sections, suites, offices, locker or team-support spaces, concessions-adjacent public areas, trash collection points, and floors. Exact inclusions depend on the facility and agreement.',
+  },
+  {
+    q: 'Do you provide post-event cleaning for smaller venues?',
+    a: 'Yes. JSM can also quote post-event cleaning for commercial event spaces, school athletic facilities, worship facilities, meeting venues, and other properties that need a scheduled reset after gatherings.',
+  },
+];
+
+const canonical = new URL('/industries/stadium-event-venue-cleaning/', BUSINESS.website).href;
+const businessId = `${new URL('/', BUSINESS.website).href}#localbusiness`;
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${canonical}#service`,
+  name: 'Stadium & Event Venue Cleaning',
+  alternateName: ['Stadium cleaning', 'Event venue cleaning', 'Post-event cleaning'],
+  serviceType: ['Stadium cleaning', 'Event venue cleaning', 'Post-event cleaning'],
+  description: 'Planned commercial cleaning for stadiums, arenas, athletic facilities, and event venues in the Twin Cities, subject to scope and staffing capacity.',
+  url: canonical,
+  areaServed: { '@type': 'AdministrativeArea', name: BUSINESS.serviceArea },
+  provider: { '@id': businessId },
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
+  ['Home', '/'],
+  ['Industries', '/industries'],
+  ['Stadium & Event Venue Cleaning', null],
+]);
+---
+
+<Base
+  title={`Stadium & Event Venue Cleaning | Twin Cities, MN | ${BUSINESS.shortName}`}
+  description={`Commercial stadium, arena, athletic-facility, and event-venue cleaning in the Twin Cities. Pre-event, porter, and post-event scopes available based on capacity.`}
+>
+  <section class="venue-hero">
+    <div class="container hero-layout">
+      <div>
+        <nav class="crumbs dark"><a href={url('/')}>Home</a> / <a href={url('/industries')}>Industries</a> / Stadium &amp; Event Venue Cleaning</nav>
+        <p class="eyebrow">High-traffic facility cleaning</p>
+        <h1>Stadium &amp; Event Venue Cleaning</h1>
+        <p class="lead">
+          JSM plans commercial venue cleaning around event calendars, traffic, turnaround windows,
+          public areas, staffing needs, and the standard the facility must reach before doors reopen.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/quote')}>Request a Venue Walkthrough</a>
+          <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+        </div>
+      </div>
+      <aside class="venue-card">
+        <p class="card-label">Possible service phases</p>
+        <ul>
+          <li>Pre-event presentation cleaning</li>
+          <li>During-event porter coverage</li>
+          <li>Post-event trash and reset cleaning</li>
+          <li>Restroom cleaning and restocking</li>
+          <li>Floor, entry, and public-area care</li>
+          <li>Scheduled non-event janitorial service</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container phase-layout">
+      <div>
+        <p class="eyebrow navy">Scope by operating phase</p>
+        <h2>One venue may require three different cleaning plans</h2>
+        <p>Event cleaning is easier to manage when preparation, live-event support, and the final reset are priced and staffed separately.</p>
+      </div>
+      <div class="phase-grid">
+        <article><span>01</span><h3>Before the event</h3><p>Entrances, glass, public floors, restrooms, suites, seating areas, and visible surfaces prepared for guests.</p></article>
+        <article><span>02</span><h3>During the event</h3><p>Defined porter routes for restrooms, spills, trash points, entrances, and high-traffic public spaces.</p></article>
+        <article><span>03</span><h3>After the event</h3><p>Trash collection, restroom reset, seating and concourse cleaning, floor work, and preparation for the next scheduled use.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container scope-layout">
+      <div>
+        <p class="eyebrow navy">Walkthrough requirements</p>
+        <h2>Venue pricing depends on more than square footage</h2>
+        <p>JSM reviews the operational details that determine staffing, equipment, timing, supervision, and the realistic completion window.</p>
+      </div>
+      <ul class="checklist scope-list">
+        <li>Expected attendance and event frequency</li>
+        <li>Seating, concourse, suite, restroom, and public-area quantities</li>
+        <li>Event end time and required reopening or turnover deadline</li>
+        <li>Trash handling, compactors, loading access, and disposal responsibilities</li>
+        <li>Security, credential, restricted-area, and parking procedures</li>
+        <li>Flooring types, equipment access, supplies, and storage availability</li>
+        <li>Existing staff responsibilities versus JSM responsibilities</li>
+        <li>Inspection, communication, and corrective-action process</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section venue-types">
+    <div class="container">
+      <div class="section-head wide">
+        <p class="eyebrow">Commercial venue applications</p>
+        <h2>Event cleaning is not limited to major stadiums</h2>
+        <p>JSM can review facilities where scheduled gatherings create concentrated traffic and a defined reset deadline.</p>
+      </div>
+      <div class="type-grid">
+        <article><strong>Stadiums and arenas</strong><p>Large public areas, restrooms, concourses, seating sections, suites, and operational support spaces.</p></article>
+        <article><strong>School athletic facilities</strong><p>Gymnasiums, field houses, spectator areas, locker-support spaces, restrooms, and event resets.</p></article>
+        <article><strong>Commercial event venues</strong><p>Meeting venues, banquet facilities, performance spaces, and scheduled post-event cleaning.</p></article>
+        <article><strong>Community and worship facilities</strong><p>High-attendance gatherings, fellowship areas, common spaces, classrooms, and weekend turnaround schedules.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container quote-layout">
+      <div>
+        <p class="eyebrow navy">Request a scope review</p>
+        <h2>Share the facility, event calendar, and required turnaround</h2>
+        <p>JSM will review whether the requested venue scope fits the service area, schedule, and available staffing capacity.</p>
+      </div>
+      <aside class="card"><QuoteForm /></aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-layout">
+      <div>
+        <p class="eyebrow navy">Venue cleaning questions</p>
+        <h2>Planning commercial event cleaning</h2>
+      </div>
+      <div>
+        {FAQS.map((faq) => (
+          <details class="faq-acc">
+            <summary>{faq.q}<span class="plus">+</span></summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA heading="Need a documented stadium or event-venue cleaning plan?" />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</Base>
+
+<style>
+  .venue-hero { padding: 5rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
+  .hero-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
+  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--teal-dark); }
+  h1 { color: #fff; font-size: clamp(2.5rem, 5vw, 4.2rem); }
+  .lead { color: #c8d7e3; font-size: 1.1rem; max-width: 760px; }
+  .actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.7rem; }
+  .venue-card { padding: 1.9rem; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(255,255,255,.09); }
+  .card-label { color: var(--teal-bright); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .venue-card ul { list-style: none; padding: 0; margin: 0; }
+  .venue-card li { position: relative; padding: .7rem 0 .7rem 1.6rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .venue-card li::before { content: '✓'; position: absolute; left: 0; color: var(--teal-bright); font-weight: 800; }
+  .phase-layout, .scope-layout, .quote-layout, .faq-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 3.5rem; align-items: start; }
+  .phase-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+  .phase-grid article, .type-grid article { padding: 1.25rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; box-shadow: var(--shadow); }
+  .phase-grid span { color: var(--teal-dark); font-size: .72rem; font-weight: 800; }
+  .phase-grid p, .type-grid p { color: var(--text-soft); margin: .3rem 0 0; }
+  .scope-list { margin: 0; }
+  .venue-types { color: #fff; background: linear-gradient(135deg, var(--navy-dark), var(--navy)); }
+  .venue-types h2 { color: #fff; }
+  .venue-types .section-head p { color: #c8d7e3; }
+  .wide { max-width: 860px; }
+  .type-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+  .type-grid article { border-color: rgba(255,255,255,.13); background: rgba(255,255,255,.08); }
+  .type-grid strong { color: var(--teal-bright); }
+  .type-grid p { color: #c8d7e3; }
+  @media (max-width: 900px) {
+    .hero-layout, .phase-layout, .scope-layout, .quote-layout, .faq-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .phase-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 620px) {
+    .type-grid { grid-template-columns: 1fr; }
+  }
+</style>
