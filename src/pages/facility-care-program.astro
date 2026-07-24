@@ -1,0 +1,272 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import { BUSINESS, url } from '../config';
+
+const FAQS = [
+  {
+    q: 'Is the JSM Facility Care Program only for large buildings?',
+    a: 'No. The same operating structure can be right-sized for a professional office, clinic, retail location, school, warehouse, or multi-building portfolio. The scope and inspection cadence are adjusted to the facility rather than forcing every client into one package.',
+  },
+  {
+    q: 'Can you use our existing cleaning scope or RFP?',
+    a: 'Yes. JSM can quote an existing scope line by line, identify unclear frequencies or accountability gaps, and recommend optional improvements separately so you can compare bids fairly.',
+  },
+  {
+    q: 'What happens when cleaning quality slips?',
+    a: 'Concerns are compared with the written scope, routed to the accountable contact, and corrected. If a completed visit missed the agreed scope, JSM re-cleans the affected area at no charge and addresses the cause with the assigned team.',
+  },
+  {
+    q: 'Can the program cover several Twin Cities locations?',
+    a: 'Yes. Multi-site programs can use a common core standard, site-specific schedules and addenda, coordinated startup planning, and one primary account contact.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Base
+  title={`Facility Care Program | Quality-Controlled Commercial Cleaning | ${BUSINESS.name}`}
+  description={`See how JSM plans, launches, inspects, and improves recurring commercial cleaning programs across the Twin Cities.`}
+>
+  <section class="program-hero">
+    <div class="container hero-layout">
+      <div>
+        <nav class="crumbs dark"><a href={url('/')}>Home</a> / Facility Care Program</nav>
+        <p class="eyebrow">The JSM Facility Care Program</p>
+        <h1>A commercial cleaning system built for accountability</h1>
+        <p class="lead">
+          Great cleaning is not one good night. It is a repeatable operating system: a clear scope,
+          an assigned team, visible quality control, direct escalation, and a plan that adapts as
+          your facility changes.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/quote')}>Request a Facility Walkthrough</a>
+          <a class="btn btn-outline" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <p class="card-label">Included in recurring programs</p>
+        <ul>
+          <li>Facility-specific written scope</li>
+          <li>Defined tasks and frequencies</li>
+          <li>Assigned, trained cleaning team</li>
+          <li>Supervisor quality inspections</li>
+          <li>Single point of contact</li>
+          <li>Free re-clean guarantee</li>
+          <li>Month-to-month agreement</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head wide">
+        <p class="eyebrow navy">Five operating disciplines</p>
+        <h2>How JSM turns a cleaning proposal into reliable service</h2>
+        <p>Each phase has a specific purpose, output, and accountability point.</p>
+      </div>
+      <div class="phase-list">
+        <article>
+          <div class="phase-number">01</div>
+          <div class="phase-copy">
+            <h3>Discover the facility</h3>
+            <p>We walk the building with the people who know it, document the current pain points, and understand how cleaning must fit around occupants and operations.</p>
+          </div>
+          <ul>
+            <li>Facility type, square footage, occupancy, and traffic</li>
+            <li>Operating hours, access, alarms, keys, and restricted areas</li>
+            <li>Current vendor gaps and priority spaces</li>
+            <li>Flooring, surfaces, supplies, and specialty requirements</li>
+          </ul>
+        </article>
+        <article>
+          <div class="phase-number">02</div>
+          <div class="phase-copy">
+            <h3>Engineer the scope</h3>
+            <p>The proposal defines what is cleaned, how often, when work occurs, and what is excluded—so both sides can measure the same expectations.</p>
+          </div>
+          <ul>
+            <li>Daily, weekly, monthly, and periodic tasks</li>
+            <li>Room-by-room scope and cleaning frequencies</li>
+            <li>Recommended staffing and schedule</li>
+            <li>Separate pricing for optional project work</li>
+          </ul>
+        </article>
+        <article>
+          <div class="phase-number">03</div>
+          <div class="phase-copy">
+            <h3>Control the startup</h3>
+            <p>A deliberate launch reduces missed rooms, access problems, supply confusion, and the quality drop that often follows a vendor transition.</p>
+          </div>
+          <ul>
+            <li>Assigned crew and supervisor orientation</li>
+            <li>Site access, safety, and communication procedures</li>
+            <li>Equipment, chemical, liner, and consumable planning</li>
+            <li>Initial service checks and scope adjustments</li>
+          </ul>
+        </article>
+        <article>
+          <div class="phase-number">04</div>
+          <div class="phase-copy">
+            <h3>Verify the work</h3>
+            <p>Quality is compared against the written scope—not a vague promise to “do better.” Inspections and direct escalation create a practical correction loop.</p>
+          </div>
+          <ul>
+            <li>Supervisor quality inspections</li>
+            <li>Checklist and priority-area review</li>
+            <li>Direct issue escalation to one accountable contact</li>
+            <li>Free re-clean when a visit misses the scope</li>
+          </ul>
+        </article>
+        <article>
+          <div class="phase-number">05</div>
+          <div class="phase-copy">
+            <h3>Improve the program</h3>
+            <p>Buildings change. Occupancy grows, seasons shift, floors wear, and tenant expectations move. The cleaning plan should evolve with them.</p>
+          </div>
+          <ul>
+            <li>Seasonal scope and schedule adjustments</li>
+            <li>Periodic floor, carpet, glass, and detail projects</li>
+            <li>Response to occupancy, traffic, and use changes</li>
+            <li>Multi-site standardization when locations are added</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container two-column">
+      <div>
+        <p class="eyebrow navy">Procurement and onboarding</p>
+        <h2>Clear documentation before the first cleaning visit</h2>
+        <p>A professional transition begins with defined responsibilities and accessible documents.</p>
+        <ul class="checklist">
+          <li>Written service proposal and scope of work</li>
+          <li>Schedule, frequencies, pricing, and optional services</li>
+          <li>Certificate of insurance available on request</li>
+          <li>Additional-insured documentation available on request</li>
+          <li>Primary contacts and escalation path</li>
+          <li>Site access, alarm, key, and safety procedures</li>
+        </ul>
+      </div>
+      <aside class="procurement-card">
+        <p class="card-label">Already have an RFP or scope?</p>
+        <h3>We will quote it line by line.</h3>
+        <p>Send the current document, and JSM will price the requested work as written. Any suggested additions can be shown separately, keeping your bid comparison clean.</p>
+        <a class="btn btn-navy" href={url('/contact')}>Send Your Current Scope</a>
+        <a class="text-link" href={url('/resources/templates')}>Or use JSM’s free RFP template →</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section multi-site-section">
+    <div class="container multi-layout">
+      <div>
+        <p class="eyebrow">Multi-site programs</p>
+        <h2>Local consistency across a Twin Cities portfolio</h2>
+        <p>For regional organizations, JSM can create a shared service framework while preserving the operating needs of each address.</p>
+      </div>
+      <div class="multi-grid">
+        <article><strong>Core standard</strong><p>A common baseline for service, training, inspections, and issue response.</p></article>
+        <article><strong>Site addenda</strong><p>Unique schedules, access rules, flooring, occupancy, and priority spaces by location.</p></article>
+        <article><strong>Coordinated planning</strong><p>One point of contact for startup sequencing, recurring service, and specialty projects.</p></article>
+        <article><strong>Comparable quality</strong><p>Consistent inspection expectations across offices, clinics, branches, or facilities.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head wide">
+        <p class="eyebrow navy">Why local accountability matters</p>
+        <h2>Enterprise discipline with fewer layers between the problem and the solution</h2>
+      </div>
+      <div class="benefit-grid">
+        <article class="card"><h3>Faster access</h3><p>The phone number on the agreement connects you to the team responsible for the account—not an anonymous national queue.</p></article>
+        <article class="card"><h3>Facility-specific decisions</h3><p>The scope is designed around the building and can be adjusted without forcing every request through a rigid national package.</p></article>
+        <article class="card"><h3>Accountability every month</h3><p>Month-to-month service means JSM keeps the relationship by performing, communicating, and correcting issues.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-layout">
+      <div class="section-head">
+        <p class="eyebrow navy">Program questions</p>
+        <h2>What facility teams ask before changing providers</h2>
+      </div>
+      <div>
+        {FAQS.map((faq) => (
+          <details class="faq-acc">
+            <summary>{faq.q}<span class="plus">+</span></summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <CTA heading="Ready to replace cleaning guesswork with a documented program?" />
+</Base>
+
+<style>
+  .program-hero { position: relative; overflow: hidden; background: linear-gradient(145deg, #081c2d, var(--navy) 65%, #174d5b); color: #fff; padding: 5rem 0; }
+  .program-hero::after { content: ''; position: absolute; width: 520px; height: 520px; border-radius: 50%; right: -220px; top: -240px; background: rgba(25,163,154,.27); filter: blur(70px); }
+  .hero-layout { position: relative; z-index: 1; display: grid; grid-template-columns: 1.2fr .8fr; gap: 4rem; align-items: center; }
+  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
+  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--teal-dark); }
+  h1 { color: #fff; font-size: clamp(2.5rem, 5vw, 4.2rem); }
+  .lead { color: #c9d7e2; font-size: 1.12rem; max-width: 720px; }
+  .actions { display: flex; gap: .9rem; flex-wrap: wrap; margin-top: 1.8rem; }
+  .hero-card { background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); border-radius: 18px; padding: 2rem; backdrop-filter: blur(12px); box-shadow: 0 24px 60px rgba(0,0,0,.24); }
+  .card-label { color: var(--teal-bright); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .hero-card ul { list-style: none; padding: 0; margin: 0; }
+  .hero-card li { position: relative; padding: .72rem 0 .72rem 1.6rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .hero-card li::before { content: '✓'; position: absolute; left: 0; color: var(--teal-bright); font-weight: 800; }
+  .wide { max-width: 850px; }
+  .phase-list { display: grid; gap: 1rem; }
+  .phase-list article { display: grid; grid-template-columns: 5rem 1fr 1.1fr; gap: 1.5rem; align-items: start; padding: 1.7rem; border: 1px solid var(--border); border-radius: 14px; background: #fff; box-shadow: var(--shadow); }
+  .phase-number { display: grid; place-items: center; width: 3.6rem; height: 3.6rem; border-radius: 12px; background: linear-gradient(135deg, var(--teal), var(--blue)); color: #fff; font-weight: 800; }
+  .phase-copy p, .phase-list ul { color: var(--text-soft); }
+  .phase-list ul { margin: 0; padding-left: 1.2rem; }
+  .phase-list li { margin-bottom: .35rem; }
+  .two-column { display: grid; grid-template-columns: 1.05fr .95fr; gap: 4rem; align-items: center; }
+  .procurement-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 2rem; box-shadow: var(--shadow-lift); }
+  .procurement-card .card-label { color: var(--teal-dark); }
+  .text-link { display: block; margin-top: 1rem; font-weight: 700; }
+  .multi-site-section { background: linear-gradient(135deg, var(--navy-dark), var(--navy)); color: #fff; }
+  .multi-site-section h2 { color: #fff; }
+  .multi-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 4rem; align-items: start; }
+  .multi-layout > div:first-child p:last-child { color: #c9d7e2; }
+  .multi-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+  .multi-grid article { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; padding: 1.25rem; }
+  .multi-grid strong { color: var(--teal-bright); }
+  .multi-grid p { color: #c9d7e2; margin: .3rem 0 0; }
+  .benefit-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
+  .faq-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 3rem; }
+  @media (max-width: 900px) {
+    .hero-layout, .two-column, .multi-layout, .faq-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .phase-list article { grid-template-columns: 4rem 1fr; }
+    .phase-list article ul { grid-column: 2; }
+    .benefit-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .program-hero { padding: 4rem 0; }
+    .phase-list article { grid-template-columns: 1fr; }
+    .phase-list article ul { grid-column: 1; }
+    .multi-grid { grid-template-columns: 1fr; }
+  }
+</style>
