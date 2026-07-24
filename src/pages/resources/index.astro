@@ -5,66 +5,77 @@ import { BUSINESS, url } from '../../config';
 import { ARTICLES } from '../../data/articles';
 import { COST_GUIDES, PILLAR_SLUG } from '../../data/costGuides';
 
-const pillar = COST_GUIDES.find((g) => g.slug === PILLAR_SLUG)!;
-const clusters = COST_GUIDES.filter((g) => g.slug !== PILLAR_SLUG);
+const pillar = COST_GUIDES.find((guide) => guide.slug === PILLAR_SLUG)!;
+const clusters = COST_GUIDES.filter((guide) => guide.slug !== PILLAR_SLUG);
 ---
 
 <Base
-  title={`Commercial Cleaning Resources, Cost Guides & Templates | ${BUSINESS.name}`}
-  description={`Free guides from ${BUSINESS.name}: cleaning cost guides by facility type, a cost calculator, downloadable RFP and checklist templates, and vetting guides.`}
+  title={`Commercial Cleaning Resources, RFPs & Cost Guides | ${BUSINESS.shortName}`}
+  description={`Free commercial cleaning resources from JSM: janitorial contract guidance, cost guides, a cost calculator, RFP templates, checklists, and a vendor scorecard.`}
 >
   <section class="section">
     <div class="container">
       <nav class="crumbs"><a href={url('/')}>Home</a> / Resources</nav>
       <div class="section-head">
-        <h1>Resources & Guides</h1>
+        <h1>Commercial Cleaning Resources &amp; Guides</h1>
         <p>
-          Straight answers for facility and office managers — what cleaning should cost, what it
-          should include, and how to hold any vendor (including us) accountable. Nothing gated.
+          Straight answers for facility and office managers—what cleaning should cost, what a
+          janitorial contract should include, and how to compare and manage vendors. Nothing gated.
         </p>
       </div>
 
-      <h2>Tools & Templates</h2>
+      <h2>Contracts, Tools &amp; Templates</h2>
       <div class="grid grid-3 block">
+        <div class="card featured-card">
+          <p class="label">High-intent guide</p>
+          <h3><a href={url('/janitorial-contracts')}>Commercial Janitorial Contracts</a></h3>
+          <p>Understand scope, frequencies, pricing factors, inspections, agreement terms, and how to compare recurring cleaning proposals.</p>
+        </div>
         <div class="card">
           <h3><a href={url('/resources/cleaning-cost-calculator')}>Cleaning Cost Calculator</a></h3>
           <p>Estimate your monthly cleaning cost in 30 seconds from published market ranges. No email required.</p>
         </div>
         <div class="card">
-          <h3><a href={url('/resources/templates')}>Free Templates</a></h3>
-          <p>Janitorial RFP, printable cleaning checklist, and a vendor comparison scorecard — web + PDF.</p>
+          <h3><a href={url('/resources/templates')}>Free RFP &amp; Vendor Templates</a></h3>
+          <p>Janitorial RFP, printable cleaning checklist, and a vendor comparison scorecard—web and PDF.</p>
+        </div>
+        <div class="card">
+          <h3><a href={url('/switching-cleaning-companies')}>Switch Cleaning Providers</a></h3>
+          <p>Use a controlled transition plan to replace an underperforming commercial cleaning vendor without creating a service gap.</p>
         </div>
       </div>
 
-      <h2>Cost Guides</h2>
+      <h2>Commercial Cleaning Cost Guides</h2>
       <div class="grid grid-3 block">
         <div class="card">
           <h3><a href={url(`/resources/${pillar.slug}`)}>{pillar.title}</a></h3>
           <p>{pillar.description}</p>
         </div>
-        {clusters.map((g) => (
+        {clusters.map((guide) => (
           <div class="card">
-            <h3><a href={url(`/resources/${g.slug}`)}>{g.title}</a></h3>
-            <p>{g.description}</p>
+            <h3><a href={url(`/resources/${guide.slug}`)}>{guide.title}</a></h3>
+            <p>{guide.description}</p>
           </div>
         ))}
       </div>
 
-      <h2>Buying & Vetting Guides</h2>
+      <h2>Buying &amp; Vetting Guides</h2>
       <div class="grid grid-3 block">
-        {ARTICLES.map((a) => (
+        {ARTICLES.map((article) => (
           <div class="card">
-            <h3><a href={url(`/resources/${a.slug}`)}>{a.title}</a></h3>
-            <p>{a.description}</p>
+            <h3><a href={url(`/resources/${article.slug}`)}>{article.title}</a></h3>
+            <p>{article.description}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
-  <CTA />
+  <CTA heading="Need a written cleaning scope and comparable proposal?" />
 </Base>
 
 <style>
   .block { margin-bottom: 2.5rem; }
-  h2 { margin-top: 0.5rem; }
+  h2 { margin-top: .5rem; }
+  .featured-card { border-color: rgba(25,163,154,.45); background: linear-gradient(145deg, rgba(25,163,154,.07), #fff); }
+  .label { color: var(--teal-dark) !important; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .55rem !important; }
 </style>
