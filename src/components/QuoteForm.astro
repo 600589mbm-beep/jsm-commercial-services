@@ -1,6 +1,6 @@
 ---
-// Three-step quote wizard. The default flow captures commercial cleaning needs;
-// variant="snow" swaps in snow-removal questions. Contact information stays last.
+// Reliable single-page quote form. It intentionally has no JavaScript dependency,
+// so it remains usable on direct visits, cached pages, mobile browsers, and Astro transitions.
 import { BUSINESS } from '../config';
 
 interface Props {
@@ -9,12 +9,12 @@ interface Props {
 
 const { variant = 'cleaning' } = Astro.props;
 const snow = variant === 'snow';
+const prefix = snow ? 'snow-quote' : 'cleaning-quote';
 
 const subject = snow
   ? '🔔 NEW SNOW QUOTE REQUEST — jsmcommercialservice.com'
   : '🔔 NEW FACILITY WALKTHROUGH REQUEST — jsmcommercialservice.com';
 
-const facilityLegend = snow ? 'What kind of property?' : 'What kind of commercial facility?';
 const facilities = snow
   ? ['Office', 'Retail', 'Medical', 'Industrial / Warehouse', 'HOA / Multifamily', 'Other']
   : [
@@ -31,8 +31,7 @@ const facilities = snow
       'Other',
     ];
 
-const frequencyLegend = snow ? 'What kind of agreement?' : 'What do you need?';
-const frequencies = snow
+const needs = snow
   ? ['Seasonal contract', 'Per-event service', 'Not sure yet']
   : [
       'Recurring janitorial',
@@ -43,13 +42,9 @@ const frequencies = snow
       'Not sure yet',
     ];
 
-const sizeLegend = snow ? 'Parking lot size' : 'Facility size';
 const sizes = snow
   ? ['Under 20 spaces', '20–50 spaces', '50–150 spaces', '150+ spaces', 'Not sure']
   : ['Under 5,000 sq ft', '5,000–20,000 sq ft', '20,000–50,000 sq ft', '50,000+ sq ft', 'Not sure'];
-
-const servicesLegend = snow ? 'What needs covering?' : 'Services needed';
-const submitText = snow ? 'Get My Snow Quote' : 'Request My Walkthrough';
 
 const serviceOptions = snow
   ? ['Parking lot plowing', 'Sidewalks & entrances', 'Salting / de-icing', 'Anti-icing pre-treatment', 'Snow hauling / stacking']
@@ -72,167 +67,162 @@ const serviceOptions = snow
       'Post-construction',
       'Snow removal',
     ];
+
+const submitText = snow ? 'Request Snow Pricing' : 'Request My Free Walkthrough';
 ---
 
-<form action={BUSINESS.formspreeEndpoint} method="POST" class="quote-wizard" novalidate>
+<form action={BUSINESS.formspreeEndpoint} method="POST" class="quote-form">
   <input type="hidden" name="_subject" value={subject} />
   <input type="hidden" name="_next" value="https://jsmcommercialservice.com/thank-you/" />
   <input type="hidden" name="form_type" value={snow ? 'snow-removal' : 'cleaning'} />
-  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
-  <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><div class="progress-fill" style="width: 33%"></div></div>
-  <p class="step-label">Step <span class="step-num">1</span> of 3</p>
+  <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
-  <fieldset class="step" data-step="1">
-    <legend>{facilityLegend}</legend>
-    <div class="chips">
-      {facilities.map((type) => (
-        <label class="chip"><input type="radio" name="facility_type" value={type} /><span>{type}</span></label>
-      ))}
-    </div>
-    <legend>{frequencyLegend}</legend>
-    <div class="chips">
-      {frequencies.map((frequency) => (
-        <label class="chip"><input type="radio" name="frequency" value={frequency} /><span>{frequency}</span></label>
-      ))}
-    </div>
-    <p class="err" hidden>Please pick one option from each question.</p>
-    <button type="button" class="btn btn-primary next">Next →</button>
-  </fieldset>
+  <div class="form-section">
+    <div class="section-number" aria-hidden="true">1</div>
+    <div class="section-content">
+      <h3>{snow ? 'Tell us about the property' : 'Tell us about the facility'}</h3>
+      <div class="field-grid">
+        <label>
+          <span>{snow ? 'Property type' : 'Commercial facility type'} *</span>
+          <select name="facility_type" required>
+            <option value="">Select one</option>
+            {facilities.map((facility) => <option value={facility}>{facility}</option>)}
+          </select>
+        </label>
 
-  <fieldset class="step" data-step="2" hidden>
-    <legend>{sizeLegend}</legend>
-    <div class="chips">
-      {sizes.map((size) => (
-        <label class="chip"><input type="radio" name="square_footage" value={size} /><span>{size}</span></label>
-      ))}
-    </div>
-    <legend>{servicesLegend}</legend>
-    <div class="chips">
-      {serviceOptions.map((service) => (
-        <label class="chip"><input type="checkbox" name="services_needed" value={service} /><span>{service}</span></label>
-      ))}
-    </div>
-    {!snow && (
-      <div class="optional-fields">
-        <label for="qw-locations">Number of locations</label>
-        <select id="qw-locations" name="number_of_locations">
-          <option value="">Select</option>
-          <option>1 location</option>
-          <option>2–5 locations</option>
-          <option>6–10 locations</option>
-          <option>11+ locations</option>
-        </select>
-        <label for="qw-challenge">What would you most like to improve?</label>
-        <textarea id="qw-challenge" name="current_challenge" rows="3" placeholder="Examples: inconsistent quality, restroom complaints, floor care, missed tasks, slow response..."></textarea>
+        <label>
+          <span>{snow ? 'Agreement type' : 'What do you need?'} *</span>
+          <select name="frequency" required>
+            <option value="">Select one</option>
+            {needs.map((need) => <option value={need}>{need}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span>{snow ? 'Parking lot size' : 'Facility size'}</span>
+          <select name="square_footage">
+            <option value="">Select one</option>
+            {sizes.map((size) => <option value={size}>{size}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span>City or ZIP *</span>
+          <input name="city_zip" type="text" required autocomplete="postal-code" placeholder="Apple Valley, MN or 55124" />
+        </label>
+
+        {!snow && (
+          <label>
+            <span>Number of locations</span>
+            <select name="number_of_locations">
+              <option value="">Select one</option>
+              <option>1 location</option>
+              <option>2–5 locations</option>
+              <option>6–10 locations</option>
+              <option>11+ locations</option>
+            </select>
+          </label>
+        )}
       </div>
-    )}
-    <label for="qw-city">City or ZIP</label>
-    <input id="qw-city" name="city_zip" type="text" autocomplete="postal-code" />
-    <div class="nav"><button type="button" class="btn btn-back back">← Back</button><button type="button" class="btn btn-primary next">Next →</button></div>
-  </fieldset>
+    </div>
+  </div>
 
-  <fieldset class="step" data-step="3" hidden>
-    <legend>Where should we follow up?</legend>
-    <label for="qw-name">Name *</label>
-    <input id="qw-name" name="name" type="text" required autocomplete="name" />
-    <label for="qw-company">Company</label>
-    <input id="qw-company" name="company" type="text" autocomplete="organization" />
-    <label for="qw-phone">Phone *</label>
-    <input id="qw-phone" name="phone" type="tel" required autocomplete="tel" />
-    <label for="qw-email">Work email</label>
-    <input id="qw-email" name="email" type="email" autocomplete="email" />
-    <label for="qw-contact-time">Best time to contact you</label>
-    <select id="qw-contact-time" name="best_contact_time">
-      <option value="">Any time</option>
-      <option>Morning</option>
-      <option>Afternoon</option>
-      <option>After 4 PM</option>
-    </select>
-    <p class="err" hidden>Please add your name and a phone number.</p>
-    <div class="nav"><button type="button" class="btn btn-back back">← Back</button><button type="submit" class="btn btn-primary">{submitText}</button></div>
-    <p class="reassure">No obligation. {BUSINESS.responsePromise}</p>
-  </fieldset>
+  <div class="form-section">
+    <div class="section-number" aria-hidden="true">2</div>
+    <div class="section-content">
+      <fieldset>
+        <legend>{snow ? 'What needs coverage?' : 'Which services are you considering?'}</legend>
+        <p class="field-help">Select all that apply.</p>
+        <div class="check-grid">
+          {serviceOptions.map((service, index) => (
+            <label class="check-option" for={`${prefix}-service-${index}`}>
+              <input id={`${prefix}-service-${index}`} type="checkbox" name="services_needed" value={service} />
+              <span>{service}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <label class="full-field">
+        <span>{snow ? 'Property details or service priorities' : 'What would you most like to improve?'}</span>
+        <textarea
+          name="current_challenge"
+          rows="4"
+          placeholder={snow
+            ? 'Entrances, sidewalks, lot size, trigger depth, problem areas...'
+            : 'Examples: inconsistent quality, restroom complaints, missed tasks, floor care, slow response...'}
+        ></textarea>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="section-number" aria-hidden="true">3</div>
+    <div class="section-content">
+      <h3>Where should JSM follow up?</h3>
+      <div class="field-grid">
+        <label>
+          <span>Name *</span>
+          <input name="name" type="text" required autocomplete="name" />
+        </label>
+
+        <label>
+          <span>Company</span>
+          <input name="company" type="text" autocomplete="organization" />
+        </label>
+
+        <label>
+          <span>Phone *</span>
+          <input name="phone" type="tel" required autocomplete="tel" inputmode="tel" />
+        </label>
+
+        <label>
+          <span>Work email</span>
+          <input name="email" type="email" autocomplete="email" inputmode="email" />
+        </label>
+
+        <label>
+          <span>Best time to contact you</span>
+          <select name="best_contact_time">
+            <option value="">Any time</option>
+            <option>Morning</option>
+            <option>Afternoon</option>
+            <option>After 4 PM</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary submit-button">{submitText}</button>
+  <p class="reassure">No obligation. {BUSINESS.responsePromise}</p>
 </form>
 
 <style>
-  .progress { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--teal); transition: width .25s; }
-  .step-label { font-size: .8rem; color: var(--text-soft); margin: .4rem 0 .8rem; }
-  fieldset { border: none; padding: 0; margin: 0; }
-  legend { font-weight: 700; color: var(--navy); padding: 0; margin: .8rem 0 .5rem; }
-  .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .5rem; }
-  .chip input { position: absolute; opacity: 0; pointer-events: none; }
-  .chip span { display: inline-block; padding: .5rem .9rem; border: 1.5px solid var(--border); border-radius: 999px; cursor: pointer; font-size: .92rem; user-select: none; transition: border-color .1s, background .1s, transform .1s; }
-  .chip input:checked + span { background: var(--teal); border-color: var(--teal); color: #fff; font-weight: 600; animation: chip-pop .25s var(--ease-out); }
-  .chip input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
-  .chip span:hover { border-color: var(--teal); transform: translateY(-1px); }
-  @keyframes chip-pop { 50% { transform: scale(1.08); } }
-  .step:not([hidden]) { animation: step-in .4s var(--ease-out); }
-  .optional-fields { display: contents; }
+  .quote-form { display: grid; gap: 1.2rem; }
+  .honeypot { display: none !important; }
+  .form-section { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: .85rem; padding-bottom: 1.15rem; border-bottom: 1px solid var(--border); }
+  .section-number { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 800; font-size: .9rem; }
+  .section-content { min-width: 0; }
+  .section-content h3, legend { margin: .2rem 0 .8rem; color: var(--navy); font-size: 1rem; font-weight: 800; }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  legend { padding: 0; }
+  .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
+  label { display: grid; gap: .35rem; color: var(--navy); font-weight: 700; font-size: .86rem; }
+  input, select, textarea { width: 100%; min-width: 0; padding: .72rem .78rem; border: 1.5px solid var(--border); border-radius: 9px; background: #fff; color: var(--text); font: inherit; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid rgba(25,163,154,.2); border-color: var(--teal); }
   textarea { resize: vertical; }
-  .nav { display: flex; gap: .75rem; margin-top: 1.25rem; flex-wrap: wrap; }
-  .btn-back { background: none; border: 1.5px solid var(--border); color: var(--text-soft); }
-  .err { color: #b3261e; font-size: .88rem; margin: .5rem 0 0; }
-  .reassure { font-size: .82rem; color: var(--text-soft); margin-top: .9rem; margin-bottom: 0; }
-  button.next, fieldset button[type='submit'] { margin-top: 1rem; }
+  .field-help { margin: -.45rem 0 .7rem; color: var(--text-soft); font-size: .8rem; }
+  .check-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
+  .check-option { display: flex; align-items: flex-start; gap: .55rem; padding: .62rem .7rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-alt); cursor: pointer; font-weight: 600; line-height: 1.35; }
+  .check-option:hover { border-color: var(--teal); background: #fff; }
+  .check-option input { width: 17px; height: 17px; margin: .08rem 0 0; flex: 0 0 auto; accent-color: var(--teal-dark); }
+  .full-field { margin-top: .9rem; }
+  .submit-button { width: 100%; min-height: 50px; font-size: 1rem; }
+  .reassure { margin: -.55rem 0 0; text-align: center; color: var(--text-soft); font-size: .82rem; }
+  @media (max-width: 640px) {
+    .form-section { grid-template-columns: 32px minmax(0, 1fr); gap: .65rem; }
+    .section-number { width: 28px; height: 28px; font-size: .8rem; }
+    .field-grid, .check-grid { grid-template-columns: 1fr; }
+  }
 </style>
-
-<script>
-  function setStep(form: HTMLFormElement, n: number) {
-    form.querySelectorAll<HTMLFieldSetElement>('.step').forEach((fieldset) => {
-      fieldset.hidden = Number(fieldset.dataset.step) !== n;
-    });
-    const fill = form.querySelector<HTMLElement>('.progress-fill');
-    if (fill) fill.style.width = `${(n / 3) * 100}%`;
-    const bar = form.querySelector('.progress');
-    if (bar) bar.setAttribute('aria-valuenow', String(n));
-    const num = form.querySelector('.step-num');
-    if (num) num.textContent = String(n);
-  }
-
-  function validStep(form: HTMLFormElement, n: number): boolean {
-    if (n === 1) {
-      return !!form.querySelector('input[name="facility_type"]:checked') && !!form.querySelector('input[name="frequency"]:checked');
-    }
-    if (n === 3) {
-      const name = form.querySelector<HTMLInputElement>('input[name="name"]');
-      const phone = form.querySelector<HTMLInputElement>('input[name="phone"]');
-      return !!name?.value.trim() && !!phone?.value.trim();
-    }
-    return true;
-  }
-
-  function initWizards() {
-    document.querySelectorAll<HTMLFormElement>('.quote-wizard').forEach((form) => {
-      if (form.dataset.wizardInit) return;
-      form.dataset.wizardInit = '1';
-      let step = 1;
-      form.addEventListener('click', (event) => {
-        const target = event.target as HTMLElement;
-        const fieldset = target.closest<HTMLFieldSetElement>('.step');
-        const error = fieldset?.querySelector<HTMLElement>('.err');
-        if (target.classList.contains('next')) {
-          if (!validStep(form, step)) {
-            if (error) error.hidden = false;
-            return;
-          }
-          if (error) error.hidden = true;
-          step = Math.min(step + 1, 3);
-          setStep(form, step);
-        } else if (target.classList.contains('back')) {
-          step = Math.max(step - 1, 1);
-          setStep(form, step);
-        }
-      });
-      form.addEventListener('submit', (event) => {
-        const fieldset = form.querySelector<HTMLFieldSetElement>('.step[data-step="3"]');
-        const error = fieldset?.querySelector<HTMLElement>('.err');
-        if (!validStep(form, 3)) {
-          event.preventDefault();
-          if (error) error.hidden = false;
-        }
-      });
-    });
-  }
-  document.addEventListener('astro:page-load', initWizards);
-</script>
