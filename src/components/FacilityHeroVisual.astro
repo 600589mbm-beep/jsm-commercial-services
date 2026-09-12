@@ -1,0 +1,56 @@
+---
+import { url } from '../config';
+---
+<aside class="facility-visual" aria-label="Illustration of a building-specific JSM cleaning plan">
+  <div class="visual-glow" aria-hidden="true"></div>
+  <div class="floating-chip chip-schedule"><span aria-hidden="true">◷</span><strong>1–7 days / week</strong></div>
+  <div class="floating-chip chip-scope"><span aria-hidden="true">✓</span><strong>Written scope</strong></div>
+  <div class="visual-card">
+    <div class="visual-head">
+      <span class="visual-mark">JSM</span>
+      <div><small>FACILITY CARE PLAN</small><strong>Built around your property</strong></div>
+      <span class="status-dot" aria-label="Local service"></span>
+    </div>
+    <div class="scene" aria-hidden="true">
+      <svg viewBox="0 0 560 320" role="img">
+        <defs>
+          <linearGradient id="ground" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#d9eee4"/><stop offset="1" stop-color="#c8dfd7"/></linearGradient>
+          <linearGradient id="front" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#173f4d"/><stop offset="1" stop-color="#0f3040"/></linearGradient>
+          <linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2a6570"/><stop offset="1" stop-color="#1e4f5d"/></linearGradient>
+          <filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#0f2c40" flood-opacity=".16"/></filter>
+        </defs>
+        <path d="M42 250 284 132 516 239 277 306Z" fill="url(#ground)"/>
+        <g filter="url(#shadow)">
+          <path d="m112 231 151 53V103L112 57Z" fill="url(#front)"/>
+          <path d="m263 103 166-60v176l-166 65Z" fill="url(#side)"/>
+          <path d="M112 57 280 10l149 33-166 60Z" fill="#b8d9cf"/>
+        </g>
+        <g fill="#a5cfc2"><path d="m137 91 31 10v32l-31-10Z"/><path d="m188 108 31 10v32l-31-10Z"/><path d="m137 140 31 10v32l-31-10Z"/><path d="m188 157 31 10v32l-31-10Z"/><path d="m137 189 31 10v32l-31-10Z"/><path d="m188 206 31 10v32l-31-10Z"/></g>
+        <g fill="#d9eee4"><path d="m292 112 38-14v33l-38 14Z"/><path d="m356 89 38-14v33l-38 14Z"/><path d="m292 166 38-14v33l-38 14Z"/><path d="m356 143 38-14v33l-38 14Z"/><path d="m292 220 38-14v33l-38 14Z"/></g>
+        <path d="m356 195 38-14v48l-38 15Z" fill="#0c2b39"/>
+        <g fill="none" stroke="#0b7465" stroke-linecap="round" stroke-width="5"><path d="M63 247c31-42 56-54 87-57" stroke-dasharray="4 12"/><path d="M420 245c33-14 56-28 73-57" stroke-dasharray="4 12"/></g>
+        <g><circle cx="70" cy="198" r="21" fill="#93c4a7"/><path d="M70 218v29" stroke="#307264" stroke-width="6"/><circle cx="482" cy="184" r="24" fill="#8bbda1"/><path d="M482 208v38" stroke="#307264" stroke-width="7"/></g>
+        <g transform="translate(437 71)"><circle cx="34" cy="34" r="34" fill="#fff" stroke="#bcd9ce"/><path d="M20 35l9 9 19-23" fill="none" stroke="#0c7768" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/></g>
+      </svg>
+      <div class="scene-label scene-label-a"><span>PROPERTY</span><strong>Spaces & surfaces</strong></div>
+      <div class="scene-label scene-label-b"><span>SCHEDULE</span><strong>Days & timing</strong></div>
+    </div>
+    <div class="visual-body">
+      <div class="visual-kicker"><span></span>YOUR PLAN STARTS HERE</div>
+      <h2>One building.<br />Every detail considered.</h2>
+      <div class="plan-list">
+        <div><span>01</span><p><small>Your property</small><strong>Type, size & spaces</strong></p><i aria-hidden="true">⌂</i></div>
+        <div><span>02</span><p><small>Your schedule</small><strong>1–7 days per week</strong></p><i aria-hidden="true">◷</i></div>
+        <div><span>03</span><p><small>Your priorities</small><strong>Scope, RFP & walkthrough</strong></p><i aria-hidden="true">≡</i></div>
+      </div>
+      <a class="visual-action" href={url('/quote')}>Build your request <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .facility-visual{position:relative;isolation:isolate;min-width:0;padding:1.2rem .4rem 1.2rem 1rem}.visual-glow{position:absolute;z-index:-2;width:82%;aspect-ratio:1;right:-8%;top:2%;border-radius:50%;background:radial-gradient(circle,#7ebba34d 0,#b9dccb2f 38%,transparent 70%);filter:blur(12px)}.visual-card{position:relative;overflow:hidden;background:#fff;border:1px solid #cfe0d9;border-radius:24px;box-shadow:0 34px 90px rgba(16,44,64,.14),0 8px 28px rgba(16,44,64,.08);transform:rotate(.7deg)}.visual-card:before{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 1px #ffffffd6}.visual-head{min-height:74px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.85rem;padding:1rem 1.25rem;border-bottom:1px solid #e3ece7}.visual-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;background:#102c40;color:#fff;font-size:.82rem;font-weight:800;letter-spacing:.02em}.visual-head div{display:grid;gap:.15rem}.visual-head small{font-size:.52rem;letter-spacing:.13em;color:#648075;font-weight:800}.visual-head strong{font-size:.8rem;color:#183947}.status-dot{width:10px;height:10px;border-radius:50%;background:#27a379;box-shadow:0 0 0 6px #27a37918}.scene{position:relative;min-height:245px;padding:.3rem 1rem 0;background:linear-gradient(145deg,#edf6ef 0%,#e4f0e9 58%,#d8ebe4 100%);overflow:hidden}.scene:before,.scene:after{content:'';position:absolute;inset:0;background-image:linear-gradient(#2d6b5a0a 1px,transparent 1px),linear-gradient(90deg,#2d6b5a0a 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,#000,transparent 92%)}.scene:after{background:radial-gradient(circle at 82% 20%,#fff9 0 6%,transparent 7%),radial-gradient(circle at 12% 24%,#fff7 0 4%,transparent 5%);mask-image:none}.scene svg{position:relative;z-index:1;display:block;width:100%;height:auto;max-height:250px}.scene-label{position:absolute;z-index:2;display:grid;gap:.05rem;padding:.45rem .6rem;border:1px solid #ffffffaa;border-radius:9px;background:#fffffff2;box-shadow:0 8px 22px #193f3920}.scene-label span{font-size:.45rem;letter-spacing:.12em;color:#5d7b70;font-weight:800}.scene-label strong{font-size:.62rem;color:#1a4350}.scene-label-a{left:8%;top:15%}.scene-label-b{right:7%;bottom:14%}.visual-body{padding:1.45rem 1.6rem 1.55rem}.visual-kicker{display:flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:.14em;color:#4d7567;font-weight:800}.visual-kicker span{width:22px;height:2px;background:#0f806f}.visual-body h2{font-size:clamp(1.55rem,2.2vw,1.9rem);line-height:1.08;letter-spacing:-.04em;margin:.75rem 0 1.1rem}.plan-list{border-top:1px solid #e0ebe5}.plan-list>div{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:center;padding:.72rem 0;border-bottom:1px solid #e0ebe5}.plan-list>div>span{font-size:.56rem;color:#739186;font-weight:800}.plan-list p{display:grid;grid-template-columns:1fr auto;gap:.75rem;align-items:center;margin:0}.plan-list small{font-size:.65rem;color:#688078}.plan-list strong{font-size:.72rem;color:#173847;text-align:right}.plan-list i{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#eef6f1;color:#0c7565;font-size:.76rem;font-style:normal}.visual-action{display:flex;justify-content:space-between;align-items:center;margin-top:.95rem;padding:.9rem 1rem;border-radius:10px;background:linear-gradient(135deg,#dff0e6,#edf7f0);color:#086858;text-decoration:none;font-size:.82rem;font-weight:800;transition:transform .2s,box-shadow .2s}.visual-action:hover{transform:translateY(-2px);box-shadow:0 10px 24px #153e3320}.floating-chip{position:absolute;z-index:3;display:flex;align-items:center;gap:.45rem;padding:.62rem .75rem;border:1px solid #cfe1da;border-radius:999px;background:#fffffff4;box-shadow:0 12px 30px rgba(18,54,60,.12);backdrop-filter:blur(8px);font-size:.64rem;color:#244a50}.floating-chip span{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:#def0e7;color:#0a705f;font-size:.68rem}.floating-chip strong{font-weight:800}.chip-schedule{left:-1.2rem;top:25%}.chip-scope{right:-1.35rem;top:62%}
+  @media(max-width:950px){.facility-visual{padding-left:0}.floating-chip{display:none}.visual-card{transform:none}.scene{min-height:220px}}
+  @media(max-width:700px){.facility-visual{padding:0;margin-top:.7rem}.visual-card{border-radius:19px}.visual-head{min-height:64px;padding:.8rem 1rem}.visual-mark{width:38px;height:38px}.scene{min-height:185px;padding:0 .4rem}.scene svg{max-height:190px}.scene-label{display:none}.visual-body{padding:1.15rem}.visual-body h2{font-size:1.5rem}.plan-list p{grid-template-columns:1fr}.plan-list strong{text-align:left}.plan-list i{display:none}}
+  @media(prefers-reduced-motion:reduce){.visual-action{transition:none}.visual-action:hover{transform:none}}
+</style>
