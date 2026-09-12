@@ -1,0 +1,197 @@
+---
+import Base from '../../layouts/Base.astro';
+import SnowWalkthroughForm from '../../components/SnowWalkthroughForm.astro';
+import { BUSINESS, url } from '../../config';
+import { LOCATIONS } from '../../data/locations';
+import { SNOW_LOCAL, PRIORITY_SNOW_SLUGS } from '../../data/snowLocations';
+
+const priorityLocations = PRIORITY_SNOW_SLUGS
+  .map((slug) => LOCATIONS.find((location) => location.slug === slug))
+  .filter(Boolean);
+
+const faqs = [
+  { q:'What is included in JSM commercial snow removal?', a:'Depending on the written property scope, commercial snow service can include parking-lot plowing, sidewalks and entrances, fire-exit clearing, salting/de-icing, anti-icing options, and snow stacking, relocation or hauling.' },
+  { q:'Does JSM offer seasonal and per-event snow contracts?', a:'Seasonal and per-event structures may be available depending on property location, route capacity, requested trigger depth and scope. An RFP or portfolio bid can also be reviewed.' },
+  { q:'How is the snow-removal trigger established?', a:'The trigger depth or applicable event condition is documented in the property agreement before service begins. The request form lets you provide an existing trigger or ask JSM to recommend an approach for proposal discussion.' },
+  { q:'Can JSM clear sidewalks, entrances and fire exits?', a:'Yes, when those surfaces are included in the agreed property scope. Priority pedestrian routes, entrances and exits should be identified during the site walk.' },
+  { q:'Does JSM provide de-icing?', a:'Salting and de-icing can be included in the commercial snow scope. Materials, priority areas and service conditions should be documented in the agreement.' },
+  { q:'Can snow be hauled away when piles take up parking space?', a:'Snow stacking, relocation or hauling can be requested and evaluated during the site walk based on on-site storage space and property requirements.' },
+  { q:'Can I send JSM an existing snow-removal RFP?', a:'Yes. Share a secure HTTPS document link or paste the requirements in the snow request form. Attachments can be emailed separately with the property name and address.' },
+  { q:'Does JSM provide documentation after snow service?', a:'JSM’s current snow service description includes documented service activity. The exact documentation provided for a property should be identified in the written proposal or agreement.' },
+  { q:'What Twin Cities communities does JSM serve?', a:`JSM’s website lists ${LOCATIONS.length} Twin Cities communities. Snow-route availability must be confirmed for the specific property before contracting.` },
+  { q:'How do I schedule a commercial snow site walk?', a:'Submit the property address, snow requirements and a preferred date/time. The selected time is a request until JSM confirms availability.' },
+];
+
+const canonical = `${BUSINESS.website}/services/snow-removal/`;
+const businessId = `${BUSINESS.website}/#localbusiness`;
+const schema = {
+  '@context':'https://schema.org',
+  '@graph':[
+    {
+      '@type':'Service', '@id':`${canonical}#service`, url:canonical,
+      name:'Commercial Snow Removal & Ice Management',
+      alternateName:['Commercial snow removal','Commercial snow plowing','Commercial de-icing','Parking lot snow removal','Commercial snow and ice management'],
+      serviceType:['Commercial snow removal','Commercial snow plowing','Commercial de-icing','Parking lot snow removal','Sidewalk snow clearing'],
+      description:'Commercial snow plowing, sidewalk and entrance clearing, ice management, and snow stacking or hauling for Twin Cities commercial properties.',
+      provider:{'@id':businessId}, areaServed:{'@type':'AdministrativeArea',name:'Minneapolis–St. Paul metro, Minnesota'}
+    },
+    {
+      '@type':'BreadcrumbList','@id':`${canonical}#breadcrumb`,itemListElement:[
+        {'@type':'ListItem',position:1,name:'Home',item:`${BUSINESS.website}/`},
+        {'@type':'ListItem',position:2,name:'Services',item:`${BUSINESS.website}/services/`},
+        {'@type':'ListItem',position:3,name:'Commercial Snow Removal & Ice Management',item:canonical}
+      ]
+    },
+    {
+      '@type':'FAQPage','@id':`${canonical}#faq`,mainEntity:faqs.map((faq)=>({'@type':'Question',name:faq.q,acceptedAnswer:{'@type':'Answer',text:faq.a}}))
+    }
+  ]
+};
+---
+
+<Base
+  title="Commercial Snow Removal Minneapolis–St. Paul, MN | JSM"
+  description="Commercial snow plowing, sidewalk clearing, de-icing and snow hauling for Twin Cities properties. Request a site walk and written snow-management proposal."
+>
+  <section class="snow-hero">
+    <div class="snow-grid" aria-hidden="true"></div>
+    <div class="container snow-hero-layout">
+      <div class="snow-copy">
+        <nav class="crumbs dark"><a href={url('/')}>Home</a> / <a href={url('/services')}>Services</a> / Commercial Snow Removal</nav>
+        <p class="eyebrow">MINNESOTA COMMERCIAL SNOW & ICE MANAGEMENT</p>
+        <h1>Commercial Snow Removal & Ice Management in Minneapolis–St. Paul, MN</h1>
+        <p class="lead">Build a property-specific winter plan for parking lots, sidewalks, entrances, de-icing and snow storage—with trigger terms and service expectations written down before the first event.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#snow-request">Request a Snow Site Walk →</a>
+          <a class="btn btn-outline" href="#snow-rfp">Send JSM Your Snow RFP</a>
+          <a class="phone-link" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+        </div>
+        <p class="hero-note">Commercial properties only · Preferred walkthrough dates require JSM confirmation · Route capacity varies by property and season.</p>
+      </div>
+      <aside class="ops-card" aria-label="Example commercial snow operations plan">
+        <div class="ops-head"><span>JSM</span><p><small>SNOW OPERATIONS PLAN</small><strong>Property-specific winter scope</strong></p><i></i></div>
+        <div class="site-map" aria-hidden="true">
+          <div class="lot zone"><span>LOT</span><strong>Plow</strong></div>
+          <div class="building"><span>COMMERCIAL PROPERTY</span></div>
+          <div class="entrance zone"><span>MAIN ENTRANCE</span><strong>Clear + treat</strong></div>
+          <div class="walk zone"><span>SIDEWALK</span><strong>Clear + de-ice</strong></div>
+          <div class="loading zone"><span>LOADING</span><strong>Maintain access</strong></div>
+          <div class="storage zone"><span>SNOW ZONE</span><strong>Stack / relocate</strong></div>
+        </div>
+        <div class="ops-rows">
+          <div><span>Trigger</span><strong>Written into agreement</strong></div>
+          <div><span>Contract</span><strong>Seasonal / per event / RFP</strong></div>
+          <div><span>Activity</span><strong>Documentation defined by scope</strong></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="proof-strip"><div class="container">
+    <div><strong>Seasonal + per-event</strong><span>Contract options where available</span></div>
+    <div><strong>Written trigger terms</strong><span>Clear expectations before storms</span></div>
+    <div><strong>Lots + walks + ice</strong><span>Property-wide scope options</span></div>
+    <div><strong>Documented activity</strong><span>Defined in your property plan</span></div>
+  </div></section>
+
+  <section class="snow-section">
+    <div class="container intro-layout">
+      <div><p class="eyebrow">START WITH THE PROPERTY</p><h2>Commercial snow plans built around your operating hours.</h2></div>
+      <div><p>Minnesota winter does not give a property manager much room for ambiguity. A commercial snow agreement should establish what gets cleared, where snow is placed, when service begins, how sidewalks and entrances are handled, what ice-management work is included and how contracted activity is documented.</p><p>Two properties with the same number of parking stalls can need very different plans. One may need a loading dock usable before an early shift. Another may have a medical entrance, heavy pedestrian traffic, limited storage space or fire exits that must remain accessible. A retail center may be more sensitive to parking-stall loss and sight lines. A warehouse may care most about truck circulation and dock approaches.</p></div>
+    </div>
+    <div class="container planning-grid">
+      <article><span>01</span><h3>Start with a commercial snow site walk</h3><p>Identify lots, drive lanes, entrances, sidewalks, fire exits, loading zones, drainage/refreeze concerns and places where snow can safely be stored.</p></article>
+      <article><span>02</span><h3>Define trigger depth & priority access</h3><p>Document the requested trigger or event conditions, business hours, preferred open-by needs and the access points that matter most to normal operations.</p></article>
+      <article><span>03</span><h3>Put the winter scope in writing</h3><p>Separate plowing, sidewalks, de-icing, anti-icing, stacking, relocation and hauling so both the property manager and contractor are working from the same expectations.</p></article>
+    </div>
+  </section>
+
+  <section class="snow-section tinted">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">PARKING LOT SNOW PLOWING</p>
+        <h2>Keep commercial traffic routes usable without treating every property like the same lot.</h2>
+        <p>Commercial plowing can cover parking fields, drive lanes and other agreed paved areas under the trigger depth and service terms written into the property agreement. During the site walk, identify traffic flow, employee/customer parking, delivery access and snow-pile locations before winter forces those decisions.</p>
+        <h3>Drive lanes, parking stalls, loading areas and access routes</h3>
+        <p>Large office, retail and industrial properties can have several different priorities on the same site. A written snow plan should identify what is most important during active operations and which zones can be serviced or stacked differently.</p>
+        <h3>Snow stacking, relocation and hauling</h3>
+        <p>Snow piles can eventually consume parking, restrict visibility or interfere with circulation. If a site has limited storage space, the proposal should address where snow is stacked and how relocation or hauling is authorized and priced rather than assuming off-site removal is included in basic plowing.</p>
+      </div>
+      <aside class="scope-card">
+        <p class="eyebrow">COMMERCIAL SITE MAP</p><h3>Bring these details to the walkthrough</h3>
+        <ul><li>Parking lots and internal drives</li><li>Main, employee and patient/customer entrances</li><li>Loading docks, truck routes and service access</li><li>Fire exits and fire lanes</li><li>Sidewalks and priority pedestrian routes</li><li>Approved snow-storage areas</li><li>Drainage/refreeze or recurring ice areas</li></ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="snow-section">
+    <div class="container section-heading"><div><p class="eyebrow">SIDEWALKS, ENTRANCES & ICE</p><h2>Commercial ice management is part of the property plan—not an afterthought.</h2></div><p>Parking-lot plowing does not automatically answer how entrances, walks, exits or refreeze-prone areas will be handled. Scope them separately and write the service conditions into the agreement.</p></div>
+    <div class="service-cards">
+      <article><span>↔</span><h3>Sidewalks & entrances</h3><p>Identify customer, employee, patient and tenant routes that should be included in the winter scope.</p></article>
+      <article><span>✣</span><h3>Salting & de-icing</h3><p>Define treatment areas, materials and service conditions instead of assuming every plow visit includes the same ice work.</p></article>
+      <article><span>△</span><h3>Anti-icing options</h3><p>Pre-treatment can be discussed where operationally appropriate and included only when it is part of the accepted property scope.</p></article>
+      <article><span>⌂</span><h3>Fire exits & priority access</h3><p>Include exits and critical building access in the site map so winter work reflects the property’s actual operational priorities.</p></article>
+    </div>
+  </section>
+
+  <section class="contracts-section">
+    <div class="container"><div class="section-heading light"><div><p class="eyebrow">COMMERCIAL SNOW CONTRACTS</p><h2>Choose a contract structure that fits the property and procurement process.</h2></div><p>Availability depends on location, route capacity, trigger depth and scope. The cards below explain the structures JSM can review—not a guarantee that every structure is available for every site.</p></div>
+      <div class="contract-grid">
+        <article><p class="contract-tag">SEASONAL AGREEMENT</p><h3>Plan the winter scope before the season.</h3><ul><li>Property-specific scope</li><li>Trigger and service terms documented</li><li>Budget-planning emphasis</li><li>Site map and priority zones</li></ul><a href="#snow-request">Request seasonal pricing →</a></article>
+        <article><p class="contract-tag">PER-EVENT SERVICE</p><h3>Define what constitutes a billable event.</h3><ul><li>Event/trigger structure</li><li>Requested surfaces and services</li><li>Separate ice/hauling terms as needed</li><li>Property availability reviewed first</li></ul><a href="#snow-request">Request per-event review →</a></article>
+        <article id="snow-rfp"><p class="contract-tag">RFP / PORTFOLIO BID</p><h3>Send an existing commercial snow scope.</h3><ul><li>Multi-property requirements</li><li>Bid deadline and site-walk instructions</li><li>Pricing format and documentation requirements</li><li>Property-specific addenda</li></ul><a href="#snow-request">Start an RFP request →</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="snow-section">
+    <div class="container"><p class="eyebrow">COMMERCIAL PROPERTY TYPES</p><h2>Different winter operations create different snow priorities.</h2>
+      <div class="property-grid">
+        <article><h3>Offices & managed properties</h3><p>Employee/visitor access, shared entrances, parking capacity and property-manager reporting expectations.</p></article>
+        <article><h3>Retail & shopping centers</h3><p>Customer-facing parking, high pedestrian traffic, curb zones, entrances, visibility and snow-storage pressure.</p></article>
+        <article><h3>Medical properties</h3><p>Patient and staff access, primary entrances and site-specific operating requirements that should be mapped before winter.</p></article>
+        <article><h3>Warehouses & industrial</h3><p>Truck circulation, loading-dock approaches, shift changes, employee lots and operational zones that may need separate priority.</p></article>
+        <article><h3>Multi-tenant / multifamily common areas</h3><p>Shared lots, building entrances and common pedestrian surfaces under one written commercial property scope.</p></article>
+        <article><h3>Campuses & multi-building sites</h3><p>Zone-based planning for multiple lots, buildings, drives and entrances instead of treating the property as one generic surface.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="workflow-section">
+    <div class="container"><p class="eyebrow">HOW THE SNOW PLAN COMES TOGETHER</p><h2>From property walk to written winter scope.</h2>
+      <ol><li><span>1</span><div><strong>Property walk</strong><p>Map surfaces, access, storage and priorities.</p></div></li><li><span>2</span><div><strong>Written snow plan</strong><p>Define trigger, scope and contract terms.</p></div></li><li><span>3</span><div><strong>Trigger / event</strong><p>Service follows the accepted agreement.</p></div></li><li><span>4</span><div><strong>Snow & ice service</strong><p>Perform the contracted work for the property.</p></div></li><li><span>5</span><div><strong>Documentation</strong><p>Record activity as defined in the property plan.</p></div></li></ol>
+    </div>
+  </section>
+
+  <section class="snow-section local-section">
+    <div class="container"><div class="section-heading"><div><p class="eyebrow">TWIN CITIES COMMERCIAL SNOW REMOVAL</p><h2>Priority local snow markets with real property-specific content.</h2></div><p>JSM lists service across the broader metro, but only the strongest snow-market pages are being indexed first. This keeps the local SEO footprint useful instead of publishing dozens of thin city copies.</p></div>
+      <div class="city-grid">
+        {priorityLocations.map((location) => location && <a href={url(`/locations/${location.slug}/snow-removal`)}><span>{location.county}</span><strong>Commercial Snow Removal in {location.name}, MN</strong><p>{SNOW_LOCAL[location.slug].priorities[0]}</p><i>→</i></a>)}
+      </div>
+      <a class="inline-action" href={url('/locations')}>View JSM’s full Twin Cities service area →</a>
+    </div>
+  </section>
+
+  <section class="snow-section resources-band">
+    <div class="container"><div class="section-heading"><div><p class="eyebrow">SNOW PROCUREMENT RESOURCES</p><h2>Compare bids using the same winter requirements.</h2></div><p>Commercial snow buyers often arrive with contract, trigger-depth or RFP questions. These guides keep that procurement intent connected to the main snow service page.</p></div>
+      <div class="resource-grid">
+        <a href={url('/resources/commercial-snow-removal-contract-minnesota')}><span>CONTRACTS</span><strong>Commercial Snow Removal Contracts in Minnesota</strong><p>Seasonal vs. per-event structure, scope and bid comparison.</p></a>
+        <a href={url('/resources/commercial-snow-removal-rfp-checklist')}><span>RFP</span><strong>Commercial Snow Removal RFP Checklist</strong><p>What to include before requesting bids or a site walk.</p></a>
+        <a href={url('/resources/snow-removal-trigger-depth-guide')}><span>TRIGGERS</span><strong>Snow Removal Trigger Depth Guide</strong><p>How trigger terms and event definitions affect the scope.</p></a>
+        <a href={url('/resources/commercial-ice-management-minnesota')}><span>ICE</span><strong>Commercial Ice Management in Minnesota</strong><p>De-icing, anti-icing and documented treatment priorities.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="snow-section faq-section"><div class="container faq-layout"><div><p class="eyebrow">MINNESOTA COMMERCIAL SNOW FAQ</p><h2>Questions property managers should settle before the first event.</h2><p>FAQ markup is included to help search engines understand visible content; expanded FAQ search results are not guaranteed.</p></div><div>{faqs.map((faq)=><details><summary>{faq.q}<span>+</span></summary><p>{faq.a}</p></details>)}</div></div></section>
+
+  <section class="request-section" id="snow-request"><div class="container request-layout"><div class="request-copy"><p class="eyebrow">REQUEST A SNOW SITE WALK</p><h2>Tell JSM how the property needs to function in winter.</h2><p>Share the building, operating hours, requested trigger, winter priorities and procurement requirements. JSM can then review route availability and prepare for the site walk with much more context than a generic quote request.</p><div class="request-points"><span>Commercial properties only</span><span>Preferred dates require confirmation</span><span>Secure document links accepted</span><span>Attachments can be emailed separately</span></div></div><div class="form-shell"><SnowWalkthroughForm /></div></div></section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</Base>
+
+<style>
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:.145em;color:#0a7567;margin:0 0 .8rem}.snow-hero{position:relative;overflow:hidden;padding:4.8rem 0;background:linear-gradient(125deg,#071a2a,#102f43 55%,#16485a);color:#fff}.snow-grid{position:absolute;inset:0;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:58px 58px;mask-image:linear-gradient(90deg,#000,#0008 70%,transparent)}.snow-hero-layout{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:3rem;align-items:center}.crumbs.dark,.crumbs.dark a{color:#b9ced8}.snow-hero .eyebrow{color:#9ed8c5}.snow-copy h1{font-size:clamp(2.6rem,4.9vw,4.35rem);line-height:1.04;letter-spacing:-.05em;color:#fff;max-width:840px}.lead{font-size:1.05rem;line-height:1.8;color:#c7d9e0;max-width:760px}.hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;margin-top:1.5rem}.hero-actions .btn-primary{background:#0b7a69;box-shadow:none}.phone-link{color:#bde2d5;font-weight:800;font-size:.84rem}.hero-note{font-size:.72rem;color:#9fb7c1;margin-top:1rem}.ops-card{overflow:hidden;border:1px solid #ffffff20;border-radius:1rem;background:#ffffff0c;box-shadow:0 24px 60px #06162255;backdrop-filter:blur(8px)}.ops-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.7rem;padding:1rem;border-bottom:1px solid #ffffff18}.ops-head>span{display:grid;place-items:center;width:38px;height:38px;border-radius:.6rem;background:#dff3eb;color:#0c5f53;font-weight:900;font-size:.75rem}.ops-head p{display:grid;margin:0}.ops-head small{font-size:.5rem;letter-spacing:.12em;color:#84bba8}.ops-head strong{font-size:.82rem;color:#fff}.ops-head i{width:9px;height:9px;border-radius:50%;background:#7ed9b8;box-shadow:0 0 0 5px #7ed9b81a}.site-map{position:relative;min-height:310px;background:linear-gradient(145deg,#e6eef0,#d3e2e5);overflow:hidden}.site-map:before{content:'';position:absolute;inset:0;background-image:linear-gradient(#204f5c0c 1px,transparent 1px),linear-gradient(90deg,#204f5c0c 1px,transparent 1px);background-size:30px 30px}.building{position:absolute;left:31%;top:25%;width:40%;height:34%;display:grid;place-items:center;background:#153c4b;border-radius:.35rem;box-shadow:13px 14px 0 #285b67}.building span{font-size:.54rem;letter-spacing:.1em;color:#d8ece6;font-weight:800}.zone{position:absolute;display:grid;gap:.08rem;padding:.36rem .45rem;border:1px solid #ffffffd0;border-radius:.45rem;background:#fffffff0;box-shadow:0 6px 16px #1c3f4722}.zone span{font-size:.42rem;letter-spacing:.1em;color:#5b7679;font-weight:800}.zone strong{font-size:.57rem;color:#154f4a}.lot{left:6%;top:11%}.entrance{left:39%;bottom:13%}.walk{right:5%;top:14%}.loading{right:4%;bottom:16%}.storage{left:5%;bottom:13%}.ops-rows{padding:0 1rem}.ops-rows div{display:flex;justify-content:space-between;gap:1rem;padding:.75rem 0;border-bottom:1px solid #ffffff14;font-size:.7rem}.ops-rows div:last-child{border-bottom:0}.ops-rows span{color:#91aeb8}.ops-rows strong{color:#dce9ed;text-align:right}.proof-strip{background:#fff;border-bottom:1px solid #dce6e2}.proof-strip>.container{display:grid;grid-template-columns:repeat(4,1fr)}.proof-strip div{padding:1.2rem 1rem;border-left:1px solid #e1e9e6}.proof-strip div:last-child{border-right:1px solid #e1e9e6}.proof-strip strong,.proof-strip span{display:block}.proof-strip strong{font-size:.8rem;color:#173e49}.proof-strip span{font-size:.66rem;color:#61777e;margin-top:.2rem}.snow-section{padding:5rem 0}.snow-section h2,.contracts-section h2,.workflow-section h2,.request-section h2{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.045em;line-height:1.08}.snow-section p{color:#526b75;line-height:1.85;font-size:.92rem}.intro-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem}.planning-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.6rem}.planning-grid article,.service-cards article,.property-grid article{border:1px solid #d8e5e1;border-radius:.9rem;padding:1.35rem;background:#fff}.planning-grid article>span{display:grid;place-items:center;width:34px;height:30px;border-radius:.45rem;background:#e2f0eb;color:#0b6d5d;font-size:.63rem;font-weight:900}.planning-grid h3,.service-cards h3,.property-grid h3{font-size:1rem;margin:.8rem 0 .45rem}.planning-grid p,.service-cards p,.property-grid p{font-size:.82rem;margin:0}.tinted{background:#f2f7f4}.two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:4rem}.scope-card{padding:1.6rem;border-radius:1rem;background:#102f42;color:#fff;box-shadow:0 20px 50px #0c24331c}.scope-card .eyebrow{color:#9ed8c5}.scope-card h3{color:#fff;font-size:1.2rem}.scope-card ul{padding-left:1.15rem;color:#c9d9df;font-size:.84rem;line-height:1.85}.snow-section h3{color:#173e49}.section-heading{display:flex;justify-content:space-between;gap:3rem;align-items:end;margin-bottom:2.4rem}.section-heading>p{max-width:430px;margin:0}.service-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.service-cards article>span{display:grid;place-items:center;width:38px;height:38px;border-radius:.65rem;background:#e2f0eb;color:#0a7567;font-weight:900}.contracts-section{padding:5rem 0;background:linear-gradient(125deg,#0b2232,#102f42);color:#fff}.section-heading.light h2{color:#fff}.section-heading.light .eyebrow{color:#9ed8c5}.section-heading.light>p{color:#adc2cb}.contract-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.contract-grid article{padding:1.5rem;border:1px solid #ffffff1b;border-radius:1rem;background:#ffffff08}.contract-tag{font-size:.58rem;letter-spacing:.13em;color:#9ed8c5;font-weight:900}.contract-grid h3{color:#fff;font-size:1.08rem}.contract-grid ul{padding-left:1.1rem;color:#c5d5dc;font-size:.82rem;line-height:1.8}.contract-grid a{color:#aee4d2;font-weight:800;font-size:.8rem}.property-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}.workflow-section{padding:4.5rem 0;background:#eef5f1}.workflow-section ol{list-style:none;margin:2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem}.workflow-section li{position:relative;padding:1rem;border:1px solid #d6e3dc;border-radius:.8rem;background:#fff}.workflow-section li>span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0b7565;color:#fff;font-size:.65rem;font-weight:900;margin-bottom:.8rem}.workflow-section strong{font-size:.82rem;color:#173e49}.workflow-section p{font-size:.72rem;color:#657b83;line-height:1.6}.local-section{background:#fff}.city-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-bottom:1.5rem}.city-grid a{position:relative;display:grid;gap:.3rem;padding:1rem 2.6rem 1rem 1rem;border:1px solid #d8e4df;border-radius:.75rem;text-decoration:none;background:#fbfdfc}.city-grid a:hover{border-color:#94bbaa}.city-grid span{font-size:.58rem;color:#668078;text-transform:uppercase;letter-spacing:.1em}.city-grid strong{color:#173e49;font-size:.88rem}.city-grid p{font-size:.72rem;margin:0}.city-grid i{position:absolute;right:1rem;top:50%;transform:translateY(-50%);font-style:normal;color:#0a7567}.resources-band{background:#f1f6f3}.resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}.resource-grid a{display:grid;gap:.45rem;padding:1.2rem;border:1px solid #d5e3dc;border-radius:.8rem;background:#fff;text-decoration:none}.resource-grid span{font-size:.56rem;letter-spacing:.12em;color:#0a7567;font-weight:900}.resource-grid strong{font-size:.95rem;color:#183f49}.resource-grid p{font-size:.77rem;margin:0}.faq-section{background:#fff}.faq-layout{display:grid;grid-template-columns:.75fr 1.25fr;gap:4rem}.faq-section details{border-bottom:1px solid #d9e4df}.faq-section summary{display:flex;justify-content:space-between;gap:1rem;padding:1rem .2rem;font-size:.86rem;font-weight:800;color:#173e49;cursor:pointer}.faq-section summary span{color:#0a7567}.faq-section details p{font-size:.82rem;margin:0;padding:0 .2rem 1rem}.request-section{padding:5rem 0;background:linear-gradient(180deg,#eef5f2,#f7faf8)}.request-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:3rem;align-items:start}.request-copy{position:sticky;top:8.5rem}.request-copy>p:not(.eyebrow){color:#526b75;line-height:1.85}.request-points{display:grid;gap:.45rem;margin-top:1.5rem}.request-points span{position:relative;padding-left:1.3rem;font-size:.78rem;color:#49646b}.request-points span:before{content:'✓';position:absolute;left:0;color:#0a7567;font-weight:900}.form-shell{padding:1.2rem;border:1px solid #d5e2de;border-radius:1.2rem;background:#fff;box-shadow:0 20px 60px #143a3210}.inline-action{font-weight:800;color:#075f54;font-size:.88rem}
+@media(max-width:1000px){.snow-hero-layout,.two-col,.intro-layout,.request-layout,.faq-layout{grid-template-columns:1fr}.request-copy{position:static}.proof-strip>.container{grid-template-columns:repeat(2,1fr)}.service-cards{grid-template-columns:repeat(2,1fr)}.workflow-section ol{grid-template-columns:repeat(3,1fr)}.property-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.snow-hero{padding:3rem 0}.snow-copy h1{font-size:2.65rem}.hero-actions{align-items:stretch;flex-direction:column}.hero-actions .btn,.phone-link{text-align:center}.site-map{min-height:260px}.proof-strip>.container,.planning-grid,.service-cards,.contract-grid,.property-grid,.workflow-section ol,.city-grid,.resource-grid{grid-template-columns:1fr}.proof-strip div{border-left:0;border-right:0!important;border-top:1px solid #e1e9e6}.snow-section,.contracts-section,.workflow-section,.request-section{padding:3.3rem 0}.section-heading{display:block}.section-heading>p{max-width:none;margin-top:1rem}.form-shell{padding:.7rem}.ops-card{margin-top:.5rem}}
+</style>
