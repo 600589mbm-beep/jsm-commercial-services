@@ -1,0 +1,91 @@
+---
+import { BUSINESS } from '../config';
+const facilities = ['Office / Professional building','Multi-tenant commercial building','Medical / Dental / Clinic','Retail / Shopping center','Warehouse / Industrial','School / Campus / Daycare','Gym / Fitness center','Multifamily common areas','Church / Worship facility','Stadium / Event venue','Vacant suite / Tenant turnover','Other'];
+const services = ['Recurring janitorial','Office / Nightly cleaning','Restrooms & breakrooms','Common areas & entrances','Day porter','Hard-floor care','Carpet cleaning','Window cleaning','Post-construction / Turnover','Other / Discuss at walkthrough'];
+const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+---
+<form action={BUSINESS.formspreeEndpoint} method="POST" data-astro-reload class="walkthrough-form" data-walkthrough>
+  <input type="hidden" name="_subject" value="NEW FACILITY WALKTHROUGH REQUEST — jsmcommercialservice.com" />
+  <input type="hidden" name="_next" value={`${BUSINESS.website}/thank-you/`} />
+  <input type="hidden" name="form_type" value="cleaning" />
+  <input type="hidden" name="walkthrough_timezone" value="America/Chicago" />
+  <label class="trap" aria-hidden="true">Leave this blank<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+  <div class="form-intro"><span class="form-tag">YOUR BUILDING. YOUR SCHEDULE.</span><h2>Let’s plan your walkthrough.</h2><p>Share the essentials. Details you do not know can be confirmed on site. Required fields are marked *.</p></div>
+  <nav class="form-progress" aria-label="Request progress" hidden>{['Building','Cleaning','Visit & RFP','Contact'].map((label,i)=><button type="button" data-step-link={i}><span>{i+1}</span>{label}</button>)}</nav>
+  <p class="form-errors" role="alert" tabindex="-1" hidden></p>
+  <section class="form-step" data-step="0" aria-labelledby="building-heading">
+    <h3 id="building-heading" tabindex="-1"><span>01</span> Tell us about your building</h3>
+    <div class="field-grid">
+      <label>Building type *<select name="facility_type" required><option value="">Select your building type</option>{facilities.map(v=><option>{v}</option>)}</select></label>
+      <label>Building / property name *<input name="building_name" required maxlength="160" placeholder="Property name or tenant / suite" /></label>
+      <label class="span-two">Building address *<input name="building_address" required maxlength="240" autocomplete="street-address" placeholder="Street address and suite number" /></label>
+      <label>City and ZIP code *<input name="city_zip" required maxlength="100" placeholder="Eagan, MN 55122" /></label>
+      <label>Area to be cleaned (square feet)<input name="square_footage" type="number" min="1" max="100000000" step="1" inputmode="numeric" placeholder="Example: 12500" /><small>An estimate is fine. Leave blank if unknown.</small></label>
+      <label class="span-two">Describe the building and spaces to be cleaned<textarea name="building_description" rows="3" maxlength="2000" placeholder="Example: two-story office with 6 restrooms, a lobby, 2 breakrooms, carpeted offices and tile entrances."></textarea><small>For “Other,” please tell us the building type here.</small></label>
+    </div>
+    <details class="optional-details"><summary>Add floors, restrooms or multiple locations <span>Optional</span></summary><div class="field-grid">
+      <label>Number of floors<input name="floor_count" type="number" min="1" max="200" step="1" inputmode="numeric" /></label>
+      <label>Number of restrooms<input name="restroom_count" type="number" min="0" max="1000" step="1" inputmode="numeric" /></label>
+      <label>Number of locations<input name="number_of_locations" type="number" min="1" max="1000" step="1" value="1" inputmode="numeric" /></label>
+      <label>Typical daily occupants<input name="daily_occupants" type="number" min="0" max="1000000" step="1" inputmode="numeric" /></label>
+      <label class="span-two">Other locations or floor surfaces<textarea name="additional_locations" rows="2" maxlength="2000" placeholder="List each additional address and its cleaning frequency, or share a site schedule in the RFP section."></textarea></label>
+    </div></details>
+  </section>
+  <section class="form-step" data-step="1" aria-labelledby="cleaning-heading">
+    <h3 id="cleaning-heading" tabindex="-1"><span>02</span> Set your cleaning schedule</h3>
+    <div class="field-grid">
+      <label>How many days per week? *<select name="frequency" required><option value="">Choose a frequency</option>{[1,2,3,4,5,6,7].map(n=><option value={`${n} day${n===1?'':'s'} per week`}>{n} day{n===1?'':'s'} per week</option>)}<option>One-time project</option><option>Custom / Rotating schedule</option><option>Not sure — recommend a schedule</option></select></label>
+      <label>Preferred cleaning time<select name="cleaning_time"><option>Discuss at walkthrough</option><option>Daytime / Business hours</option><option>Evening / After closing</option><option>Overnight</option><option>Before opening</option><option>Multiple visits per day</option></select></label>
+    </div>
+    <fieldset><legend>Which days work best? <span>Optional</span></legend><p class="help">Choose the same number of days as your weekly frequency, or leave all blank and we will recommend a schedule.</p><div class="day-grid">{days.map(day=><label><input type="checkbox" name="cleaning_days" value={day} /><span>{day.slice(0,3)}</span></label>)}</div><p class="day-message" aria-live="polite"></p></fieldset>
+    <fieldset><legend>What needs cleaning? <span>Select all that apply</span></legend><div class="service-grid">{services.map(service=><label class="check"><input type="checkbox" name="services_needed" value={service} /><span>{service}</span></label>)}</div></fieldset>
+    <div class="field-grid">
+      <label>What brings you to JSM?<select name="service_goal"><option>New cleaning proposal</option><option>Replace current cleaning provider</option><option>New building / Tenant move-in</option><option>One-time or specialty project</option><option>RFP / Competitive bid</option></select></label>
+      <label>Preferred service start date<input name="service_start_date" type="date" data-future-date /></label>
+      <label class="span-two">Priorities, access hours or special requirements<textarea name="current_challenge" rows="3" maxlength="2500" placeholder="Tell us about missed tasks, busy areas, preferred cleaning hours or site-specific requirements. Do not include alarm codes, keys, passwords or personal health information."></textarea></label>
+    </div>
+  </section>
+  <section class="form-step" data-step="2" aria-labelledby="visit-heading">
+    <h3 id="visit-heading" tabindex="-1"><span>03</span> Choose a visit and share your RFP</h3>
+    <div class="notice"><strong>A preferred date, not a confirmed appointment.</strong><p>JSM will contact you to confirm availability and the walkthrough time. All times are Central Time.</p></div>
+    <div class="field-grid">
+      <label>Walkthrough preference<select name="walkthrough_preference"><option>Choose a preferred date</option><option>Contact me to arrange a date</option><option>Review my RFP first</option></select></label>
+      <label>Preferred walkthrough date<input name="walkthrough_date" type="date" data-future-date /></label>
+      <label>Preferred time window<select name="walkthrough_time"><option value="">Choose a time window</option><option>Morning: 9 AM–12 PM Central</option><option>Afternoon: 12 PM–3 PM Central</option><option>Late afternoon: 3 PM–5 PM Central</option><option>Other — explain below</option></select></label>
+      <label>Alternate date <small>Optional</small><input name="alternate_date" type="date" data-future-date /></label>
+      <label class="span-two">On-site contact or visit instructions<textarea name="visit_notes" rows="2" maxlength="1500" placeholder="Who should we meet? Include parking, check-in instructions or a different preferred time. No access codes, please."></textarea></label>
+    </div>
+    <div class="document-box" id="rfp-details"><div class="document-icon" aria-hidden="true">↥</div><h4>Already have an RFP, floor plan or cleaning scope?</h4><p>Share a document link or paste the requirements below. For an attachment, <a href={`mailto:${BUSINESS.email}?subject=Building%20RFP%20and%20walkthrough%20request`}>email your files to JSM</a> and include the building name and address.</p>
+      <label>RFP / building-document link<input name="document_url" type="url" maxlength="2000" placeholder="https://…" inputmode="url" /><small>Use an HTTPS link. Grant access to {BUSINESS.email}; do not make confidential documents public.</small></label>
+      <label>RFP requirements or document notes<textarea name="rfp_notes" rows="3" maxlength="5000" placeholder="Paste your scope, bid instructions, building requirements or a list of documents you will email."></textarea></label>
+      <div class="field-grid"><label>Proposal / RFP due date<input name="rfp_due_date" type="date" data-future-date /></label><label>Document delivery<select name="document_delivery"><option>No documents yet</option><option>Link included above</option><option>Requirements pasted above</option><option>I will email attachments separately</option></select></label></div>
+      <p class="help">This form submits links and text, not file attachments. Email attachments are sent separately. Only share documents you are authorized to provide.</p>
+    </div>
+  </section>
+  <section class="form-step" data-step="3" aria-labelledby="contact-heading">
+    <h3 id="contact-heading" tabindex="-1"><span>04</span> Who should we contact?</h3>
+    <div class="field-grid">
+      <label>Your name *<input name="name" required maxlength="120" autocomplete="name" /></label>
+      <label>Company / management firm<input name="company" maxlength="160" autocomplete="organization" /></label>
+      <label>Email *<input name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" /></label>
+      <label>Phone *<input name="phone" type="tel" required minlength="7" maxlength="40" autocomplete="tel" inputmode="tel" /></label>
+      <label>Preferred contact method<select name="contact_method"><option>Email</option><option>Phone</option><option>Either email or phone</option></select></label>
+      <label>Best time to contact you<select name="best_contact_time"><option>Any business time</option><option>Morning</option><option>Afternoon</option></select></label>
+    </div>
+    <div class="review-box" hidden><h4>Your request at a glance</h4><dl data-review></dl><p>Need to change something? Use the steps above. Nothing is booked until JSM confirms.</p></div>
+    <label class="check consent"><input name="contact_permission" type="checkbox" required value="Contact me about this building request" /><span>I agree that JSM may contact me about this request. I understand my preferred walkthrough date is subject to confirmation. *</span></label>
+    <p class="help">Your contact information and submitted building details are sent to JSM to review and respond to this request. Please exclude sensitive security, financial or personal information.</p>
+  </section>
+  <div class="form-actions"><button type="button" class="btn back-button" data-back hidden>← Back</button><button type="button" class="btn btn-primary" data-next hidden>Continue →</button><button type="submit" class="btn btn-primary" data-submit>Send My Walkthrough Request →</button></div>
+  <p class="form-reassure">No obligation. {BUSINESS.responsePromise}<br />Prefer to talk? <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a></p>
+  <noscript><p class="notice">Complete the sections above and send your request. Choose a date or select “Contact me to arrange a date.” JSM will confirm the details with you.</p></noscript>
+</form>
+<script>
+  import { initWalkthroughForms } from '../scripts/walkthrough';
+  initWalkthroughForms();
+  document.addEventListener('astro:page-load', initWalkthroughForms);
+</script>
+<style>
+.walkthrough-form{--ink:#102c40;--muted:#506575;--line:#d6e3e8;--brand:#096e64;display:grid;gap:1.5rem;color:var(--ink)}.walkthrough-form [hidden]{display:none!important}.trap{display:none!important}.form-tag{font-size:.7rem;font-weight:800;letter-spacing:.14em;color:var(--brand)}.form-intro h2{margin:.45rem 0 .7rem;font-size:clamp(1.6rem,3vw,2rem)}.form-intro p,.help{font-size:.88rem;color:var(--muted);line-height:1.6}.form-intro p{margin:0}.form-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.35rem;padding-bottom:1.25rem;border-bottom:1px solid var(--line)}.form-progress button{display:flex;align-items:center;justify-content:center;gap:.4rem;font:inherit;font-size:.76rem;border:0;background:#f0f5f6;color:var(--muted);padding:.7rem .3rem;border-radius:.55rem;cursor:pointer}.form-progress button span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#dce7e9;font-weight:800}.form-progress button[aria-current=step]{background:#deefea;color:#075b53;font-weight:800}.form-progress button[aria-current=step] span{background:var(--brand);color:#fff}.form-step{min-width:0}.form-step h3{display:flex;gap:.7rem;align-items:center;margin:0 0 1.4rem;font-size:1.1rem}.form-step h3>span{font-size:.75rem;color:var(--brand);border:1px solid #bad7cf;border-radius:.5rem;padding:.5rem}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.span-two{grid-column:1/-1}label{display:grid;gap:.45rem;font-size:.88rem;font-weight:700;min-width:0}input,select,textarea{width:100%;min-width:0;padding:.85rem;border:1px solid var(--line);border-radius:.65rem;background:#fff;color:var(--ink);font:inherit;font-size:1rem;line-height:1.4}input:focus,select:focus,textarea:focus{outline:3px solid #096e6428;outline-offset:1px;border-color:var(--brand)}input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{border-color:#b3261e}textarea{resize:vertical}small{font-size:.77rem;font-weight:400;color:var(--muted);line-height:1.5}.field-error{color:#a51d17;font-size:.8rem}.form-errors{background:#fff1ef;border:1px solid #e6aaa5;border-radius:.7rem;padding:1rem;color:#8c201a;margin:0}fieldset{border:0;padding:0;margin:1.3rem 0;min-width:0}legend{font-weight:800;font-size:.9rem;margin-bottom:.6rem}legend span,.optional-details summary>span{font-weight:400;font-size:.78rem;color:var(--muted)}.day-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.3rem}.day-grid label{cursor:pointer;position:relative}.day-grid input{position:absolute;opacity:0;width:1px;height:1px}.day-grid label>span{display:block;text-align:center;padding:.75rem .15rem;border:1px solid var(--line);border-radius:.55rem;font-size:.8rem;background:#fff}.day-grid input:checked+span{background:#deefea;border-color:var(--brand);color:#075b53}.day-grid input:focus-visible+span{outline:3px solid #096e6460;outline-offset:2px}.day-message{font-size:.8rem;color:var(--muted);margin:.5rem 0 0}.service-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}.check{display:flex;align-items:flex-start;gap:.6rem;padding:.75rem;border:1px solid var(--line);border-radius:.6rem;font-weight:500;line-height:1.5;cursor:pointer}.check input{width:18px;height:18px;flex:0 0 18px;margin:.1rem 0 0;accent-color:var(--brand)}.check:has(input:checked){border-color:#7faea3;background:#f0f8f5}.optional-details{margin-top:1.3rem;border:1px solid var(--line);border-radius:.7rem;padding:1rem}.optional-details summary{cursor:pointer;font-weight:700;font-size:.87rem}.optional-details[open] .field-grid{margin-top:1rem}.notice{background:#edf5f5;border-left:3px solid var(--brand);padding:1rem;font-size:.87rem;border-radius:0 .6rem .6rem 0;margin-bottom:1.2rem}.notice p{margin:.3rem 0 0;color:var(--muted)}.document-box{margin-top:1.5rem;border:1px dashed #7aaba0;border-radius:1rem;padding:1.3rem;background:#f6faf8}.document-box h4{font-size:1.05rem}.document-icon{width:35px;height:35px;display:grid;place-items:center;background:#deefea;border-radius:.6rem;font-size:1.4rem;margin-bottom:.8rem}.document-box p{font-size:.85rem;color:var(--muted)}.document-box>label{margin-bottom:1rem}.document-box a{color:#075b53;overflow-wrap:anywhere}.review-box{margin:1.4rem 0;padding:1.2rem;background:#f3f7f8;border-radius:.8rem}.review-box dl{display:grid;grid-template-columns:110px 1fr;font-size:.83rem;gap:.5rem .75rem}.review-box dt{font-weight:800}.review-box dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}.review-box p{font-size:.8rem;color:var(--muted);margin:0}.consent{margin-top:1.2rem;border:0;padding:.3rem 0}.form-actions{display:flex;gap:.7rem;border-top:1px solid var(--line);padding-top:1.3rem}.form-actions button{cursor:pointer;font:inherit;font-size:.92rem}.form-actions .btn-primary{flex:1;background:var(--brand);box-shadow:none}.back-button{border:1px solid var(--line);color:var(--ink);background:#fff}.form-reassure{text-align:center;font-size:.82rem;color:var(--muted);margin:0}.form-reassure a{color:var(--brand);font-weight:800}.form-progress button:focus-visible,.optional-details summary:focus-visible,.form-actions button:focus-visible{outline:3px solid #096e6480;outline-offset:3px}
+@media(max-width:600px){.field-grid,.service-grid{grid-template-columns:1fr}.span-two{grid-column:auto}.form-progress button{flex-direction:column;font-size:.7rem;gap:.3rem}.form-step h3{font-size:1rem}.document-box{padding:1rem}.form-actions button{padding:.8rem .7rem;font-size:.83rem}.review-box dl{grid-template-columns:1fr;gap:.2rem}.review-box dd{margin-bottom:.7rem}.day-grid{gap:.2rem}}
+</style>
