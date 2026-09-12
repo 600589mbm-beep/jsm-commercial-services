@@ -1,7 +1,7 @@
 name: Walkthrough UI and SEO QA
 on:
   push:
-    branches: [main, enhance-walkthrough-seo-2026-09]
+    branches: [main, enhance-walkthrough-seo-2026-09, snow-seo-2026-09]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -22,6 +22,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - name: Verify commercial snow SEO architecture
+        run: node scripts/test-snow-seo.mjs
       - name: Install isolated browser-test dependencies
         run: npm install --no-save --package-lock=false playwright
       - run: npx playwright install --with-deps chromium

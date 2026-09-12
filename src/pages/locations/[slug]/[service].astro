@@ -5,151 +5,97 @@ import QuoteForm from '../../../components/QuoteForm.astro';
 import { BUSINESS, url } from '../../../config';
 import { LOCATIONS, CITY_LOCAL } from '../../../data/locations';
 import { SERVICES, SERVICE_ICONS } from '../../../data/services';
+import { SNOW_LOCAL } from '../../../data/snowLocations';
 
 export function getStaticPaths() {
   const paths = [];
-  for (const location of LOCATIONS) {
-    for (const service of SERVICES) {
-      paths.push({
-        params: { slug: location.slug, service: service.slug },
-        props: { location, service },
-      });
-    }
-  }
+  for (const location of LOCATIONS) for (const service of SERVICES) paths.push({
+    params: { slug: location.slug, service: service.slug }, props: { location, service },
+  });
   return paths;
 }
 
 const { location, service } = Astro.props;
 const local = CITY_LOCAL[location.slug];
-
-// Google warns against indexing large sets of substantially similar city pages.
-// Keep all combinations useful and crawlable for visitors, but index only the
-// strongest city/service pages with real local context and core buyer demand.
-const CORE_INDEXED_SERVICES = new Set([
-  'janitorial-services',
-  'office-cleaning',
-  'day-porter-services',
-  'floor-care',
-  'medical-office-cleaning',
-  'industrial-warehouse-cleaning',
-]);
-const shouldIndex = Boolean(local) && CORE_INDEXED_SERVICES.has(service.slug);
+const snowLocal = SNOW_LOCAL[location.slug];
+const isSnow = service.slug === 'snow-removal';
+const CORE_INDEXED_SERVICES = new Set(['janitorial-services','office-cleaning','day-porter-services','floor-care','medical-office-cleaning','industrial-warehouse-cleaning']);
+const shouldIndex = isSnow ? Boolean(snowLocal) : Boolean(local) && CORE_INDEXED_SERVICES.has(service.slug);
 
 const li = LOCATIONS.findIndex((l) => l.slug === location.slug);
 const si = SERVICES.findIndex((s) => s.slug === service.slug);
-const v = (li + si) % 3;
-
 const intros = [
-  `${BUSINESS.name} provides ${service.name.toLowerCase()} for commercial properties in ${location.name}, MN. Every proposal starts with a free facility walkthrough, a written scope, and clear pricing. Trained, background-checked crews serve ${location.name} and the rest of ${location.county} on a schedule built around your operations. ${location.blurb}`,
-  `${BUSINESS.name} delivers ${service.name.toLowerCase()} to businesses throughout ${location.name}, Minnesota, with a documented scope of work, supervisor inspections, and a free re-clean guarantee. ${location.blurb}`,
-  `Businesses in ${location.name}, MN can use ${BUSINESS.name} for ${service.name.toLowerCase()} on month-to-month agreements with an assigned local team and direct accountability. We serve ${location.name} and surrounding communities throughout ${location.county}. ${location.blurb}`,
+  `${BUSINESS.name} provides ${service.name.toLowerCase()} for commercial properties in ${location.name}, MN. Every proposal starts with a walkthrough, written scope, and clear pricing. ${location.blurb}`,
+  `${BUSINESS.name} delivers ${service.name.toLowerCase()} to businesses throughout ${location.name}, Minnesota, with a documented scope of work. ${location.blurb}`,
+  `Businesses in ${location.name}, MN can use ${BUSINESS.name} for ${service.name.toLowerCase()} with direct local accountability. ${location.blurb}`,
 ];
-
+const intro = intros[(li + si) % intros.length];
 const nearby = LOCATIONS.filter((l) => l.county === location.county && l.slug !== location.slug).slice(0, 6);
 const otherServices = SERVICES.filter((s) => s.slug !== service.slug);
-const businessId = `${new URL('/', BUSINESS.website).href}#localbusiness`;
 const canonical = new URL(`/locations/${location.slug}/${service.slug}/`, BUSINESS.website).href;
+const businessId = `${new URL('/', BUSINESS.website).href}#localbusiness`;
 
 const serviceSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  '@id': `${canonical}#service`,
-  name: `${service.name} in ${location.name}, Minnesota`,
-  description: service.short,
-  url: canonical,
-  areaServed: { '@type': 'City', name: `${location.name}, Minnesota` },
-  provider: { '@id': businessId },
+  '@context':'https://schema.org','@type':'Service','@id':`${canonical}#service`,
+  name:isSnow ? `Commercial Snow Removal & Ice Management in ${location.name}, Minnesota` : `${service.name} in ${location.name}, Minnesota`,
+  description:isSnow ? `Commercial snow plowing, ice management and property-specific snow planning in ${location.name}, MN.` : service.short,
+  url:canonical,areaServed:{'@type':'City',name:`${location.name}, Minnesota`},provider:{'@id':businessId},
 };
-
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL(url('/'), BUSINESS.website).href },
-    { '@type': 'ListItem', position: 2, name: 'Locations', item: new URL(url('/locations'), BUSINESS.website).href },
-    { '@type': 'ListItem', position: 3, name: location.name, item: new URL(url(`/locations/${location.slug}`), BUSINESS.website).href },
-    { '@type': 'ListItem', position: 4, name: service.name },
-  ],
-};
+const breadcrumbSchema = {'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[
+  {'@type':'ListItem',position:1,name:'Home',item:new URL(url('/'),BUSINESS.website).href},
+  {'@type':'ListItem',position:2,name:'Locations',item:new URL(url('/locations'),BUSINESS.website).href},
+  {'@type':'ListItem',position:3,name:location.name,item:new URL(url(`/locations/${location.slug}`),BUSINESS.website).href},
+  {'@type':'ListItem',position:4,name:service.name},
+]};
+const title = isSnow ? `Commercial Snow Removal ${location.name}, MN | JSM` : `${service.name} in ${location.name}, MN | JSM Commercial Services`;
+const description = isSnow
+  ? `Commercial snow plowing, ice management, sidewalks and written snow plans for ${location.name}, MN properties. Request a JSM snow site walk and proposal.`
+  : `${service.name} for commercial facilities in ${location.name}, MN. Written scopes, background-checked crews, supervisor inspections, and free walkthroughs from JSM.`;
 ---
 
-<Base
-  title={`${service.name} in ${location.name}, MN | JSM Commercial Services`}
-  description={`${service.name} for commercial facilities in ${location.name}, MN. Written scopes, background-checked crews, supervisor inspections, and free walkthroughs from JSM.`}
-  robots={shouldIndex
-    ? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
-    : 'noindex,follow'}
->
-  <section class="section">
+<Base title={title} description={description} robots={shouldIndex ? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' : 'noindex,follow'}>
+  <section class:list={['section', { 'snow-city': isSnow }]}>
     <div class="container split">
       <div>
-        <nav class="crumbs">
-          <a href={url('/')}>Home</a> / <a href={url('/locations')}>Locations</a> /
-          <a href={url(`/locations/${location.slug}`)}>{location.name}</a> / {service.name}
-        </nav>
-        <h1>{service.name} in {location.name}, MN</h1>
-        <p>{intros[v]}</p>
-        <p>{service.description}</p>
-        {local && (
+        <nav class="crumbs"><a href={url('/')}>Home</a> / <a href={url('/locations')}>Locations</a> / <a href={url(`/locations/${location.slug}`)}>{location.name}</a> / {service.name}</nav>
+        <p class="eyebrow">{isSnow ? `${location.name} commercial snow & ice management` : 'Twin Cities commercial facility service'}</p>
+        <h1>{isSnow ? `Commercial Snow Removal in ${location.name}, MN` : `${service.name} in ${location.name}, MN`}</h1>
+        {isSnow ? (
           <>
-            <h2>Commercial Facilities in {location.name}</h2>
-            <p>{local.context}</p>
+            <p class="lead">Commercial snow plowing, sidewalks, ice management and winter-property planning for {location.name} businesses and managed properties.</p>
+            {snowLocal ? <><p>{snowLocal.intro}</p><h2>Commercial snow priorities in {location.name}</h2><ul class="checklist">{snowLocal.priorities.map((item)=><li>{item}</li>)}</ul><p class="local-note"><strong>Planning note:</strong> {snowLocal.planningNote}</p></> : <p>Snow-route availability in {location.name} depends on the property, requested trigger, scope and seasonal capacity. This page remains noindex until JSM has enough genuinely local snow-planning content to support it.</p>}
+            <h2>What a commercial snow proposal can include</h2>
+            <p>{service.description}</p><ul class="checklist">{service.bullets.map((bullet)=><li>{bullet}</li>)}</ul>
+            <h2>Define trigger depth, access and snow storage before winter</h2>
+            <p>A commercial agreement should identify the trigger depth or event conditions, the surfaces in scope, priority entrances and access routes, and how extra ice-management or hauling work is authorized. During the site walk, map lots, drive lanes, sidewalks, fire exits, loading areas and approved snow-storage zones.</p>
+            <h2>Common commercial snow questions in {location.name}</h2>
+            {(snowLocal?.faqs ?? []).map((faq)=><details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}
+            {service.faq.map((faq)=><details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}
+            <h2>Commercial snow planning resources</h2>
+            <p>Start with JSM’s <a href={url('/services/snow-removal')}>Twin Cities commercial snow removal & ice management guide</a>, then review the <a href={url('/resources/commercial-snow-removal-contract-minnesota')}>commercial snow contract guide</a>, <a href={url('/resources/commercial-snow-removal-rfp-checklist')}>RFP checklist</a>, and <a href={url('/resources/snow-removal-trigger-depth-guide')}>trigger-depth guide</a>.</p>
+          </>
+        ) : (
+          <>
+            <p>{intro}</p><p>{service.description}</p>
+            {local && <><h2>Commercial Facilities in {location.name}</h2><p>{local.context}</p></>}
+            <h2>What’s Included</h2><ul class="checklist">{service.bullets.map((bullet)=><li>{bullet}</li>)}</ul>
+            {(service.faq.length > 0 || local) && <><h2>Common Questions</h2>{(local?.faqs ?? []).map((faq)=><details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}{service.faq.map((faq)=><details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}</>}
+            <h2>Other Commercial Cleaning Services in {location.name}</h2><p class="link-cloud">{otherServices.map((other)=><a href={url(`/locations/${location.slug}/${other.slug}`)}>{SERVICE_ICONS[other.slug]} {other.name}</a>)}</p>
           </>
         )}
-        <h2>What’s Included</h2>
-        <ul class="checklist">
-          {service.bullets.map((bullet) => <li>{bullet}</li>)}
-        </ul>
-        {(service.faq.length > 0 || local) && (
-          <>
-            <h2>Common Questions</h2>
-            {(local?.faqs ?? []).map((faq) => (
-              <details class="faq-acc">
-                <summary>{faq.q}<span class="plus">+</span></summary>
-                <p>{faq.a}</p>
-              </details>
-            ))}
-            {service.faq.map((faq) => (
-              <details class="faq-acc">
-                <summary>{faq.q}<span class="plus">+</span></summary>
-                <p>{faq.a}</p>
-              </details>
-            ))}
-          </>
-        )}
-        <h2>Other Commercial Cleaning Services in {location.name}</h2>
-        <p class="link-cloud">
-          {otherServices.map((otherService) => (
-            <a href={url(`/locations/${location.slug}/${otherService.slug}`)}>{SERVICE_ICONS[otherService.slug]} {otherService.name}</a>
-          ))}
-        </p>
-        {nearby.length > 0 && (
-          <>
-            <h2>{service.name} Near {location.name}</h2>
-            <p class="link-cloud">
-              {nearby.map((nearbyLocation) => (
-                <a href={url(`/locations/${nearbyLocation.slug}/${service.slug}`)}>{nearbyLocation.name}, MN</a>
-              ))}
-            </p>
-          </>
-        )}
+        {nearby.length > 0 && <><h2>{service.name} Near {location.name}</h2><p class="link-cloud">{nearby.map((n)=><a href={url(`/locations/${n.slug}/${service.slug}`)}>{n.name}, MN</a>)}</p></>}
       </div>
-      <aside class="card">
-        <h2>Request a Free {service.slug === 'snow-removal' ? 'Snow ' : ''}Walkthrough in {location.name}</h2>
-        <p>{service.slug === 'snow-removal' ? 'Tell us about your property.' : 'Tell us about your facility.'} {BUSINESS.responsePromise}</p>
-        <QuoteForm variant={service.slug === 'snow-removal' ? 'snow' : 'cleaning'} />
+      <aside class:list={['card', { 'snow-card': isSnow }]}>
+        <h2>{isSnow ? `Request a Snow Site Walk in ${location.name}` : `Request a Free Walkthrough in ${location.name}`}</h2>
+        {isSnow ? <><p>Share the property, operating hours, trigger, priority areas and contract structure you want reviewed.</p><a class="btn btn-primary wide" href={url('/services/snow-removal#snow-request')}>Start My Snow Plan →</a><a class="rfp-link" href={url('/services/snow-removal#snow-rfp')}>I already have a snow RFP →</a><small>Preferred dates require confirmation. Route and contract availability depend on the property and seasonal capacity.</small></> : <><p>Tell us about your facility. {BUSINESS.responsePromise}</p><QuoteForm variant="cleaning" /></>}
       </aside>
     </div>
   </section>
-  <CTA heading={`Need ${service.name.toLowerCase()} in ${location.name}?`} />
+  <CTA heading={isSnow ? `Plan commercial snow service in ${location.name}` : `Need ${service.name.toLowerCase()} in ${location.name}?`} />
   {shouldIndex && <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />}
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Base>
 
 <style>
-  .split { display: grid; grid-template-columns: 1.6fr 1fr; gap: 3rem; align-items: start; }
-  .link-cloud { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; }
-  .link-cloud a { text-decoration: none; font-weight: 600; }
-  .link-cloud a:hover { text-decoration: underline; }
-  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+.split{display:grid;grid-template-columns:1.6fr 1fr;gap:3rem;align-items:start}.link-cloud{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem}.link-cloud a{text-decoration:none;font-weight:600}.link-cloud a:hover{text-decoration:underline}.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#087263}.lead{font-size:1.05rem;color:#48636d}.snow-city{background:linear-gradient(180deg,#f7faf9,#eef5f2)}.local-note{padding:1rem;border-left:3px solid #0a7567;background:#fff;border-radius:0 .55rem .55rem 0}.snow-card{position:sticky;top:8.5rem;background:#102f42;color:#fff;border:0}.snow-card h2{color:#fff}.snow-card p{color:#c4d6dd}.snow-card .wide{display:block;text-align:center;background:#0b7868;box-shadow:none}.rfp-link{display:block;text-align:center;margin-top:.8rem;color:#aee2d0;font-weight:800;font-size:.8rem}.snow-card small{display:block;margin-top:1rem;color:#91abb5;line-height:1.55}.snow-card a:focus-visible{outline:3px solid #c9eadf;outline-offset:3px}@media(max-width:860px){.split{grid-template-columns:1fr}.snow-card{position:static}}
 </style>
