@@ -1,0 +1,43 @@
+name: Walkthrough UI and SEO QA
+on:
+  push:
+    branches: [main, enhance-walkthrough-seo-2026-09]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: walkthrough-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  browser-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Install isolated browser-test dependencies
+        run: npm install --no-save --package-lock=false playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Verify layout, metadata, links and mocked form submission
+        run: node scripts/test-walkthrough.mjs
+      - name: Upload screenshots and browser-test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: walkthrough-qa
+          path: qa-artifacts/
+          retention-days: 7
+      - name: Upload static preview for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: walkthrough-static-preview
+          path: dist/
+          retention-days: 3
