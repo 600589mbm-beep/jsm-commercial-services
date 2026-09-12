@@ -1,0 +1,112 @@
+---
+import { BUSINESS } from '../config';
+const propertyTypes = ['Office / Corporate','Retail / Shopping center','Medical / Clinic','Industrial / Warehouse','Multi-tenant commercial','HOA / Multifamily common areas','School / Campus','Other commercial property'];
+const services = ['Parking lot plowing','Sidewalks & entrances','Fire-exit clearing','Salting / de-icing','Anti-icing pre-treatment','Snow stacking / relocation','Snow hauling'];
+const contractTypes = ['Seasonal agreement','Per-event service','RFP / competitive bid','Not sure — recommend an option'];
+const triggers = ['0 in / zero-tolerance request','1 inch','2 inches','Custom trigger','Not sure — recommend a trigger'];
+---
+<form action={BUSINESS.formspreeEndpoint} method="POST" class="snow-form" data-snow-form>
+  <input type="hidden" name="_subject" value="NEW COMMERCIAL SNOW SITE-WALK / RFP REQUEST — jsmcommercialservice.com" />
+  <input type="hidden" name="_next" value={`${BUSINESS.website}/thank-you/`} />
+  <input type="hidden" name="form_type" value="snow-removal" />
+  <input type="hidden" name="walkthrough_timezone" value="America/Chicago" />
+  <label class="honeypot" aria-hidden="true">Leave blank<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+
+  <header class="snow-form-intro">
+    <p class="form-kicker">COMMERCIAL SNOW PLAN</p>
+    <h2>Request a snow site walk & written proposal.</h2>
+    <p>Tell JSM how the property operates, what must stay accessible, and the contract structure you want reviewed. Preferred dates are requests until JSM confirms them.</p>
+  </header>
+
+  <section class="snow-step">
+    <div class="step-head"><span>01</span><div><h3>Property</h3><p>Start with the actual commercial site.</p></div></div>
+    <div class="field-grid">
+      <label>Property type *<select name="facility_type" required><option value="">Select property type</option>{propertyTypes.map(v=><option>{v}</option>)}</select></label>
+      <label>Property / building name *<input name="building_name" required maxlength="160" autocomplete="organization" /></label>
+      <label class="span-two">Property address *<input name="building_address" required maxlength="240" autocomplete="street-address" placeholder="Street address and suite, if applicable" /></label>
+      <label>City and ZIP *<input name="city_zip" required maxlength="100" placeholder="Eagan, MN 55122" /></label>
+      <label>Number of locations<select name="number_of_locations"><option>1 location</option><option>2–5 locations</option><option>6–10 locations</option><option>11+ locations</option></select></label>
+      <label>Approximate parking capacity<select name="parking_capacity"><option value="">Select if known</option><option>Under 20 spaces</option><option>20–50 spaces</option><option>50–150 spaces</option><option>150–300 spaces</option><option>300+ spaces</option><option>Not sure</option></select></label>
+      <label>Approximate sidewalk area<select name="sidewalk_area"><option value="">Select if known</option><option>Minimal / entrance walks</option><option>Moderate</option><option>Large / campus-style</option><option>Not sure</option></select></label>
+    </div>
+  </section>
+
+  <section class="snow-step">
+    <div class="step-head"><span>02</span><div><h3>Operations</h3><p>Show us what has to stay usable.</p></div></div>
+    <div class="field-grid">
+      <label>Typical business hours<input name="business_hours" maxlength="160" placeholder="Example: Mon–Fri, 7 AM–6 PM" /></label>
+      <label>Preferred open-by time<input name="open_by_time" maxlength="100" placeholder="Example: 6:00 AM" /></label>
+      <label>Weekend operation<select name="weekend_operation"><option value="">Select one</option><option>No regular weekend operation</option><option>Saturday</option><option>Sunday</option><option>Saturday and Sunday</option><option>Varies</option></select></label>
+      <label>Loading / delivery access<select name="loading_access"><option value="">Select one</option><option>No loading areas</option><option>Loading dock / truck access</option><option>Delivery lane / service entrance</option><option>Multiple loading zones</option></select></label>
+      <label class="span-two">Priority areas & operating requirements<textarea name="priority_areas" rows="3" maxlength="2500" placeholder="Main entrance, employee entrance, loading docks, fire lanes, medical access, shift-change areas, sight-line concerns, snow-storage limits..."></textarea></label>
+    </div>
+  </section>
+
+  <section class="snow-step">
+    <div class="step-head"><span>03</span><div><h3>Snow plan</h3><p>Define the contract and surfaces to evaluate.</p></div></div>
+    <div class="field-grid">
+      <label>Contract structure *<select name="frequency" required><option value="">Choose an option</option>{contractTypes.map(v=><option>{v}</option>)}</select></label>
+      <label>Preferred trigger depth *<select name="trigger_depth" required><option value="">Choose a trigger</option>{triggers.map(v=><option>{v}</option>)}</select></label>
+    </div>
+    <fieldset><legend>Services to include in the proposal</legend><p class="help">Select all that apply. Final scope and availability are confirmed in the written proposal.</p><div class="service-grid">{services.map(service=><label class="check"><input type="checkbox" name="services_needed" value={service} /><span>{service}</span></label>)}</div></fieldset>
+    <label>Snow-storage, hauling or ice-management notes<textarea name="current_challenge" rows="3" maxlength="3000" placeholder="Existing snow pile locations, parking stalls you cannot lose, de-icing priorities, drainage/refreeze problem areas, or other winter concerns."></textarea></label>
+  </section>
+
+  <section class="snow-step" id="snow-rfp">
+    <div class="step-head"><span>04</span><div><h3>Site walk & RFP</h3><p>Give JSM a preferred visit and procurement details.</p></div></div>
+    <div class="notice"><strong>Preferred date only.</strong> JSM must confirm availability before the walkthrough is scheduled. Times are Central Time.</div>
+    <div class="field-grid">
+      <label>Preferred site-walk date<input name="walkthrough_date" type="date" data-future-date /></label>
+      <label>Preferred time window<select name="walkthrough_time"><option value="">Choose a time</option><option>Morning: 9 AM–12 PM Central</option><option>Afternoon: 12 PM–3 PM Central</option><option>Late afternoon: 3 PM–5 PM Central</option><option>Contact me to arrange a time</option></select></label>
+      <label>Alternate date<input name="alternate_date" type="date" data-future-date /></label>
+      <label>Proposal / RFP due date<input name="rfp_due_date" type="date" data-future-date /></label>
+      <label class="span-two">RFP / scope / site-plan link<input name="document_url" type="url" maxlength="2000" placeholder="https://…" inputmode="url" /><small>Use a secure HTTPS link and grant access to {BUSINESS.email}. Do not make confidential documents public.</small></label>
+      <label class="span-two">RFP requirements or site-walk instructions<textarea name="rfp_notes" rows="4" maxlength="5000" placeholder="Paste bid instructions, required pricing format, mandatory site-walk details, insurance/vendor requirements, or a list of files you will send."></textarea></label>
+    </div>
+    <div class="email-files"><strong>Need to send attachments?</strong><p>This site does not place client RFPs into public storage. Email PDF/DOCX/XLSX/site-plan attachments separately to <a href={`mailto:${BUSINESS.email}?subject=Commercial%20snow%20RFP%20and%20site%20walk`}>{BUSINESS.email}</a> and include the property name and address.</p></div>
+  </section>
+
+  <section class="snow-step">
+    <div class="step-head"><span>05</span><div><h3>Contact & review</h3><p>Who should JSM contact about the property?</p></div></div>
+    <div class="field-grid">
+      <label>Name *<input name="name" required maxlength="120" autocomplete="name" /></label>
+      <label>Company / management firm<input name="company" maxlength="160" autocomplete="organization" /></label>
+      <label>Email *<input name="email" type="email" required maxlength="254" autocomplete="email" /></label>
+      <label>Phone *<input name="phone" type="tel" required maxlength="40" autocomplete="tel" inputmode="tel" /></label>
+      <label>Best contact time<select name="best_contact_time"><option>Any business time</option><option>Morning</option><option>Afternoon</option><option>After 4 PM</option></select></label>
+      <label>Preferred contact method<select name="contact_method"><option>Email</option><option>Phone</option><option>Either</option></select></label>
+    </div>
+    <label class="check consent"><input type="checkbox" name="contact_permission" value="Contact me about this commercial snow request" required /><span>I agree that JSM may contact me about this commercial snow request. I understand that route capacity, contract availability, trigger terms and the requested walkthrough date must be confirmed by JSM. *</span></label>
+  </section>
+
+  <button class="btn btn-primary submit" type="submit">Request My Snow Site Walk & Proposal →</button>
+  <p class="reassure">Commercial properties only. No obligation. {BUSINESS.responsePromise}</p>
+</form>
+
+<script>
+  function todayChicago(){
+    const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Chicago',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+    const get=(t)=>parts.find(p=>p.type===t)?.value||'';
+    return `${get('year')}-${get('month')}-${get('day')}`;
+  }
+  function initSnowForm(){
+    document.querySelectorAll('form[data-snow-form]').forEach((form)=>{
+      if(form.dataset.ready) return;
+      form.dataset.ready='true';
+      form.querySelectorAll('[data-future-date]').forEach((input)=>input.min=todayChicago());
+      const link=form.querySelector('[name="document_url"]');
+      if(link) link.addEventListener('input',()=>{
+        let ok=true;
+        if(link.value.trim()) { try { const u=new URL(link.value); ok=u.protocol==='https:'&&!u.username&&!u.password; } catch { ok=false; } }
+        link.setCustomValidity(ok?'':'Use a complete HTTPS link without a username or password.');
+      });
+    });
+  }
+  initSnowForm();
+  document.addEventListener('astro:page-load',initSnowForm);
+</script>
+
+<style>
+.snow-form{display:grid;gap:1.2rem;color:#17384a}.honeypot{display:none!important}.snow-form-intro{padding:1.25rem;border-radius:1rem;background:linear-gradient(145deg,#0f3144,#143f52);color:#fff}.form-kicker{margin:0 0 .45rem!important;font-size:.62rem!important;letter-spacing:.14em;color:#a8dfcf!important;font-weight:800}.snow-form-intro h2{color:#fff;font-size:1.45rem;margin:.2rem 0 .55rem}.snow-form-intro>p:last-child{color:#c5d8df!important;font-size:.83rem!important;line-height:1.65;margin:0!important}.snow-step{padding:1.1rem;border:1px solid #d6e4e2;border-radius:1rem;background:#fff;box-shadow:0 8px 24px #12383f08}.step-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}.step-head>span{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border-radius:.65rem;background:#e1f0eb;color:#086b5c;font-size:.66rem;font-weight:800}.step-head h3{margin:0;font-size:1rem}.step-head p{margin:.15rem 0 0!important;color:#667d87!important;font-size:.74rem!important}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem}.span-two{grid-column:1/-1}label{display:grid;gap:.38rem;font-size:.82rem;font-weight:750;color:#193f4d}input,select,textarea{width:100%;min-width:0;padding:.78rem .8rem;border:1px solid #ccdadd;border-radius:.65rem;background:#fff;color:#153744;font:inherit;font-size:.92rem}input:focus,select:focus,textarea:focus{outline:3px solid #0e806e24;outline-offset:1px;border-color:#0e806e}textarea{resize:vertical}small,.help{font-size:.72rem;color:#667d87;line-height:1.5}fieldset{border:0;padding:0;margin:1rem 0}legend{font-size:.84rem;font-weight:800}.help{margin:.25rem 0 .65rem!important}.service-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}.check{display:flex;align-items:flex-start;gap:.55rem;padding:.65rem;border:1px solid #d6e3e0;border-radius:.65rem;background:#f7faf8;cursor:pointer;font-weight:600;line-height:1.4}.check:has(input:checked){border-color:#7aaf9f;background:#edf7f2}.check input{width:17px;height:17px;flex:0 0 17px;margin:.08rem 0 0;accent-color:#0a7464}.consent{margin-top:1rem;background:#f3f8f5}.notice{padding:.8rem 1rem;margin-bottom:.9rem;border-left:3px solid #0b7565;border-radius:0 .6rem .6rem 0;background:#eef6f3;color:#46636a;font-size:.78rem;line-height:1.55}.email-files{padding:1rem;margin-top:1rem;border:1px dashed #88b5a7;border-radius:.8rem;background:#f3f8f5}.email-files strong{font-size:.84rem}.email-files p{font-size:.76rem!important;line-height:1.6;color:#5c737c!important;margin:.35rem 0 0!important}.email-files a{color:#086759;font-weight:800}.submit{width:100%;min-height:54px;background:#0a7464!important;box-shadow:none!important}.reassure{text-align:center;font-size:.76rem!important;color:#667d87!important;margin:-.5rem 0 0!important}
+@media(max-width:620px){.field-grid,.service-grid{grid-template-columns:1fr}.span-two{grid-column:auto}.snow-step{padding:.9rem}.snow-form-intro{padding:1rem}.snow-form-intro h2{font-size:1.3rem}}
+</style>
