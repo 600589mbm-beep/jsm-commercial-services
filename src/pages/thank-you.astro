@@ -1,49 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import CTA from '../components/CTA.astro';
 import { BUSINESS, url } from '../config';
 ---
-
-<Base
-  title={`Thank You — Request Received | ${BUSINESS.name}`}
-  description="Thanks — we received your quote request and will be in touch shortly."
->
-  <section class="section">
-    <div class="container narrow">
-      <nav class="crumbs"><a href={url('/')}>Home</a> / Thank You</nav>
-      <div class="thanks">
-        <span class="check" aria-hidden="true">✓</span>
-        <h1>Request received — thank you.</h1>
-        <p class="lead">
-          We've got your details and a team member will reach out personally.
-          {BUSINESS.responsePromise}
-        </p>
-        <p>
-          Need us sooner? Call <a href={BUSINESS.phoneHref}><strong>{BUSINESS.phone}</strong></a> and
-          we'll get right on it. For anything to send over, email
-          <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>.
-        </p>
-        <div class="actions">
-          <a class="btn btn-primary" href={url('/')}>Back to Home</a>
-          <a class="btn btn-ghost" href={url('/services')}>Browse Services</a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <CTA heading="In the meantime, see what we cover" />
+<Base title={`Thank You for Contacting JSM | ${BUSINESS.name}`} description="Next steps after your JSM commercial cleaning or property-service request." robots="noindex,follow">
+  <section class="thanks-section"><div class="container thanks-card"><span class="thanks-mark" aria-hidden="true">✓</span><p class="eyebrow">YOUR NEXT STEPS</p><h1>Thank you for contacting JSM.</h1><p class="lead">A team member will follow up on your request. {BUSINESS.responsePromise}</p><div class="confirmation-note"><h2>Your preferred date is not a confirmed booking.</h2><p>JSM will contact you to confirm availability, the walkthrough time and who we should meet at the property.</p></div><div class="document-note"><h2>Have an RFP or building documents?</h2><p>File attachments are sent separately from the request form. Email them to <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a> with the building name and address. For shared links, make sure JSM has permission to view the documents.</p></div><p>Need to discuss your request? Call <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>.</p><div class="thanks-actions"><a class="btn btn-primary" href={url('/')}>Back to Home</a><a href={url('/commercial-cleaning-twin-cities')}>Explore cleaning plans →</a></div></div></section>
 </Base>
-
 <style>
-  .narrow { max-width: 640px; }
-  .thanks { text-align: center; padding: 1rem 0 0; }
-  .check {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 64px; height: 64px; border-radius: 50%;
-    background: var(--teal); color: #fff; font-size: 2rem; font-weight: 800;
-    margin-bottom: 1.25rem;
-  }
-  .thanks h1 { margin-bottom: 0.75rem; }
-  .lead { font-size: 1.1rem; color: var(--text); }
-  .actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
-  .btn-ghost { background: none; border: 1.5px solid var(--border); color: var(--text-soft); }
+.thanks-section{background:#f2f6f3;padding:4rem 0}.thanks-card{max-width:760px;text-align:center}.thanks-mark{display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:#dceddf;color:#0b6b57;font-size:1.8rem;font-weight:800;margin:0 auto 1.5rem}.eyebrow{font-size:.7rem;letter-spacing:.14em;color:#0a6b5c;font-weight:800}.thanks-card h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em}.lead{font-size:1.05rem;color:#4c6571}.confirmation-note,.document-note{text-align:left;padding:1.5rem;border:1px solid #cddfd4;border-radius:.8rem;background:#fff;margin:1.2rem 0}.thanks-card h2{font-size:1.1rem;line-height:1.4}.thanks-card p{line-height:1.8;color:#4c6571}.confirmation-note p,.document-note p{font-size:.9rem;margin:0}.thanks-card a{color:#096558;font-weight:700;overflow-wrap:anywhere}.thanks-actions{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:1.7rem;font-size:.88rem}.thanks-actions .btn{color:#fff;background:#096e64;box-shadow:none}@media(max-width:600px){.thanks-section{padding:2.5rem 0}.confirmation-note,.document-note{padding:1.1rem}.thanks-actions{gap:1rem}}
 </style>

@@ -26,7 +26,7 @@ jobs:
         run: npm install --no-save --package-lock=false playwright
       - run: npx playwright install --with-deps chromium
       - name: Verify layout, metadata, links and mocked form submission
-        run: node scripts/test-walkthrough.mjs
+        run: node scripts/test-walkthrough.mjs && node scripts/test-navigation.mjs
       - name: Upload screenshots and browser-test results
         if: always()
         uses: actions/upload-artifact@v4
