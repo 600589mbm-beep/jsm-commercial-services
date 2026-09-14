@@ -90,7 +90,7 @@ try{
   await page.locator('[data-submit]').click();check('Required contact details block submit',await page.locator('.form-errors').isVisible());
   await field('name').fill('QA Example');await field('company').fill('QA Only');await field('email').fill('qa@example.invalid');await field('phone').fill('2025550100');await field('contact_permission').check();
   let submitted=null;
-  await page.route('**/forms/jsm',async route=>{if(route.request().method()==='POST'){submitted=new URLSearchParams(route.request().postData());await route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Mock submission only</title><h1>TEST: not sent to JSM</h1>'});}else await route.abort();});
+  await page.route('**/jsm',async route=>{if(route.request().method()==='POST'){submitted=new URLSearchParams(route.request().postData());await route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Mock submission only</title><h1>TEST: not sent to JSM</h1>'});}else await route.abort();});
   await page.locator('[data-submit]').click();await page.waitForLoadState('networkidle');
   check('Native POST includes exact weekly count',submitted?.get('frequency')==='3 days per week');
   check('Native POST retains all weekdays',submitted?.getAll('cleaning_days').length===3);
