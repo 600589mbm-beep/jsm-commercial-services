@@ -14,9 +14,9 @@ export const BUSINESS = {
   phoneHref: 'tel:+16514478036',
   email: 'sales@jsmcommercialservices.com',
   infoEmail: 'info@jsmcommercialservices.com',
-  // Quote-form POST target. Self-hosted receiver on the VPS (stores to SQLite,
-  // shows on the admin launchpad). Swap here only after testing the replacement.
-  formspreeEndpoint: 'https://191-101-2-203.sslip.io/forms/jsm',
+  // All JSM quote / walkthrough forms post to the same Cloudflare Worker used
+  // by Dakota Valley, which routes submissions to the shared Telegram chat.
+  formspreeEndpoint: 'https://dakota-valley-telegram-bridge.dakota-valley-haul-600589.workers.dev/jsm',
   hours: 'Mon–Fri 9am–5pm',
   address: {
     street: '7287 153rd St W #240868',
