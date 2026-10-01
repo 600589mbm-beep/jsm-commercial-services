@@ -27,6 +27,8 @@ export const BUSINESS = {
   serviceArea: 'Minneapolis–St. Paul metro',
   foundingYear: 2018,
   responsePromise: 'We respond within one business day.',
+  schedulingPromise: 'Walkthrough dates and service availability are confirmed with JSM after we review your request.',
+  proposalPromise: 'After the walkthrough and agreement on the scope, JSM confirms when your written proposal will be ready.',
   // Social proof numbers remain hidden until verified values from the Google
   // Business Profile and approved client quotes are available.
   showStats: false,

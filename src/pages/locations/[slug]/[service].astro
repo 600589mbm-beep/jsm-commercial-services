@@ -6,6 +6,7 @@ import { BUSINESS, url } from '../../../config';
 import { LOCATIONS, CITY_LOCAL } from '../../../data/locations';
 import { SERVICES, SERVICE_ICONS } from '../../../data/services';
 import { SNOW_LOCAL } from '../../../data/snowLocations';
+import { OFFICE_LOCAL } from '../../../data/officeLocations';
 
 export function getStaticPaths() {
   const paths = [];
@@ -19,6 +20,7 @@ const { location, service } = Astro.props;
 const local = CITY_LOCAL[location.slug];
 const snowLocal = SNOW_LOCAL[location.slug];
 const isSnow = service.slug === 'snow-removal';
+const officeLocal = service.slug === 'office-cleaning' ? OFFICE_LOCAL[location.slug] : undefined;
 const CORE_INDEXED_SERVICES = new Set(['janitorial-services','office-cleaning','day-porter-services','floor-care','medical-office-cleaning','industrial-warehouse-cleaning']);
 const shouldIndex = isSnow ? Boolean(snowLocal) : Boolean(local) && CORE_INDEXED_SERVICES.has(service.slug);
 
@@ -76,10 +78,19 @@ const description = isSnow
           </>
         ) : (
           <>
-            <p>{intro}</p><p>{service.description}</p>
-            {local && <><h2>Commercial Facilities in {location.name}</h2><p>{local.context}</p></>}
+            {officeLocal ? <>
+              <p>{officeLocal.intro}</p>
+              <h2>Planning office cleaning in {location.name}</h2>
+              <p>{officeLocal.context}</p>
+              <p class="local-source">Local area context: <a href={officeLocal.source.url}>{officeLocal.source.label}</a>.</p>
+              <h2>Office scope examples to discuss at your walkthrough</h2>
+              <p>These planning examples help you define your requirements. Your written proposal will specify the tasks and frequency agreed for your facility.</p>
+              {officeLocal.examples.map(example => <article class="office-scope"><h3>{example.title}</h3><ul class="checklist">{example.scope.map(item => <li>{item}</li>)}</ul></article>)}
+              <h2>Office cleaning questions in {location.name}</h2>
+              {officeLocal.faqs.map(faq => <details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}
+            </> : <><p>{intro}</p><p>{service.description}</p>{local && <><h2>Commercial Facilities in {location.name}</h2><p>{local.context}</p></>}</>}
             <h2>What’s Included</h2><ul class="checklist">{service.bullets.map((bullet)=><li>{bullet}</li>)}</ul>
-            {(service.faq.length > 0 || local) && <><h2>Common Questions</h2>{(local?.faqs ?? []).map((faq)=><details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}{service.faq.map((faq)=><details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}</>}
+            {!officeLocal && (service.faq.length > 0 || local) && <><h2>Common Questions</h2>{(local?.faqs ?? []).map((faq)=><details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}{service.faq.map((faq)=><details class="faq-acc"><summary>{faq.q}<span class="plus">+</span></summary><p>{faq.a}</p></details>)}</>}
             <h2>Other Commercial Cleaning Services in {location.name}</h2><p class="link-cloud">{otherServices.map((other)=><a href={url(`/locations/${location.slug}/${other.slug}`)}>{SERVICE_ICONS[other.slug]} {other.name}</a>)}</p>
           </>
         )}
@@ -97,5 +108,8 @@ const description = isSnow
 </Base>
 
 <style>
+  .office-scope { margin:1.3rem 0; padding:1.3rem; background:var(--bg-alt); border:1px solid var(--border); border-radius:12px; }
+  .office-scope h3 { font-size:1.05rem; }
+  .local-source { font-size:.8rem; color:var(--text-soft); }
 .split{display:grid;grid-template-columns:1.6fr 1fr;gap:3rem;align-items:start}.link-cloud{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem}.link-cloud a{text-decoration:none;font-weight:600}.link-cloud a:hover{text-decoration:underline}.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#087263}.lead{font-size:1.05rem;color:#48636d}.snow-city{background:linear-gradient(180deg,#f7faf9,#eef5f2)}.local-note{padding:1rem;border-left:3px solid #0a7567;background:#fff;border-radius:0 .55rem .55rem 0}.snow-card{position:sticky;top:8.5rem;background:#102f42;color:#fff;border:0}.snow-card h2{color:#fff}.snow-card p{color:#c4d6dd}.snow-card .wide{display:block;text-align:center;background:#0b7868;box-shadow:none}.rfp-link{display:block;text-align:center;margin-top:.8rem;color:#aee2d0;font-weight:800;font-size:.8rem}.snow-card small{display:block;margin-top:1rem;color:#91abb5;line-height:1.55}.snow-card a:focus-visible{outline:3px solid #c9eadf;outline-offset:3px}@media(max-width:860px){.split{grid-template-columns:1fr}.snow-card{position:static}}
 </style>

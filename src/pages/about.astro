@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
+import TrustEvidence from '../components/TrustEvidence.astro';
 import { BUSINESS, url } from '../config';
 import { LOCATIONS } from '../data/locations';
 import { SERVICES } from '../data/services';
@@ -82,6 +83,7 @@ import { SERVICES } from '../data/services';
     </div>
   </section>
 
+  <TrustEvidence showOwner />
   <CTA heading="Work with a cleaning partner that stays accountable" />
 </Base>
 

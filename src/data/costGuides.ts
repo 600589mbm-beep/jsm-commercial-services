@@ -67,7 +67,7 @@ export const COST_GUIDES: CostGuide[] = [
       {
         h: 'Getting a real number',
         ps: [
-          'Ranges budget; walkthroughs price. A legitimate vendor tours your facility, counts the restrooms, looks at the floors, and gives you a written scope with a fixed monthly price. If you\'re in the Twin Cities, JSM does that walkthrough free with pricing within 24 hours — and our cost calculator below gives you a starting estimate in 30 seconds.',
+          'Ranges budget; walkthroughs price. A legitimate vendor tours your facility, counts the restrooms, looks at the floors, and gives you a written scope with a fixed monthly price. In the Twin Cities, request a free JSM walkthrough. JSM responds within one business day, confirms visit availability separately, and agrees on proposal timing after the walkthrough and scope review. Our cost calculator below gives you a starting estimate in 30 seconds.',
         ],
       },
     ],

@@ -49,7 +49,7 @@ export const CITY_LOCAL: Record<string, NonNullable<Location['local']>> = {
   },
   eagan: {
     context:
-      'Eagan hosts some of the south metro\'s largest corporate campuses — Thomson Reuters and Blue Cross Blue Shield of Minnesota are both headquartered here — alongside extensive flex and light-industrial space off I-35E and Highway 55. Campus-scale buildings and flex space price and schedule differently than small suburban offices.',
+      'Eagan includes office, business park and industrial areas along corridors such as Highway 55. An office suite, multiple office buildings and office space attached to a warehouse need different scope boundaries, access plans and cleaning schedules.',
     faqs: [
       { q: 'Can you handle campus-scale or multi-building accounts in Eagan?', a: 'Yes — multi-building scopes get per-building checklists under one account manager and one monthly invoice.' },
       { q: 'Do you clean flex/industrial space along I-35E and Highway 55?', a: 'Yes. Flex space usually means office-grade care up front and warehouse-grade floor work in back; we scope both sides in one walkthrough.' },
@@ -73,9 +73,9 @@ export const CITY_LOCAL: Record<string, NonNullable<Location['local']>> = {
   },
   'apple-valley': {
     context:
-      'Apple Valley is our home base. The city\'s commercial stock runs along the Cedar Avenue (Highway 77) and County Road 42 corridors — retail centers, medical and dental suites, and professional offices — plus civic anchors like the Minnesota Zoo and employers including Uponor\'s North American headquarters. Being headquartered here means the shortest response times in our service area.',
+      'Apple Valley is our home base. Cedar Avenue and County Road 42 anchor the city\'s commercial center. A useful walkthrough identifies the facility\'s floor surfaces, visitor traffic, shared spaces and access hours before JSM confirms a cleaning scope and schedule.',
     faqs: [
-      { q: 'How fast can you start service in Apple Valley?', a: 'Usually fastest of anywhere we serve — we\'re headquartered here, so walkthroughs and starts schedule quickly.' },
+      { q: 'How fast can you start service in Apple Valley?', a: 'We respond to inquiries within one business day. Walkthrough and startup dates depend on the address, scope, access requirements and service availability, and are confirmed separately by JSM.' },
       { q: 'Do you clean medical and dental suites in Apple Valley?', a: 'Yes — protocol-driven medical cleaning with hospital-grade disinfectants is one of our core services, and several of the Cedar/42 corridor\'s buildings are medical-heavy.' },
     ],
   },
@@ -98,7 +98,7 @@ export const CITY_LOCAL: Record<string, NonNullable<Location['local']>> = {
 };
 
 export const LOCATIONS: Location[] = [
-  { slug: 'apple-valley', name: 'Apple Valley', county: 'Dakota County', blurb: 'Our home base — offices, retail, and clinics across Apple Valley get our fastest response.' },
+  { slug: 'apple-valley', name: 'Apple Valley', county: 'Dakota County', blurb: 'Our home base for office, retail and clinic cleaning requests. Walkthrough and service dates are confirmed after scope review.' },
   { slug: 'minneapolis', name: 'Minneapolis', county: 'Hennepin County', blurb: 'From North Loop offices to industrial space along the river, we keep Minneapolis businesses clean.' },
   { slug: 'st-paul', name: 'St. Paul', county: 'Ramsey County', blurb: 'Downtown offices, clinics, and warehouses across St. Paul trust JSM for nightly janitorial.' },
   { slug: 'bloomington', name: 'Bloomington', county: 'Hennepin County', blurb: 'Serving the I-494 corridor — offices, hotels-adjacent retail, and medical suites.' },
