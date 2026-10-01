@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
+import ServiceIllustration from '../../components/ServiceIllustration.astro';
+import { INDUSTRY_ILLUSTRATION_KEYS } from '../../data/serviceIllustrations';
 import { BUSINESS, url } from '../../config';
 import { INDUSTRIES } from '../../data/industries';
 import { SERVICES } from '../../data/services';
@@ -82,6 +84,7 @@ const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
         </div>
       </div>
       <aside class="industry-card">
+        {INDUSTRY_ILLUSTRATION_KEYS[industry.slug] && <div class="illustration-panel"><ServiceIllustration illustrationKey={INDUSTRY_ILLUSTRATION_KEYS[industry.slug]} /></div>}
         <p class="card-label">Facility focus</p>
         <p>{industry.short}</p>
         {industryAliases.length > 0 && <small>Related service names: {industryAliases.join(' · ')}</small>}
@@ -133,6 +136,7 @@ const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
 </Base>
 
 <style>
+  .illustration-panel { margin-bottom:1.2rem; }
   .industry-hero { padding: 4.9rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
   .hero-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
   .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }

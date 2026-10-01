@@ -1,0 +1,17 @@
+---
+import ServiceIllustration from './ServiceIllustration.astro';
+import { SERVICE_ILLUSTRATIONS, type IllustrationKey } from '../data/serviceIllustrations';
+interface Props { selected?: IllustrationKey[]; }
+const { selected = Object.keys(SERVICE_ILLUSTRATIONS) as IllustrationKey[] } = Astro.props;
+---
+<section class="section illustration-gallery" aria-label="Commercial cleaning service illustrations">
+  <div class="container">
+    <div class="section-head"><h2>Care for the spaces your team uses</h2><p>Explore the cleaning tasks to discuss during your facility walkthrough.</p></div>
+    <div class="illustration-grid">{selected.map(key => <ServiceIllustration illustrationKey={key} />)}</div>
+  </div>
+</section>
+<style>
+  .illustration-gallery { background:var(--bg-alt); }
+  .illustration-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.5rem; }
+  @media(max-width:600px) { .illustration-grid { grid-template-columns:1fr; } }
+</style>
