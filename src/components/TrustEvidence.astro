@@ -2,7 +2,7 @@
 import { OWNER_PROFILE, CREW_PHOTOS, FACILITY_PROJECTS } from '../data/trustEvidence';
 const { showOwner = false } = Astro.props;
 const owner = showOwner ? OWNER_PROFILE : null;
-const hasEvidence = owner || CREW_PHOTOS.length || FACILITY_PROJECTS.length;
+const hasEvidence = Boolean(owner || CREW_PHOTOS.length || FACILITY_PROJECTS.length);
 ---
 {hasEvidence && <section class="section trust-evidence"><div class="container">
   {owner && <article class="owner-profile">
