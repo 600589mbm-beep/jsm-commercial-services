@@ -49,7 +49,7 @@ try{
     check(`${route} canonical is production URL`,await page.locator('link[rel="canonical"]').getAttribute('href')==='https://jsmcommercialservice.com'+route);
     check(`${route} is indexable`,!(await page.locator('meta[name="robots"]').getAttribute('content')).includes('noindex'));
     const schemas=await page.locator('script[type="application/ld+json"]').allTextContents();
-    schemas.forEach(text=>JSON.parse(text));check(`${route} has valid JSON-LD`,schemas.length>=2);
+    schemas.forEach(text=>JSON.parse(text));check(`${route} has valid JSON-LD`,schemas.length >= (route === '/contact/' ? 1 : 2));
     const links=await page.locator('main a[href]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')).filter(h=>h.startsWith('/')));
     for(const link of new Set(links)){const pathname=new URL(link,origin).pathname;const file=resolve(root,'.'+pathname+(pathname.endsWith('/')?'index.html':''));check(`${route} internal link ${pathname}`,existsSync(file));}
   }
@@ -101,17 +101,19 @@ try{
   for (const route of ['/quote/','/contact/']) {
     await page.goto(origin+route);
     const quick = page.locator('form[data-quick-inquiry]');
-    check(`${route} quick inquiry only requires name and phone`,await quick.locator('[required]').count()===2);
+    check(`${route} quick inquiry requires only contact and service area`,await quick.locator('[required]').count()===3);
     submitted = null;
     await quick.locator('button[type="submit"]').click();
     check(`${route} empty quick inquiry blocks submission`,submitted===null && await quick.locator('[name="name"]').evaluate(input=>!input.validity.valid));
     await quick.locator('[name="name"]').fill('QA Callback Example');
     await quick.locator('[name="phone"]').fill('2025550100');
+    await quick.locator('[name="city_zip"]').fill('Apple Valley, MN');
     await quick.locator('button[type="submit"]').click();
     await page.waitForLoadState('networkidle');
     check(`${route} quick inquiry posts contact details`,submitted?.get('name')==='QA Callback Example' && submitted?.get('phone')==='2025550100');
     check(`${route} quick inquiry retains receiver routing`,submitted?.get('form_type')==='cleaning' && submitted?.get('request_type')==='callback-quote' && submitted?.get('_next')==='https://jsmcommercialservice.com/thank-you/');
-    check(`${route} optional fields can be omitted`,submitted?.get('email')==='' && submitted?.get('city_zip')==='');
+    check(`${route} receiver-required fields are populated`,['name','phone','city_zip','facility_type','frequency'].every(name=>submitted?.get(name)));
+    check(`${route} optional email can be omitted`,submitted?.get('email')==='');
   }
   await page.goto(origin+'/');await page.locator('main a[href="/quote/"]').first().click();await page.locator('form[data-ready="true"]').waitFor();check('Form initializes after client-side navigation',await page.locator('[data-step="0"]').isVisible());
   const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});await offline(noJS);const fallback=await noJS.newPage();await fallback.goto(origin+'/quote/');

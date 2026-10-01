@@ -11,12 +11,12 @@ import { BUSINESS } from '../config';
   <label class="trap" aria-hidden="true">Leave this blank<input name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></label>
   <p class="eyebrow">JUST THE ESSENTIALS</p>
   <h2>Request a callback or discuss a quote</h2>
-  <p>Start with your name and phone number. We can discuss the building details when we contact you. Required fields are marked *.</p>
+  <p>Start with your name, phone number and facility city. We can discuss the building details when we contact you. Required fields are marked *.</p>
   <div class="quick-fields">
     <label>Your name *<input name="name" required autocomplete="name" maxlength="160" /></label>
     <label>Phone *<input name="phone" type="tel" required autocomplete="tel" inputmode="tel" maxlength="40" /></label>
     <label>Work email (optional)<input name="email" type="email" autocomplete="email" maxlength="254" /></label>
-    <label>Facility city or ZIP (optional)<input name="city_zip" autocomplete="postal-code" maxlength="100" /></label>
+    <label>Facility city or ZIP *<input name="city_zip" required autocomplete="postal-code" maxlength="100" /></label>
     <label class="full">What would you like to discuss? (optional)<textarea name="current_challenge" rows="3" maxlength="2000" placeholder="Cleaning needs, a good time to call, or a question for JSM"></textarea></label>
   </div>
   <button type="submit" class="btn btn-primary">Request My Callback</button>
