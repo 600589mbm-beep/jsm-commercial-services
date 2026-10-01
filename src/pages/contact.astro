@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import QuoteForm from '../components/QuoteForm.astro';
+import QuickInquiryForm from '../components/QuickInquiryForm.astro';
 import { BUSINESS, url } from '../config';
 ---
 
@@ -44,14 +44,15 @@ import { BUSINESS, url } from '../config';
         <p>{BUSINESS.serviceArea} — <a href={url('/locations')}>see all cities</a></p>
       </div>
       <aside class="card">
-        <h2>Send a Message</h2>
-        <QuoteForm />
+        <QuickInquiryForm />
+        <p class="detailed-option">Ready to share building details? <a href={url('/quote/#walkthrough-form')}>Plan a detailed walkthrough →</a></p>
       </aside>
     </div>
   </section>
 </Base>
 
 <style>
+  .detailed-option { border-top:1px solid var(--border); margin-top:1.5rem; padding-top:1rem; font-size:.85rem; }
   .split {
     display: grid;
     grid-template-columns: 1fr 1fr;

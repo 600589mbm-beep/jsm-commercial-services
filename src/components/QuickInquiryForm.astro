@@ -1,0 +1,38 @@
+---
+import { BUSINESS } from '../config';
+---
+<form action={BUSINESS.formspreeEndpoint} method="POST" data-astro-reload class="quick-inquiry" data-quick-inquiry>
+  <input type="hidden" name="_subject" value="NEW CALLBACK / CLEANING QUOTE INQUIRY — jsmcommercialservice.com" />
+  <input type="hidden" name="_next" value={`${BUSINESS.website}/thank-you/`} />
+  <input type="hidden" name="form_type" value="cleaning" />
+  <input type="hidden" name="request_type" value="callback-quote" />
+  <input type="hidden" name="facility_type" value="Discuss with JSM" />
+  <input type="hidden" name="frequency" value="Discuss with JSM" />
+  <label class="trap" aria-hidden="true">Leave this blank<input name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></label>
+  <p class="eyebrow">JUST THE ESSENTIALS</p>
+  <h2>Request a callback or discuss a quote</h2>
+  <p>Start with your name, phone number and facility city. We can discuss the building details when we contact you. Required fields are marked *.</p>
+  <div class="quick-fields">
+    <label>Your name *<input name="name" required autocomplete="name" maxlength="160" /></label>
+    <label>Phone *<input name="phone" type="tel" required autocomplete="tel" inputmode="tel" maxlength="40" /></label>
+    <label>Work email (optional)<input name="email" type="email" autocomplete="email" maxlength="254" /></label>
+    <label>Facility city or ZIP *<input name="city_zip" required autocomplete="postal-code" maxlength="100" /></label>
+    <label class="full">What would you like to discuss? (optional)<textarea name="current_challenge" rows="3" maxlength="2000" placeholder="Cleaning needs, a good time to call, or a question for JSM"></textarea></label>
+  </div>
+  <button type="submit" class="btn btn-primary">Request My Callback</button>
+  <p class="quick-note">By sending this request, you ask JSM to contact you about your inquiry. No purchase required. {BUSINESS.responsePromise}</p>
+</form>
+<style>
+  .quick-inquiry { display:grid; gap:1rem; }
+  .quick-inquiry > p, .quick-inquiry h2 { margin:0; }
+  .eyebrow { color:#087263; font-size:.7rem; font-weight:800; letter-spacing:.12em; }
+  .quick-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+  label { display:grid; gap:.35rem; font-weight:700; font-size:.86rem; color:var(--navy); }
+  .full { grid-column:1/-1; }
+  input, textarea { width:100%; min-width:0; padding:.75rem; border:1.5px solid var(--border); border-radius:9px; background:#fff; color:var(--text); font:inherit; }
+  textarea { resize:vertical; }
+  input:focus-visible, textarea:focus-visible, button:focus-visible { outline:3px solid #128078; outline-offset:3px; }
+  .quick-note { color:var(--text-soft); font-size:.8rem; line-height:1.6; }
+  .trap { display:none; }
+  @media(max-width:600px) { .quick-fields { grid-template-columns:1fr; } }
+</style>

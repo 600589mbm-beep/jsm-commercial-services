@@ -1,0 +1,29 @@
+---
+import { OWNER_PROFILE, CREW_PHOTOS, FACILITY_PROJECTS } from '../data/trustEvidence';
+const { showOwner = false } = Astro.props;
+const owner = showOwner ? OWNER_PROFILE : null;
+const hasEvidence = Boolean(owner || CREW_PHOTOS.length || FACILITY_PROJECTS.length);
+---
+{hasEvidence && <section class="section trust-evidence"><div class="container">
+  {owner && <article class="owner-profile">
+    <div><p class="eyebrow">MEET LOCAL OWNERSHIP</p><h2>{owner.name}</h2><p><strong>{owner.role}</strong></p><p>{owner.biography}</p></div>
+    {owner.photo && <figure><img src={owner.photo.src} alt={owner.photo.alt} width={owner.photo.width} height={owner.photo.height} loading="lazy" /><figcaption>{owner.photo.caption}</figcaption></figure>}
+  </article>}
+  {CREW_PHOTOS.length > 0 && <><h2>The people behind your cleaning plan</h2><div class="evidence-grid">{CREW_PHOTOS.map(photo => <figure><img src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" /><figcaption>{photo.caption}</figcaption></figure>)}</div></>}
+  {FACILITY_PROJECTS.length > 0 && <><h2>Documented facility projects</h2><div class="evidence-grid">{FACILITY_PROJECTS.map(project => <article class="project-card">
+    {project.photo && <figure><img src={project.photo.src} alt={project.photo.alt} width={project.photo.width} height={project.photo.height} loading="lazy" /><figcaption>{project.photo.caption}</figcaption></figure>}
+    <h3>{project.title}</h3><p class="project-details">{project.facilityType} · {project.city} · {project.completed}{project.size && ` · ${project.size}`}</p>
+    <ul>{project.scope.map(item => <li>{item}</li>)}</ul><p><strong>Outcome:</strong> {project.outcome}</p>
+  </article>)}</div></>}
+</div></section>}
+<style>
+  .trust-evidence { background:var(--bg-alt); }
+  .eyebrow { font-size:.7rem; color:var(--teal-dark); font-weight:800; letter-spacing:.1em; }
+  .owner-profile { display:grid; grid-template-columns:1.4fr 1fr; gap:2rem; align-items:center; margin-bottom:2rem; }
+  .evidence-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.5rem; margin-bottom:2rem; }
+  figure { margin:0 0 1rem; }
+  img { width:100%; height:auto; border-radius:12px; }
+  figcaption,.project-details { font-size:.82rem; color:var(--text-soft); }
+  .project-card { padding:1.5rem; background:#fff; border:1px solid var(--border); border-radius:14px; }
+  @media(max-width:760px) { .owner-profile,.evidence-grid { grid-template-columns:1fr; } }
+</style>
