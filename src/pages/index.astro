@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import FacilityHeroVisual from '../components/FacilityHeroVisual.astro';
 import TrustEvidence from '../components/TrustEvidence.astro';
+import IllustrationGallery from '../components/IllustrationGallery.astro';
 import { BUSINESS, url } from '../config';
 import { SERVICES } from '../data/services';
 import { INDUSTRIES } from '../data/industries';
@@ -155,6 +156,8 @@ const faqSchema = {
       </div>
     </div>
   </section>
+
+  <IllustrationGallery selected={['office', 'clinic', 'retail', 'warehouse']} />
 
   <section class="home-section schedule-section">
     <div class="container schedule-layout">

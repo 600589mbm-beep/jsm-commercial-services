@@ -1,0 +1,18 @@
+---
+import { Image } from 'astro:assets';
+import { SERVICE_ILLUSTRATIONS, type IllustrationKey } from '../data/serviceIllustrations';
+interface Props { illustrationKey: IllustrationKey; }
+const { illustrationKey } = Astro.props;
+const illustration = SERVICE_ILLUSTRATIONS[illustrationKey];
+---
+<figure class="service-illustration">
+  <Image src={illustration.image} alt={illustration.alt} width={800} widths={[400, 800, 1200]} sizes="(max-width: 760px) 100vw, 50vw" format="webp" loading="lazy" decoding="async" />
+  <figcaption><strong>{illustration.title}</strong><span>AI-generated service illustration</span></figcaption>
+</figure>
+<style>
+  figure { margin:0; overflow:hidden; border:1px solid var(--border); border-radius:14px; background:#fff; }
+  figure :global(img) { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; }
+  figcaption { padding:.9rem 1rem; color:var(--navy); }
+  strong { display:block; font-size:.9rem; }
+  span { display:block; font-size:.72rem; color:var(--text-soft); margin-top:.25rem; }
+</style>

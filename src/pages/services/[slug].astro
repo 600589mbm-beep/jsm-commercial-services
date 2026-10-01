@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
+import ServiceIllustration from '../../components/ServiceIllustration.astro';
+import { SERVICE_ILLUSTRATION_KEYS } from '../../data/serviceIllustrations';
 import { BUSINESS, url } from '../../config';
 import { SERVICES } from '../../data/services';
 import { LOCATIONS } from '../../data/locations';
@@ -75,6 +77,7 @@ const description = isJanitorial
         </div>
       </div>
       <aside class="service-summary">
+        {SERVICE_ILLUSTRATION_KEYS[service.slug] && <div class="illustration-panel"><ServiceIllustration illustrationKey={SERVICE_ILLUSTRATION_KEYS[service.slug]} /></div>}
         <p class="card-label">Service overview</p>
         <p>{service.short}</p>
         <ul>
@@ -150,6 +153,7 @@ const description = isJanitorial
 </Base>
 
 <style>
+  .illustration-panel { margin-bottom:1.2rem; }
   .service-hero { padding: 4.8rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
   .hero-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
   .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }

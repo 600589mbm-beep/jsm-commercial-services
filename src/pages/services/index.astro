@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
+import IllustrationGallery from '../../components/IllustrationGallery.astro';
 import { BUSINESS, url } from '../../config';
 import { SERVICES, SERVICE_ICONS } from '../../data/services';
 import { breadcrumbList } from '../../lib/breadcrumbs';
@@ -135,6 +136,7 @@ const catalogSchema = {
     </div>
   </section>
 
+  <IllustrationGallery />
   <CTA heading="Build a commercial cleaning scope around your facility" />
   <script type="application/ld+json" set:html={JSON.stringify(catalogSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
