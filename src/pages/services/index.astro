@@ -143,19 +143,19 @@ const catalogSchema = {
 </Base>
 
 <style>
-  .services-hero { padding: 4.9rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
+  .services-hero { padding: 4.9rem 0; color: #fff; background: linear-gradient(145deg, var(--navy-dark), var(--navy) 65%, var(--navy-raised)); }
   .hero-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
-  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
-  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-  .eyebrow.navy { color: var(--teal-dark); }
+  .crumbs.dark, .crumbs.dark a { color: var(--text-on-dark); }
+  .eyebrow { color: var(--brand-light); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--brand-dark); }
   h1 { color: #fff; font-size: clamp(2.5rem, 5vw, 4.15rem); }
-  .lead { color: #c8d7e3; font-size: 1.1rem; max-width: 760px; }
+  .lead { color: var(--brand-border); font-size: 1.1rem; max-width: 760px; }
   .actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.7rem; }
   .hero-card { padding: 1.9rem; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(255,255,255,.09); }
-  .card-label { color: var(--teal-bright); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .card-label { color: var(--brand-light); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
   .hero-card ul { list-style: none; padding: 0; margin: 0; }
   .hero-card li { position: relative; padding: .7rem 0 .7rem 1.6rem; border-bottom: 1px solid rgba(255,255,255,.12); }
-  .hero-card li::before { content: '✓'; position: absolute; left: 0; color: var(--teal-bright); font-weight: 800; }
+  .hero-card li::before { content: '✓'; position: absolute; left: 0; color: var(--brand-light); font-weight: 800; }
   .wide { max-width: 880px; }
   .service-card small { display: block; margin-top: .8rem; color: var(--text-soft); font-size: .72rem; line-height: 1.45; }
   .catalog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .85rem; }
@@ -163,10 +163,10 @@ const catalogSchema = {
   .catalog-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
   .catalog-item strong { color: var(--navy); }
   .catalog-item span { color: var(--text-soft); font-size: .84rem; line-height: 1.5; }
-  .catalog-item small { color: var(--teal-dark); font-weight: 800; margin-top: auto; }
-  .local-section { color: #fff; background: linear-gradient(120deg, var(--teal-dark), var(--navy)); }
+  .catalog-item small { color: var(--brand-dark); font-weight: 800; margin-top: auto; }
+  .local-section { color: #fff; background: linear-gradient(120deg, var(--brand-dark), var(--navy)); }
   .local-section h2 { color: #fff; }
-  .local-section p { color: #d7e5ec; }
+  .local-section p { color: var(--brand-border); }
   .local-layout { display: flex; justify-content: space-between; align-items: center; gap: 3rem; }
   .local-layout > div:first-child { max-width: 720px; }
   .local-actions { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: flex-end; }

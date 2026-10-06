@@ -27,19 +27,19 @@ import { BUSINESS, url } from '../config';
       padding: .45rem;
       border: 1px solid rgba(255,255,255,.14);
       border-radius: 14px;
-      background: rgba(10,31,51,.97);
-      box-shadow: 0 12px 35px rgba(4,18,30,.35);
+      background: rgba(var(--navy-dark-rgb), .97);
+      box-shadow: 0 12px 35px rgba(var(--navy-dark-rgb), .35);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       animation: sticky-rise .45s var(--ease-out) .55s both;
     }
     .mobile-conversion-bar a { min-height: 48px; border-radius: 10px; text-decoration: none; }
     .call { display: flex; align-items: center; justify-content: center; gap: .55rem; color: #fff; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); }
-    .call > span:first-child { color: var(--teal-bright); font-size: 1.05rem; }
+    .call > span:first-child { color: var(--brand-light); font-size: 1.05rem; }
     .call > span:last-child { display: flex; flex-direction: column; line-height: 1.08; }
-    .call small { color: #a9bcc9; font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; }
+    .call small { color: var(--text-on-dark); font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; }
     .call strong { color: #fff; font-size: .78rem; }
-    .quote { display: grid; place-items: center; padding: 0 .7rem; color: #fff; background: linear-gradient(135deg, var(--teal), var(--teal-dark)); font-size: .75rem; font-weight: 800; text-align: center; box-shadow: 0 6px 16px rgba(25,163,154,.25); }
+    .quote { display: grid; place-items: center; padding: 0 .7rem; color: #fff; background: linear-gradient(135deg, var(--brand), var(--brand-dark)); font-size: .75rem; font-weight: 800; text-align: center; box-shadow: 0 6px 16px rgba(var(--brand-rgb), .25); }
     :global(body) { padding-bottom: calc(5rem + env(safe-area-inset-bottom)); }
     :global(.mobile-panel-inner) { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom)); }
   }
