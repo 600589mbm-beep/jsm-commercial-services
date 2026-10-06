@@ -20,7 +20,7 @@ const {
 
 const canonical = new URL(Astro.url.pathname, BUSINESS.website);
 const homepage = new URL('/', BUSINESS.website).href;
-const ogImage = new URL(url('/og-default.png').replace(/\/$/, ''), BUSINESS.website).href;
+const ogImage = new URL(url(BUSINESS.logo.src), BUSINESS.website).href;
 const businessId = `${homepage}#localbusiness`;
 const websiteId = `${homepage}#website`;
 const webpageId = `${canonical.href}#webpage`;
@@ -89,8 +89,8 @@ const schema = {
       primaryImageOfPage: {
         '@type': 'ImageObject',
         url: ogImage,
-        width: 1200,
-        height: 630,
+        width: BUSINESS.logo.width,
+        height: BUSINESS.logo.height,
       },
       inLanguage: 'en-US',
     },
@@ -117,9 +117,9 @@ const schema = {
     <meta property="og:site_name" content={BUSINESS.name} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${BUSINESS.name} commercial cleaning and janitorial services`} />
+    <meta property="og:image:width" content={BUSINESS.logo.width} />
+    <meta property="og:image:height" content={BUSINESS.logo.height} />
+    <meta property="og:image:alt" content={`${BUSINESS.name} logo`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -131,7 +131,7 @@ const schema = {
       crossorigin
       href={url('/fonts/manrope-latin.woff2').replace(/\/$/, '')}
     />
-    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg').replace(/\/$/, '')} />
+    <link rel="icon" type="image/svg+xml" href={url(BUSINESS.logo.icon)} />
     <ClientRouter />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <!-- Cookieless self-hosted analytics beacon (no third-party, no PII stored). -->

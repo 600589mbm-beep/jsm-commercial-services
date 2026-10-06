@@ -6,6 +6,12 @@
 export const BUSINESS = {
   name: 'JSM Commercial Services',
   shortName: 'JSM',
+  logo: {
+    src: '/images/jsm-commercial-services-logo.png',
+    width: 1179,
+    height: 563,
+    icon: '/favicon-jsm.svg',
+  },
   legalName: 'JSM Commercial Services LLC',
   website: 'https://jsmcommercialservice.com',
   tagline: 'Commercial Cleaning & Janitorial Services in the Twin Cities Metro',

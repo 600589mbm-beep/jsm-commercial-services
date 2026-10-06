@@ -1,5 +1,6 @@
 ---
 import { BUSINESS, url } from '../config';
+import BrandLogo from './BrandLogo.astro';
 import { SERVICES } from '../data/services';
 import { LOCATIONS } from '../data/locations';
 
@@ -9,7 +10,7 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container cols">
     <div>
-      <h3>{BUSINESS.name}</h3>
+      <a class="footer-brand" href={url('/')} aria-label={`${BUSINESS.name} home`}><BrandLogo placement="footer" /></a>
       <p>Commercial cleaning and janitorial services with enterprise-level standards and owner-led local accountability across the Twin Cities.</p>
       <p>
         <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a><br />
@@ -67,6 +68,8 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer { background: var(--navy-dark); color: #c4d3df; margin-top: 3rem; }
+  .footer-brand { display: inline-block; max-width: 100%; margin-bottom: 1rem; border-radius: .45rem; }
+  .footer-brand:focus-visible { outline: 3px solid #b7e5ce; outline-offset: 4px; }
   .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 2rem; padding-top: 3rem; padding-bottom: 2rem; }
   h3 { color: #fff; font-size: 1rem; }
   ul { list-style: none; padding: 0; margin: 0; }
