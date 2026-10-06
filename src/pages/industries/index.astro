@@ -78,14 +78,14 @@ const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
 </Base>
 
 <style>
-  .industries-hero { padding: 4.9rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
-  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
-  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-  .eyebrow.navy { color: var(--teal-dark); }
+  .industries-hero { padding: 4.9rem 0; color: #fff; background: linear-gradient(145deg, var(--navy-dark), var(--navy) 65%, var(--navy-raised)); }
+  .crumbs.dark, .crumbs.dark a { color: var(--text-on-dark); }
+  .eyebrow { color: var(--brand-light); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--brand-dark); }
   .industries-hero h1 { color: #fff; font-size: clamp(2.5rem, 5vw, 4.15rem); }
-  .industries-hero p:last-of-type { color: #c8d7e3; max-width: 780px; font-size: 1.08rem; }
+  .industries-hero p:last-of-type { color: var(--brand-border); max-width: 780px; font-size: 1.08rem; }
   .actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.7rem; }
   .wide { max-width: 860px; }
-  .featured-card { border-color: rgba(25,163,154,.45); background: linear-gradient(145deg, rgba(25,163,154,.07), #fff); }
+  .featured-card { border-color: rgba(var(--brand-rgb), .45); background: linear-gradient(145deg, rgba(var(--brand-rgb), .07), #fff); }
   .not-listed { margin-top: 2.5rem; text-align: center; color: var(--text-soft); }
 </style>

@@ -210,13 +210,13 @@ const submitText = snow ? 'Request Snow Pricing' : 'Request My Free Walkthrough'
   .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
   label { display: grid; gap: .35rem; color: var(--navy); font-weight: 700; font-size: .86rem; }
   input, select, textarea { width: 100%; min-width: 0; padding: .72rem .78rem; border: 1.5px solid var(--border); border-radius: 9px; background: #fff; color: var(--text); font: inherit; }
-  input:focus, select:focus, textarea:focus { outline: 2px solid rgba(25,163,154,.2); border-color: var(--teal); }
+  input:focus, select:focus, textarea:focus { outline: 2px solid rgba(var(--brand-rgb), .2); border-color: var(--brand); }
   textarea { resize: vertical; }
   .field-help { margin: -.45rem 0 .7rem; color: var(--text-soft); font-size: .8rem; }
   .check-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
   .check-option { display: flex; align-items: flex-start; gap: .55rem; padding: .62rem .7rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-alt); cursor: pointer; font-weight: 600; line-height: 1.35; }
-  .check-option:hover { border-color: var(--teal); background: #fff; }
-  .check-option input { width: 17px; height: 17px; margin: .08rem 0 0; flex: 0 0 auto; accent-color: var(--teal-dark); }
+  .check-option:hover { border-color: var(--brand); background: #fff; }
+  .check-option input { width: 17px; height: 17px; margin: .08rem 0 0; flex: 0 0 auto; accent-color: var(--brand-dark); }
   .full-field { margin-top: .9rem; }
   .submit-button { width: 100%; min-height: 50px; font-size: 1rem; }
   .reassure { margin: -.55rem 0 0; text-align: center; color: var(--text-soft); font-size: .82rem; }

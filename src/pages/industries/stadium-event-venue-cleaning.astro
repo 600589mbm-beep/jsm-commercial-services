@@ -173,33 +173,33 @@ const breadcrumbSchema = breadcrumbList(BUSINESS.website, [
 </Base>
 
 <style>
-  .venue-hero { padding: 5rem 0; color: #fff; background: linear-gradient(145deg, #071a2a, var(--navy) 65%, #174654); }
+  .venue-hero { padding: 5rem 0; color: #fff; background: linear-gradient(145deg, var(--navy-dark), var(--navy) 65%, var(--navy-raised)); }
   .hero-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center; }
-  .crumbs.dark, .crumbs.dark a { color: #c5d5e0; }
-  .eyebrow { color: var(--teal-bright); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-  .eyebrow.navy { color: var(--teal-dark); }
+  .crumbs.dark, .crumbs.dark a { color: var(--text-on-dark); }
+  .eyebrow { color: var(--brand-light); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .eyebrow.navy { color: var(--brand-dark); }
   h1 { color: #fff; font-size: clamp(2.5rem, 5vw, 4.2rem); }
-  .lead { color: #c8d7e3; font-size: 1.1rem; max-width: 760px; }
+  .lead { color: var(--brand-border); font-size: 1.1rem; max-width: 760px; }
   .actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.7rem; }
   .venue-card { padding: 1.9rem; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(255,255,255,.09); }
-  .card-label { color: var(--teal-bright); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .card-label { color: var(--brand-light); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
   .venue-card ul { list-style: none; padding: 0; margin: 0; }
   .venue-card li { position: relative; padding: .7rem 0 .7rem 1.6rem; border-bottom: 1px solid rgba(255,255,255,.12); }
-  .venue-card li::before { content: '✓'; position: absolute; left: 0; color: var(--teal-bright); font-weight: 800; }
+  .venue-card li::before { content: '✓'; position: absolute; left: 0; color: var(--brand-light); font-weight: 800; }
   .phase-layout, .scope-layout, .quote-layout, .faq-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 3.5rem; align-items: start; }
   .phase-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
   .phase-grid article, .type-grid article { padding: 1.25rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; box-shadow: var(--shadow); }
-  .phase-grid span { color: var(--teal-dark); font-size: .72rem; font-weight: 800; }
+  .phase-grid span { color: var(--brand-dark); font-size: .72rem; font-weight: 800; }
   .phase-grid p, .type-grid p { color: var(--text-soft); margin: .3rem 0 0; }
   .scope-list { margin: 0; }
   .venue-types { color: #fff; background: linear-gradient(135deg, var(--navy-dark), var(--navy)); }
   .venue-types h2 { color: #fff; }
-  .venue-types .section-head p { color: #c8d7e3; }
+  .venue-types .section-head p { color: var(--brand-border); }
   .wide { max-width: 860px; }
   .type-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
   .type-grid article { border-color: rgba(255,255,255,.13); background: rgba(255,255,255,.08); }
-  .type-grid strong { color: var(--teal-bright); }
-  .type-grid p { color: #c8d7e3; }
+  .type-grid strong { color: var(--brand-light); }
+  .type-grid p { color: var(--brand-border); }
   @media (max-width: 900px) {
     .hero-layout, .phase-layout, .scope-layout, .quote-layout, .faq-layout { grid-template-columns: 1fr; gap: 2.5rem; }
     .phase-grid { grid-template-columns: 1fr; }
